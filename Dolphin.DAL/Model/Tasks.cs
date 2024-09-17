@@ -37,18 +37,7 @@ namespace Dolphin.DAL.Model
         public DateTime Start_Date { get; set; }
         [Required]
         [Column(Order = 9)]
-        public DateTime End_Date { get; set; }
-        [Column(Order = 10)]
-        public Guid? Parent_Id { get; set; }
-        [ForeignKey("User_Id")]
-        [Column(Order = 11)]
-        public Guid User_Id { get; set; }
-        public User User { get; set; }
-        [ForeignKey("Project_Id")]
-        [Column(Order = 12)]
-        public Guid Project_Id { get; set; }
-
-        public Project Project { get; set; } 
+        public DateTime End_Date { get; set; }      
 
     }
 }
