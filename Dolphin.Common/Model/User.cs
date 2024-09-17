@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dolphin.DAL.Model
+namespace Dolphin.Common.Model
 {
     public class User : BaseEntity
     {
