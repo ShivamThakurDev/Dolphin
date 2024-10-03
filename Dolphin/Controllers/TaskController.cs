@@ -4,26 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dolphin.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TaskController : ControllerBase
+    public class TaskController : Controller
     {
-        public readonly ITaskRepository _taskRepository;
-        public TaskController(ITaskRepository taskRepository)
+        public IActionResult Index()
         {
-            _taskRepository = taskRepository;
+            return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var list = await _taskRepository.GetAllTasks();
-            if(list== null)
-            {
-                return NotFound();
-            }
-            return Ok(list);
-        }
-
 
     }
 }

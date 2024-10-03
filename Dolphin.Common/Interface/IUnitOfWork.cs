@@ -9,6 +9,7 @@ namespace Dolphin.Common.Interface
     public interface IUnitOfWork:IDisposable
     {
         ITaskRepository Tasks { get; }
-        int Save();
+        int Save(); 
+
     }
 }

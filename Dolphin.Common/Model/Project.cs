@@ -1,4 +1,4 @@
-﻿namespace Dolphin.DAL.Model
+﻿namespace Dolphin.Common.Model
 {
     public class Project:BaseEntity
     {

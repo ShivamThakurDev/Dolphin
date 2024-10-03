@@ -1,9 +1,11 @@
+using Dolphin.BLL.Repository;
+using Dolphin.BLL.Repository.IRepository;
 using Dolphin.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 // Add services to the container.
 var Configuration = builder.Configuration;
 builder.Services.AddDbContext<ApplicationManagerContext>(options =>
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<ApplicationManagerContext>(options =>
 
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
