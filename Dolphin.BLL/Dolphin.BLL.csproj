@@ -15,4 +15,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dolphin.Common\Dolphin.Common.csproj" />
+    <ProjectReference Include="..\Dolphin.DAL\Dolphin.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

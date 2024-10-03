@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dolphin.BLL.Repository.IRepository
+namespace Dolphin.Common.Interface
 {
-    internal interface ITaskRepository
+    public interface ITaskRepository: IGenricRepository<Task>
     {
     }
 }
