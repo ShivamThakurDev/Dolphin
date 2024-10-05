@@ -1,5 +1,4 @@
 ﻿using Dolphin.Common.Interface;
-using Dolphin.DAL.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Dolphin.BLL.Repository;
+using Dolphin.Common.Data;
 
 
 namespace Dolphin.Helper

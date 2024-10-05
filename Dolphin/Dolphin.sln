@@ -5,13 +5,11 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dolphin", "Dolphin.csproj", "{8C33AF0E-3CA5-4803-A967-639469C2181A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dolphin.DAL", "..\Dolphin.DAL\Dolphin.DAL.csproj", "{04761383-9A86-4061-AEDE-A7C660889940}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dolphin.BLL", "..\Dolphin.BLL\Dolphin.BLL.csproj", "{7153DABB-29F3-41AA-8326-EB40FC54D12C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dolphin.Common", "..\Dolphin.Common\Dolphin.Common.csproj", "{DB1C0989-5ADC-4A81-A7F4-857A8225539B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dolphin.Helper", "..\Dolphin.Helper\Dolphin.Helper.csproj", "{FEDBDE05-7D11-486B-9A2D-01FE59DEE21C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dolphin.Helper", "..\Dolphin.Helper\Dolphin.Helper.csproj", "{FEDBDE05-7D11-486B-9A2D-01FE59DEE21C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{8C33AF0E-3CA5-4803-A967-639469C2181A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C33AF0E-3CA5-4803-A967-639469C2181A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C33AF0E-3CA5-4803-A967-639469C2181A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04761383-9A86-4061-AEDE-A7C660889940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04761383-9A86-4061-AEDE-A7C660889940}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04761383-9A86-4061-AEDE-A7C660889940}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04761383-9A86-4061-AEDE-A7C660889940}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7153DABB-29F3-41AA-8326-EB40FC54D12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7153DABB-29F3-41AA-8326-EB40FC54D12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7153DABB-29F3-41AA-8326-EB40FC54D12C}.Release|Any CPU.ActiveCfg = Release|Any CPU

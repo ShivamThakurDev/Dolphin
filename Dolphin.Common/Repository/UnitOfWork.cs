@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dolphin.Common.Data;
 using Dolphin.Common.Interface;
 
 namespace Dolphin.BLL.Repository
