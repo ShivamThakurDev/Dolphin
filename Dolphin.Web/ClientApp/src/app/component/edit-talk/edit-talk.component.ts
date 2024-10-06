@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { appConstants } from '../../shared/appConstants';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { IssueType, Talk } from '../../model/schema.model';
-import { text } from 'stream/consumers';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ColorPickerDialogComponent } from '../../shared/color-picker-dialog/color-picker-dialog.component';
 
@@ -15,25 +14,29 @@ import { ColorPickerDialogComponent } from '../../shared/color-picker-dialog/col
 export class EditTalkComponent implements OnInit{
 
   formGroup: FormGroup;
-  issueTypesArrayWithColor: Object.values(appConstants.issueTypeListWithColor);
-
+  issueTypesArrayWithColor: any[];
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {talk: Talk,edit:boolean},
     private dialogRef: MatDialogRef<EditTalkComponent>,
     public fromBuilder: FormBuilder,
     public colorPickerdialog: MatDialog
-  ){}
+  ){
+    this.formGroup = this.fromBuilder.group({}); // Initialize with an empty group
+    this.issueTypesArrayWithColor = Object.values(appConstants.issueTypeListWithColor);
+  }
 
   ngOnInit(): void {
     const talk = this.data && this.data.talk ? this.data.talk: null;
     this.formGroup = this.fromBuilder.group({
-      text: [talk && talk.text ? talk.text: '',Validators.required],
-      speaker: [talk && talk.speaker ? talk.speaker: '',Validators.required],
-      image: [talk && talk.image ? talk.image : ''],
-      tags: [talk && talk.tags ? talk.tags : []],
-      IssueType: [talk && talk.issueType ? talk.issueType : ''],
-      createdAt: [talk && talk.createdAt ? talk.createdAt : new Date()]
+      text: [talk?.text || '', Validators.required],
+      speaker: [talk?.speaker || '', Validators.required],
+      image: [talk?.image || ''],
+      tags: [talk?.tags || []],
+      issueType: [talk?.issueType || '', Validators.required],
+      createdAt: [talk?.createdAt || new Date()]
     });
+    
   }
 
   onSubmit(){
@@ -74,4 +77,6 @@ export class EditTalkComponent implements OnInit{
       }
     });
   }
+
+  
 }

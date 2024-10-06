@@ -1,7 +1,15 @@
-import { IssueType } from "../model/schema.model";
+enum IssueType{
+    Task = 'task',
+    SubTask = 'sub-task',
+    Bug = 'bug',
+    Epic = 'epic',
+    Story = 'story'
+};
 
 export const appConstants = {
     /**Issue Types with their hardcoded colors */
+
+    
     issueTypeListWithColor:{
         [IssueType.Bug]:{
             name:IssueType.Bug,

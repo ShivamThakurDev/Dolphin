@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { appConstants } from '../../shared/appConstants';
 import { IssueType } from '../../model/schema.model';
 
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -15,9 +16,9 @@ export class CardComponent implements OnInit{
   @Output() delete = new EventEmitter<void>();
   @Input() text : string ='';
   @Input() author: string = '';
-  @Input() tags: [] = [];
+  @Input() tags: { name: string; color?: string }[] = [];
   @Input() image: string ='';
-  @Input() issueType: string= '';
+  @Input() issueType: IssueType = IssueType.Task;
   @Input() createdAt: Date | undefined;
 
   constructor(){}

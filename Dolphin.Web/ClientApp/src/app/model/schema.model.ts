@@ -24,6 +24,7 @@ export interface Track{
     title: string;
     talks: Talk[];
     id: string;
+    collapsed: boolean;
 }
 
 export interface Board {

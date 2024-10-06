@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +43,7 @@ import { LayoutModule } from '@angular/cdk/layout';
   imports: [
     CommonModule,
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
@@ -60,7 +63,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatMenuModule,
     MatOptionModule,
     MatSelectModule,
-    ColorChromeModule
+    ColorChromeModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Board } from '../model/schema.model';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Injectable({
@@ -7,9 +9,13 @@ import { Board } from '../model/schema.model';
 })
 export class BoardService {
 
-  private _boards: Board[] = require('./data.json');
+  private _boards: any[] = [];
 
-  getBoards(): Board[] {
-    return this._boards;
+  constructor(private http: HttpClient) {}
+
+  getBoards():any {
+    this.http.get<any[]>('assets/data.json').subscribe((data) => {
+      this._boards = data;
+    });
   }
 }
