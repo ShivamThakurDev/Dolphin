@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dolphin.Common\Dolphin.Common.csproj" />
+    <ProjectReference Include="..\Dolphin.BLL\Dolphin.BLL.csproj" />
   </ItemGroup>
 
   

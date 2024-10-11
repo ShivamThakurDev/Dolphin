@@ -19,7 +19,6 @@ namespace Dolphin.Common.Model
         public string Email { get; set; }
         [Column(Order = 4)]
         public DateTime DOB { get; set; }
-        [ForeignKey("Role_Id")]
         [Column(Order = 5)]
         public Role Role_Id {get;set;}
         public Role Role { get; set; }
@@ -27,7 +26,7 @@ namespace Dolphin.Common.Model
         public string Password { get; set; }
         [ForeignKey("Team_Id")]
         [Column(Order =7)]
-        public int Team_Id { get; set; }
+        public Guid Team_Id { get; set; }
         public Team Team { get; set; }
         [Column(Order=8)]
         public DateTime Last_Login { get; set; }

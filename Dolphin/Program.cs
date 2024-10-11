@@ -1,16 +1,9 @@
+using Dolphin.Helper;
 using Dolphin.BLL.Repository;
-using Dolphin.BLL.Repository.IRepository;
-using Dolphin.Common.Data;
-using Microsoft.EntityFrameworkCore;
-
-
+using Dolphin.Common.Interface;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-// Add services to the container.
-var Configuration = builder.Configuration;
-builder.Services.AddDbContext<ApplicationManagerContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDIServices(builder.Configuration);
+builder.Services.AddScoped<ITaskRepository, TaskRespository>();
 
 builder.Services.AddControllers();
 
