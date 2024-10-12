@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dolphin.BLL.Repository
 {
-    internal class TaskRepository
+    public class TaskRepository
     {
     }
 }

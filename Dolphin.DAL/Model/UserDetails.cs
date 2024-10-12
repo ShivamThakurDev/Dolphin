@@ -10,7 +10,7 @@ namespace Dolphin.DAL.Model
     public class UserDetails:BaseEntity
     {
         [Column(Order =0)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Column(Order =1)]
         public Guid User_Id { get; set; }
         public virtual User User { get; set; }

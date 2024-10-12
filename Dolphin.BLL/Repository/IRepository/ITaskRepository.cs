@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dolphin.BLL.Repository.IRepository
 {
-    internal interface ITaskRepository
+    public interface ITaskRepository
     {
     }
 }
