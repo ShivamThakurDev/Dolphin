@@ -17,7 +17,6 @@ namespace Dolphin.BLL.Repository.IRepository
         void Update(T entity);
         void Delete(T entity);
         Task<T> Find(Expression<Func<T, bool>> predicate);
-        Guid AddRecord(T entity);
         IQueryable<T> Query<T>() where T : class;
     }
 }

@@ -14,60 +14,74 @@ namespace Dolphin.BLL.Repository
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationManagerContext _context;
-        private DbSet<T> db;
+        private DbSet<T> _db;
+        // Initalize the constructor class with dependency injection
         public Repository(ApplicationManagerContext context)
         {
             this._context = context;
-            db = context.Set<T>();
+            _db = context.Set<T>();
             
         }
+        // Add a single record in db
         public void Add(T entity)
         {
             if(entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            db.Add(entity);
+            _db.Add(entity);
+            _context.SaveChanges();
         }
-
-        public void AddAll(List<T> entity)
+        // Adding the multiple of record in db
+        public void AddAll(List<T> entityList)
         {
-            throw new NotImplementedException();
+            if (!entityList.Any())
+            {
+                throw new ArgumentNullException(nameof(entityList));
+            }
+            _db.AddRange(entityList);
+            _context.SaveChanges();
         }
 
-        public Guid AddRecord(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
+      
+        // Soft Deleting record from db
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            entity.IsDeleted = false;
+            _context.SaveChanges();
         }
-
-        public Task<T> Find(Expression<Func<T, bool>> predicate)
+        // Get by find record from db 
+        public async virtual Task<T> Find(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _db.FirstOrDefaultAsync(predicate);
         }
-
+        // Get all records from db
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _db.AsEnumerable();
         }
-
+        // Get the record by Id
         public T GetById(Guid Id)
         {
-            throw new NotImplementedException();
+            return _db.Find(Id);
         }
-
-        public IQueryable<T1> Query<T1>() where T1 : class
+        // Get list or records
+        public IQueryable<T> Query<T>() where T : class
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().AsNoTracking();
         }
-
+        // Used existing record to update and save changes in db
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            if(entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            _context.SaveChanges();
         }
     }
 }
