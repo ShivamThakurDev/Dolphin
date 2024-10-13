@@ -1,3 +1,7 @@
+using Dolphin.BLL.Repository;
+using Dolphin.BLL.Repository.IRepository;
+using Dolphin.BLL.Services;
+using Dolphin.BLL.Services.IServices;
 using Dolphin.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 builder.Services.AddDbContext<ApplicationManagerContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ITaskService,TaskService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

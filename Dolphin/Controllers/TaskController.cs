@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dolphin.BLL.Services.IServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dolphin.Controllers
 {
-    public class TaskController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class TaskController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ITaskService _taskService; 
+        public TaskController(ITaskService taskService)
         {
-            return View();
+            _taskService = taskService;
         }
-
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        { 
+            var result = await _taskService.GetAllTasks();
+            return Ok(result);
+        }
     }
 }
