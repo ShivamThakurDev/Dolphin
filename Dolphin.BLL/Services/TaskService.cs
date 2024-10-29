@@ -43,12 +43,12 @@ namespace Dolphin.BLL.Services
 
         public void Update(Tasks task)
         {
-            var taskDetail = _taskRepo.GetById(task.Id);
-            if(taskDetail != null)
-            {
+            //var taskDetail = _taskRepo.GetById(task.Id);
+            //if(taskDetail != null)
+            //{
                 
                 _taskRepo.Update(task);
-            }
+            //}
         }
     }
 }
