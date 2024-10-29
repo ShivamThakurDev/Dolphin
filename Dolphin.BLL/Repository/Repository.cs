@@ -81,6 +81,7 @@ namespace Dolphin.BLL.Repository
             {
                 throw new ArgumentNullException(nameof(entity));
             }
+            _db.Update(entity);
             _context.SaveChanges();
         }
     }

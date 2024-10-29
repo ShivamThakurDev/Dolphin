@@ -1,4 +1,5 @@
 ﻿using Dolphin.BLL.Services.IServices;
+using Dolphin.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dolphin.Controllers
@@ -17,6 +18,32 @@ namespace Dolphin.Controllers
         { 
             var result = await _taskService.GetAllTasks();
             return Ok(result);
+        }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetById(Guid Id)
+        {
+            var result = _taskService.GetById(Id);
+            return Ok(result);
+        }
+
+        [HttpPost("Add")]
+        public async Task<IActionResult> Add(Tasks tasks)
+        {
+            _taskService.Add(tasks);
+            return Created();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit(Tasks tasks)
+        {
+            _taskService.Update(tasks);
+            return Created();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            _taskService.Delete(id);
+            return Ok();
         }
     }
 }
