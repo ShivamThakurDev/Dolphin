@@ -1,16 +1,13 @@
-﻿using Dolphin.Common.Model;
+﻿using Dolphin.DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Dolphin.DAL.Model;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace Dolphin.DAL.Data
 {
-    public class ApplicationManagerContext : IdentityDbContext<IdentityUser>
+    public class ApplicationManagerContext : DbContext
     {
         public ApplicationManagerContext(DbContextOptions<ApplicationManagerContext> options):base(options)
         {

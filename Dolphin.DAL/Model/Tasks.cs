@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dolphin.Common.Model
+namespace Dolphin.DAL.Model
 {
     public class Tasks:BaseEntity
     {

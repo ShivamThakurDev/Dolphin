@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dolphin.BLL.Services.IServices
 {
-    public interface ITaskService: IRepository<Tasks>
+    public interface ITaskService
     {
         Task<IEnumerable<Tasks>> GetAllTasks();
         Tasks GetById(Guid id);

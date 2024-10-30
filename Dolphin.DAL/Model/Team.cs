@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dolphin.Common.Model
+namespace Dolphin.DAL.Model
 {
     public class Team
     {
