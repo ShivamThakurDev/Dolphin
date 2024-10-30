@@ -33,7 +33,7 @@ namespace Dolphin.BLL.Services
 
         public async Task<IEnumerable<Tasks>> GetAllTasks()
         {
-            return  _taskRepo.GetAll();
+            return  _taskRepo.GetAll().Where(x=>x!.IsDeleted);
         }
 
         public Tasks GetById(Guid id)
@@ -46,7 +46,6 @@ namespace Dolphin.BLL.Services
             //var taskDetail = _taskRepo.GetById(task.Id);
             //if(taskDetail != null)
             //{
-                
                 _taskRepo.Update(task);
             //}
         }

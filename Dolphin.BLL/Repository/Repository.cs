@@ -51,7 +51,7 @@ namespace Dolphin.BLL.Repository
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            entity.IsDeleted = false;
+            entity.IsDeleted = true;
             _context.SaveChanges();
         }
         // Get by find record from db 
