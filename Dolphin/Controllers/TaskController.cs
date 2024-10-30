@@ -19,6 +19,17 @@ namespace Dolphin.Controllers
             var result = await _taskService.GetAllTasks();
             return Ok(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var list = await _taskRepository.GetAllTasks();
+            if(list== null)
+            {
+                return NotFound();
+            }
+            return Ok(list);
+        }
+
 
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(Guid Id)

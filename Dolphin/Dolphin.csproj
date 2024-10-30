@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Dolphin.BLL\Dolphin.BLL.csproj" />
     <ProjectReference Include="..\Dolphin.Common\Dolphin.Common.csproj" />
-    <ProjectReference Include="..\Dolphin.DAL\Dolphin.DAL.csproj" />
+    <ProjectReference Include="..\Dolphin.Helper\Dolphin.Helper.csproj" />
   </ItemGroup>
 
 </Project>

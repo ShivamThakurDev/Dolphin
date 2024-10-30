@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dolphin.DAL.Model
+namespace Dolphin.Common.Model
 {
     public class TaskDetails:BaseEntity
     {
