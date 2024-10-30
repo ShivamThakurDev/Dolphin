@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dolphin.Common.Model
 {
-    public class Role
+    public class Role:IdentityRole
     {
-        [Column(Order =0)]
-        public Guid  Id { get; set; }
-        [Column(Order =1)]
-        public string Name { get; set; }
     }
 }

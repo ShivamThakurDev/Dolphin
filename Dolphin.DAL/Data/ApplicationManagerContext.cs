@@ -4,10 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Dolphin.DAL.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Dolphin.DAL.Data
 {
-    public class ApplicationManagerContext : DbContext
+    public class ApplicationManagerContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationManagerContext(DbContextOptions<ApplicationManagerContext> options):base(options)
         {

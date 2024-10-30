@@ -10,7 +10,7 @@ namespace Dolphin.Common.Model
     public class TaskDetails:BaseEntity
     {
         [Column(Order =0)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Column(Order =1)]
         [ForeignKey("Task_Id")]
         public Guid Task_Id { get; set; }
