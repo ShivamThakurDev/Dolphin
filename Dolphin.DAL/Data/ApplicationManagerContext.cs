@@ -20,6 +20,14 @@ namespace Dolphin.DAL.Data
         public DbSet<Role> roles { get; set; }
         public DbSet<UserDetails> userDetails { get; set; }
         public DbSet<TaskDetails> taskDetails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Tasks>()
+                .Property(t => t.Progress)
+                .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                .HasPrecision(18, 2); // Optional, depending on your needs
+        }
     }
 }
 
