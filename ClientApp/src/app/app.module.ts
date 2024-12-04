@@ -8,11 +8,13 @@ import { MaterialModule } from './shared/material/material.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AddEditTaskComponent } from './components/add-edit-task/add-edit-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskListComponent
+    TaskListComponent,
+    AddEditTaskComponent
   ],
   imports: [
     BrowserModule,

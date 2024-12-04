@@ -1,51 +1,32 @@
-<h3>Task List</h3>
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-        <mat-label>Id:</mat-label>
-        <input matInput id="id" formControlName="id">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Name:</mat-label>
-        <input matInput id="name" formControlName="name">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Description:</mat-label>
-        <input matInput id="description" formControlName="description">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Status:</mat-label>
-        <mat-select id="status" formControlName="status">
-            <mat-option *ngFor="let option of statusList" [value]="option.value">
-                {{ option.label }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Priority:</mat-label>
-        <mat-select id="priority" formControlName="priority">
-            <mat-option *ngFor="let option of priorityList" [value]="option.value">
-                {{ option.label }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Start Date:</mat-label>
-        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
-        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #startDatePicker></mat-datepicker>
-     </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>End Date:</mat-label>
-        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
-        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #endDatePicker></mat-datepicker>
-    </mat-form-field>
-
-    <button type="submit" mat-raised-button color="primary" [disabled]="taskForm.invalid">Submit</button>
-</form>
+<div class="container-fluid">
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Story Point</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of taskList; let i=index;">
+                <td scope="row">{{i}}</td>
+                <td>{{task.name}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.priority}}</td>
+                <td>{{task.progress}}</td>
+                <td>{{task.story_Point}}</td>
+                <td>{{task.start_Date}}</td>
+                <td>{{task.end_Date}}</td>
+            </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
