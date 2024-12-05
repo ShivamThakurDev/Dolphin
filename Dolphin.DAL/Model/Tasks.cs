@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dolphin.DAL.Model.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskStatus = Dolphin.DAL.Model.Enum.TaskStatus;
 
 namespace Dolphin.DAL.Model
 {
@@ -12,30 +9,31 @@ namespace Dolphin.DAL.Model
     {
 
         [Required]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public string Name { get; set; }
         [Required]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         public string Description { get; set; }
-        public enum Task_Status { ToDo, InProgress, Done, Closed}
+
+        [Column(Order = 3)]
+        public TaskStatus Status { get; set; }
         [Column(Order = 4)]
-        public Task_Status Status { get; set; }
-        public enum Priority_Level { Low, Medium, High }
-        [Column(Order = 5)]
-        public Priority_Level Priority {  get; set; }
+        public PriorityLevel Priority {  get; set; }
         [Required]
         [Range(0,100)]
-        [Column(Order = 6)]
+        [Column(Order = 5)]
         public decimal Progress { get; set; }
         [Required]
-        [Column(Order = 7)]
+        [Column(Order = 6)]
         public int Story_Point { get; set; }
         [Required]
-        [Column(Order = 8)]
+        [Column(Order = 7)]
         public DateTime Start_Date { get; set; }
         [Required]
-        [Column(Order = 9)]
-        public DateTime End_Date { get; set; }      
+        [Column(Order = 8)]
+        public DateTime End_Date { get; set; }
+        [Column(Order =9)]
+        public Guid? ParentId { get; set; }
 
     }
 }

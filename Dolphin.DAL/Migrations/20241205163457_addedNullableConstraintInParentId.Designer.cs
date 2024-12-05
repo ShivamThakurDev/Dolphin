@@ -3,6 +3,7 @@ using System;
 using Dolphin.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dolphin.DAL.Migrations
 {
     [DbContext(typeof(ApplicationManagerContext))]
-    partial class ApplicationManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20241205163457_addedNullableConstraintInParentId")]
+    partial class addedNullableConstraintInParentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

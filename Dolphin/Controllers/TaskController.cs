@@ -14,10 +14,9 @@ namespace Dolphin.Controllers
             _taskService = taskService;
         }
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<Tasks>>> GetAll()
+        public async Task<IEnumerable<Tasks>> GetAll()
         { 
-            var result = await _taskService.GetAllTasks();
-            return Ok(new {response = result});
+            return await _taskService.GetAllTasks();
         }
 
 
