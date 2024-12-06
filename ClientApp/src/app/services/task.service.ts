@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiEndpoint } from '../components/helpers/ApiEndpoint';
 import { Observable } from 'rxjs';
+import { task } from '../models/task';
 
 
 

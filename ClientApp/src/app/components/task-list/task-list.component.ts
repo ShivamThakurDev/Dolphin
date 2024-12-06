@@ -15,13 +15,19 @@ constructor(private taskService: TaskService){
 
 }
 
-ngOnInit(){
-  this.taskService.getTaskList().pipe(first()).subscribe((data:any)=>{
-    console.log(data)
-    this.taskList = data;
-  },(err)=>{
-    console.log(err);
-  })
+ngOnInit() {
+  this.taskService.getTaskList().subscribe({
+    next: (res: any) => {
+      console.log('Response:', res);
+    },
+    error: (err: any) => {
+      console.error('Error occurred:', err);
+    },
+    complete: () => {
+      console.info('Request completed.');
+    }
+  });
 }
+
 
 }

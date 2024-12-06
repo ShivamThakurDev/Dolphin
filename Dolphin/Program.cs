@@ -17,15 +17,15 @@ builder.Services.AddScoped<ITaskService,TaskService>();
 
 builder.Services.AddControllers();
 
+// In Startup.cs or Program.cs
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
-    {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
+               .AllowAnyHeader());
 });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -39,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors("AllowAll"); // Apply the CORS policy
 
 app.UseHttpsRedirection();
