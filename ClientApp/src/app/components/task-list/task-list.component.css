@@ -1,0 +1,11 @@
+.mat-elevation-z8 {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+  }
+  
+  mat-header-cell, mat-cell {
+    padding: 8px 16px;
+  }
+  

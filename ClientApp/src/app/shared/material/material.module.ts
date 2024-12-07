@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatRow, MatTable, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 const  MaterialComponent = [
   MatInputModule,
@@ -16,6 +19,14 @@ const  MaterialComponent = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonModule,
+  MatTableModule,
+  MatHeaderCell,
+  MatCell,
+  MatHeaderRow,
+  MatRow,
+  MatPaginatorModule,
+  MatSortModule
+
 ]
 
 @NgModule({

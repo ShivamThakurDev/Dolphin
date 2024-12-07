@@ -1,5 +1,6 @@
 ﻿using Dolphin.BLL.Services.IServices;
 using Dolphin.DAL.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dolphin.Controllers
@@ -14,8 +15,8 @@ namespace Dolphin.Controllers
             _taskService = taskService;
         }
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
-        { 
+        public async Task<ActionResult<IEnumerable<Tasks>>> GetAll()
+        {
             var tasks = await _taskService.GetAllTasks();
             return Ok(tasks);
         }

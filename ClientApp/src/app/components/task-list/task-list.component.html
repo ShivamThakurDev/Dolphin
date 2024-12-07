@@ -1,32 +1,77 @@
-<div class="container-fluid">
-    <div class="row">
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Status</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Progress</th>
-                <th scope="col">Story Point</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let task of taskList; let i=index;">
-                <td scope="row">{{i}}</td>
-                <td>{{task.name}}</td>
-                <td>{{task.description}}</td>
-                <td>{{task.status}}</td>
-                <td>{{task.priority}}</td>
-                <td>{{task.progress}}</td>
-                <td>{{task.story_Point}}</td>
-                <td>{{task.start_Date}}</td>
-                <td>{{task.end_Date}}</td>
-            </tr>
-            </tbody>
-          </table>
-    </div>
+<div class="mat-elevation-z8">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Filter</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="Search tasks">
+    </mat-form-field>
+  </div>
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.description}}</mat-cell>
+    </ng-container>
+
+   
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.status}}</mat-cell>
+    </ng-container>
+
+    <!-- Priority Column -->
+    <ng-container matColumnDef="priority">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Priority</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.priority}}</mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="progress">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Progress</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.progress}}</mat-cell>
+    </ng-container>
+
+    <!-- Story_Point Column -->
+    <ng-container matColumnDef="story point">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Story Point</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.story_Point}}</mat-cell>
+    </ng-container>
+
+    <!-- Start_Date Column -->
+    <ng-container matColumnDef="start date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.start_Date|date: "dd-MM-yyy"}}</mat-cell>
+    </ng-container>
+
+    <!-- End_Date Column -->
+    <ng-container matColumnDef="end date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.end_Date|date: "dd-MM-yyy"}}</mat-cell>
+    </ng-container>
+
+    <!-- Parent_Id Column -->
+    <ng-container matColumnDef="parent id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Parent Id</mat-header-cell>
+      <mat-cell *matCellDef="let task">{{task.parentId}}</mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Definitions -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+  <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
 </div>
