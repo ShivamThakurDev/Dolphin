@@ -1,4 +1,5 @@
 ﻿using Dolphin.BLL.Repository.IRepository;
+using Dolphin.DAL.DTOs;
 using Dolphin.DAL.Model;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Dolphin.BLL.Services.IServices
 {
     public interface ITaskService
     {
-        Task<IEnumerable<Tasks>> GetAllTasks();
-        Tasks GetById(Guid id);
-        void Add(Tasks task);
-        void Update(Tasks task);
+        Task<IEnumerable<TaskResponseDto>> GetAllTasks();
+        TaskResponseDto GetById(Guid id);
+        void Add(TaskRequestDto taskDto);
+        void Update(string id,TaskRequestDto taskDto);
         void Delete(Guid id);
 
     }

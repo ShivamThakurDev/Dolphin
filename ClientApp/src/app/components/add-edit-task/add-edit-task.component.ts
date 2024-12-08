@@ -21,13 +21,7 @@ export class AddEditTaskComponent {
     { label: 'High', value: 2 }
   ];
   
-onSubmit():void {
-  debugger;
-  console.log(this.taskForm.value)
-  this.taskService.addTask(this.taskForm.value).subscribe((res:any)=>{
-    console.log(res);
-  });
-}
+
   public taskForm: FormGroup;
   constructor(private taskService: TaskService,private fb:FormBuilder){
     this.taskForm = this.fb.group({
@@ -42,6 +36,7 @@ onSubmit():void {
       endDate:['',Validators.required]
     })
   }
+
   ngOnInit(){
     this.taskService.getTaskList().subscribe((res)=>{
       console.log(res);
@@ -50,5 +45,12 @@ onSubmit():void {
       console.log(err);
     }
   )
+  }
+
+  onSubmit():void {
+    console.log(this.taskForm.value)
+    this.taskService.addTask(this.taskForm.value).subscribe((res:any)=>{
+      console.log(res);
+    });
   }
 }

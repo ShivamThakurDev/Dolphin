@@ -1,4 +1,5 @@
 ﻿using Dolphin.BLL.Services.IServices;
+using Dolphin.DAL.DTOs;
 using Dolphin.DAL.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace Dolphin.Controllers
             _taskService = taskService;
         }
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<Tasks>>> GetAll()
+        public async Task<ActionResult<IEnumerable<TaskResponseDto>>> GetAll()
         {
             var tasks = await _taskService.GetAllTasks();
             return Ok(tasks);
@@ -30,15 +31,15 @@ namespace Dolphin.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add(Tasks tasks)
+        public async Task<IActionResult> Add(TaskRequestDto taskDto)
         {
-            _taskService.Add(tasks);
+            _taskService.Add(taskDto);
             return Created();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit(Tasks tasks)
+        public async Task<IActionResult> Edit(string id, TaskRequestDto taskDto)
         {
-            _taskService.Update(tasks);
+            _taskService.Update(id,taskDto);
             return Created();
         }
         [HttpDelete]

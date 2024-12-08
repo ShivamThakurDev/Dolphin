@@ -3,12 +3,16 @@ using Dolphin.BLL.Repository.IRepository;
 using Dolphin.BLL.Services;
 using Dolphin.BLL.Services.IServices;
 using Dolphin.DAL.Data;
+using Dolphin.DAL.DTOs.Mapper;
 using Microsoft.EntityFrameworkCore;
-using System;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Add AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 var Configuration = builder.Configuration;
 builder.Services.AddDbContext<ApplicationManagerContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));

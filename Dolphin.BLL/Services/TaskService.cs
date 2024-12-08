@@ -1,5 +1,7 @@
-﻿using Dolphin.BLL.Repository.IRepository;
+﻿using AutoMapper;
+using Dolphin.BLL.Repository.IRepository;
 using Dolphin.BLL.Services.IServices;
+using Dolphin.DAL.DTOs;
 using Dolphin.DAL.Model;
 using System;
 using System.Collections.Generic;
@@ -12,14 +14,19 @@ namespace Dolphin.BLL.Services
     public class TaskService: ITaskService
     {
         private readonly IRepository<Tasks> _taskRepo;
-        public TaskService(IRepository<Tasks> taskRepo)
+        private readonly IMapper _mapper;
+        public TaskService(IRepository<Tasks> taskRepo,IMapper mapper)
         {
             _taskRepo = taskRepo;
+            _mapper = mapper;
         }
 
-        public void Add(Tasks task)
+        public void Add(TaskRequestDto taskDto)
         {
-           _taskRepo.Add(task);
+            var tasks = _mapper.Map<Tasks>(taskDto);
+            tasks.Start_Date = tasks.Start_Date.ToUniversalTime();
+            tasks.End_Date = tasks.End_Date.ToUniversalTime();
+            _taskRepo.Add(tasks);
         }
 
         public void Delete(Guid id)
@@ -31,21 +38,22 @@ namespace Dolphin.BLL.Services
             }
         }
 
-        public async Task<IEnumerable<Tasks>> GetAllTasks()
+        public async Task<IEnumerable<TaskResponseDto>> GetAllTasks()
         {
-            return  _taskRepo.GetAll();
+            return  _mapper.Map<IEnumerable<TaskResponseDto>>(_taskRepo.GetAll());
         }
 
-        public Tasks GetById(Guid id)
+        public TaskResponseDto GetById(Guid id)
         {
-            return _taskRepo.GetById(id);
+            return _mapper.Map<TaskResponseDto>(_taskRepo.GetById(id));
         }
 
-        public void Update(Tasks task)
+        public void Update(string id, TaskRequestDto taskDto)
         {
             //var taskDetail = _taskRepo.GetById(task.Id);
             //if(taskDetail != null)
             //{
+                var task = _mapper.Map<Tasks>(taskDto);
                 _taskRepo.Update(task);
             //}
         }
