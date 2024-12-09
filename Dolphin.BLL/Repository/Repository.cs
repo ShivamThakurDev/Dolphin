@@ -29,6 +29,10 @@ namespace Dolphin.BLL.Repository
             {
                 throw new ArgumentNullException(nameof(entity));
             }
+            entity.CreatedOn = DateTime.UtcNow;
+            entity.ModifiedOn = DateTime.UtcNow;
+            entity.IsDeleted = false;
+            entity.IsActive = true;
             _db.Add(entity);
             _context.SaveChanges();
         }
@@ -38,6 +42,13 @@ namespace Dolphin.BLL.Repository
             if (!entityList.Any())
             {
                 throw new ArgumentNullException(nameof(entityList));
+            }
+            foreach (var entity in entityList)
+            {
+                entity.CreatedOn = DateTime.UtcNow;
+                entity.ModifiedOn = DateTime.UtcNow;
+                entity.IsDeleted = false;
+                entity.IsActive = true;
             }
             _db.AddRange(entityList);
             _context.SaveChanges();
@@ -81,6 +92,7 @@ namespace Dolphin.BLL.Repository
             {
                 throw new ArgumentNullException(nameof(entity));
             }
+            entity.ModifiedOn = DateTime.UtcNow;
             _db.Update(entity);
             _context.SaveChanges();
         }

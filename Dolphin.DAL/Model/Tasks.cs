@@ -25,13 +25,26 @@ namespace Dolphin.DAL.Model
         public decimal Progress { get; set; }
         [Required]
         [Column(Order = 6)]
-        public int Story_Point { get; set; }
+        public int StoryPoint { get; set; }
         [Required]
         [Column(Order = 7)]
-        public DateTime Start_Date { get; set; }
+        public DateTime StartDate
+        {
+            get => _startDate;
+            set => _startDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
+        private DateTime _startDate;
         [Required]
         [Column(Order = 8)]
-        public DateTime End_Date { get; set; }
+        
+
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set => _endDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
+        private DateTime _endDate;
+
         [Column(Order =9)]
         public Guid? ParentId { get; set; }
 

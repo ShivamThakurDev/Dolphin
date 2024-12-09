@@ -10,9 +10,9 @@ namespace Dolphin.DAL.DTOs
         public Model.Enum.TaskStatus Status { get; set; }
         public PriorityLevel Priority { get; set; }
         public decimal Progress { get; set; }
-        public int Story_Point { get; set; }
-        public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }
+        public int StoryPoint { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public Guid? ParentId { get; set; }
 
     }

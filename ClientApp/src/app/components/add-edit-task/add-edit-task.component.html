@@ -2,22 +2,22 @@
 <div class="container-fluid">
     <h3>Task List</h3>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
+        <mat-form-field style="display: none;">
             <mat-label>Id:</mat-label>
             <input matInput id="id" formControlName="id">
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Name:</mat-label>
             <input matInput id="name" formControlName="name">
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Description:</mat-label>
             <input matInput id="description" formControlName="description">
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Status:</mat-label>
             <mat-select id="status" formControlName="status">
                 <mat-option *ngFor="let option of statusList" [value]="option.value">
@@ -26,7 +26,7 @@
             </mat-select>
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Priority:</mat-label>
             <mat-select id="priority" formControlName="priority">
                 <mat-option *ngFor="let option of priorityList" [value]="option.value">
@@ -34,15 +34,25 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Progress:</mat-label>
+            <input matInput id="progress" formControlName="progress">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Story Point:</mat-label>
+            <input matInput id="storyPoint" formControlName="storyPoint">
+        </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Start Date:</mat-label>
             <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
          </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>End Date:</mat-label>
             <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>

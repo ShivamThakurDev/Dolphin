@@ -24,8 +24,6 @@ namespace Dolphin.BLL.Services
         public void Add(TaskRequestDto taskDto)
         {
             var tasks = _mapper.Map<Tasks>(taskDto);
-            tasks.Start_Date = tasks.Start_Date.ToUniversalTime();
-            tasks.End_Date = tasks.End_Date.ToUniversalTime();
             _taskRepo.Add(tasks);
         }
 

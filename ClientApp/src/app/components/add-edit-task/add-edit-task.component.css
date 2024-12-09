@@ -1,10 +1,80 @@
-form{
-    width: 30%;
+.container-fluid {
+    max-width: 800px; /* Limit the container width for better readability */
+    margin: 20px auto; /* Center the form on the page */
+    padding: 20px;
+    background-color: #ffffff; /* White background for a clean look */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-family: 'Roboto', sans-serif; /* Use Material Design recommended font */
+}
+
+h3 {
+    text-align: center;
+    color: #3f51b5; /* Primary Material Design color */
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Add space between input fields */
 }
 
 mat-form-field {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+    width: calc(50% - 16px); /* Half-width fields with spacing */
+    min-width: 200px; /* Minimum width for smaller screens */
+}
+
+mat-form-field.full-width {
+    width: 100%; /* Full-width fields for long inputs */
+}
+
+mat-form-field mat-label {
+    color: #757575; /* Subtle gray for labels */
+    font-size: 14px;
+    font-weight: 400;
+}
+
+input[matInput], mat-select {
+    font-size: 16px;
+    color: #333333; /* Dark gray for text input */
+}
+
+mat-datepicker-toggle {
+    margin-left: 8px; /* Add spacing to the datepicker icon */
+}
+
+button[type="submit"] {
+    width: 100%; /* Full-width button for better appearance */
+    padding: 12px;
+    background-color: #3f51b5; /* Material primary color */
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #303f9f; /* Darker shade on hover */
+}
+
+button[type="submit"]:disabled {
+    background-color: #9e9e9e; /* Disabled button color */
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    mat-form-field {
+        width: 100%; /* Stack fields on small screens */
+    }
+
+    button[type="submit"] {
+        width: 100%; /* Ensure the button is full-width */
+    }
+}
+
