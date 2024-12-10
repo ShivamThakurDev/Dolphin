@@ -16,7 +16,7 @@ export class TaskListComponent{
   taskList: task[] =[];
   dataSource: any;
   //columns to be displayed 
-  displayedColumns: string[] = ['id','name','description','status','priority','progress','story point','start date','end date']
+  displayedColumns: string[] = ['id','name','description','status','priority','progress','story point','start date','end date','actions']
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -57,6 +57,17 @@ applyFilter(event: Event){
   const filterValue = (event.target as HTMLInputElement).value;
   this.dataSource.filter = filterValue.trim().toLowerCase();
 }
+
+editTask(task: task): void {
+  console.log('Editing task:', task);
+  // Implement edit logic here
+}
+
+deleteTask(task: task): void {
+  console.log('Deleting task:', task);
+  // Implement delete logic here
+}
+
 
 
 }

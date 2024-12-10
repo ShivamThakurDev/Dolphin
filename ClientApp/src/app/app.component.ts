@@ -7,6 +7,5 @@ import { environment } from '../environments/environment.development';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'clientApp';
-  baseUrl: string = environment.baseUrl;
+  title = 'Dolphin';
 }
