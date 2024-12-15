@@ -10,6 +10,7 @@ import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, Mat
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const  MaterialComponent = [
   MatInputModule,
@@ -27,7 +28,8 @@ const  MaterialComponent = [
   MatRow,
   MatPaginatorModule,
   MatSortModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule
 ]
 
 @NgModule({

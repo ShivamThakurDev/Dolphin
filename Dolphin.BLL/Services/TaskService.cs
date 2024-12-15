@@ -27,23 +27,52 @@ namespace Dolphin.BLL.Services
             _taskRepo.Add(tasks);
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            var taskDetail = _taskRepo.GetById(id);
-            if(taskDetail != null)
+            try 
             {
-                _taskRepo.Delete(taskDetail);
+                if (Guid.TryParse(id, out var taskId))
+                {
+                    Tasks taskDetail = _taskRepo.GetById(taskId);
+                    if (taskDetail != null)
+                    {
+                        _taskRepo.Delete(taskDetail);
+                    }
+                }
+                else
+                {
+
+                    throw new Exception("Invalid Guid Id");
+                }
+            }
+            
+            catch (Exception ex)
+            {
+                throw new Exception("Message expection details", ex);
             }
         }
 
         public async Task<IEnumerable<TaskResponseDto>> GetAllTasks()
         {
-            return  _mapper.Map<IEnumerable<TaskResponseDto>>(_taskRepo.GetAll());
+            return  _mapper.Map<IEnumerable<TaskResponseDto>>(_taskRepo.GetAll().Where(x=>!x.IsDeleted));
         }
 
-        public TaskResponseDto GetById(Guid id)
+        public TaskResponseDto GetById(string id)
         {
-            return _mapper.Map<TaskResponseDto>(_taskRepo.GetById(id));
+            try
+            {
+                if(Guid.TryParse(id,out  var taskId))
+                {
+                    return _mapper.Map<TaskResponseDto>(_taskRepo.GetById(taskId));
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Message expection details",ex);
+            }
+            
         }
 
         public void Update(string id, TaskRequestDto taskDto)

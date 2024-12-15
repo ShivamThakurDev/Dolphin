@@ -23,10 +23,10 @@ namespace Dolphin.Controllers
         }
 
 
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(Guid Id)
+        [HttpGet("GetById/{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
-            var result = _taskService.GetById(Id);
+            var result = _taskService.GetById(id);
             return Ok(result);
         }
 
@@ -36,14 +36,14 @@ namespace Dolphin.Controllers
             _taskService.Add(taskDto);
             return Created();
         }
-        [HttpPut]
+        [HttpPut("Edit/{id}")]
         public async Task<IActionResult> Edit(string id, TaskRequestDto taskDto)
         {
             _taskService.Update(id,taskDto);
             return Created();
         }
-        [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             _taskService.Delete(id);
             return Ok();

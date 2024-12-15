@@ -10,7 +10,7 @@ export interface task{
     status: number,
     priority: number,
     progress: number,
-    story_Point: number,
-    start_Date: string,
-    end_Date: string
+    storyPoint: number,
+    startDate: string,
+    endDate: string
 }

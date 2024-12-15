@@ -21,4 +21,11 @@ export class TaskService {
   addTask(task:any){
     return this.http.post<any>(ApiEndpoint.addTask,task);
   }
+
+  editTask(id:string,task:any){
+    return this.http.put<any>(ApiEndpoint.editTask,task);
+  }
+  deleteTask(id:string){
+    return this.http.delete<any>(`${ApiEndpoint.deleteTask}/${id}`)
+  }
 }

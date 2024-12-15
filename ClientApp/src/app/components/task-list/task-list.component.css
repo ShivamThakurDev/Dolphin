@@ -8,4 +8,7 @@
   mat-header-cell, mat-cell {
     padding: 8px 16px;
   }
-  
+.list-header{
+  display: flex;
+  justify-content: space-between;
+}

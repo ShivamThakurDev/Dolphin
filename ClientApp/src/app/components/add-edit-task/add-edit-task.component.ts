@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { task } from '../../models/task';
 
 @Component({
   selector: 'app-add-edit-task',
@@ -23,34 +25,50 @@ export class AddEditTaskComponent {
   
 
   public taskForm: FormGroup;
-  constructor(private taskService: TaskService,private fb:FormBuilder){
-    this.taskForm = this.fb.group({
-      id:[''],
-      name:['',Validators.required],
-      description:['',Validators.required],
-      status: [''],
-      priority: [''],
-      progress: ['',Validators.min(0)],
-      storyPoint:['',Validators.min(0)],
-      startDate:['',Validators.required],
-      endDate:['',Validators.required]
-    })
-  }
+  constructor(private dialogRef: MatDialogRef<AddEditTaskComponent>,private taskService: TaskService,private fb:FormBuilder, @Inject(MAT_DIALOG_DATA) public data: task // Inject the passed data
+) {
+   console.log(data);
+  this.taskForm = this.fb.group({
+    id: [data?.id || ''], // Pre-fill form controls with existing data if available
+    name: [data?.name || '', Validators.required],
+    description: [data?.description || '', Validators.required],
+    status: [data?.status || ''],
+    priority: [data?.priority || ''],
+    progress: [data?.progress || '', Validators.min(0)],
+    storyPoint: [data?.storyPoint || '', Validators.min(0)],
+    startDate: [data?.startDate || '', Validators.required],
+    endDate: [data?.endDate || '', Validators.required]
+  });
+}
 
   ngOnInit(){
-    this.taskService.getTaskList().subscribe((res)=>{
-      console.log(res);
-    },
-    (err)=>{
-      console.log(err);
+    if (this.data) {
+      this.patchFormValues(this.data);
     }
-  )
+  }
+  patchFormValues(task: task): void {
+    this.taskForm.patchValue({
+      id: task.id,
+      name: task.name,
+      description: task.description,
+      status: task.status,
+      priority: task.priority,
+      progress: task.progress,
+      storyPoint: task.storyPoint,
+      startDate: task.startDate,
+      endDate: task.endDate
+    });
+  }
+  onSubmit():void {
+    if (this.taskForm.valid) {
+    this.taskService.addTask(this.taskForm.value).subscribe((res:any)=>{
+       console.log(res);
+       this.dialogRef.close(this.taskForm.value);
+    });
+  }
   }
 
-  onSubmit():void {
-    console.log(this.taskForm.value)
-    this.taskService.addTask(this.taskForm.value).subscribe((res:any)=>{
-      console.log(res);
-    });
+  ClosePopup(): void {
+    this.dialogRef.close(); // Close the modal without saving
   }
 }

@@ -62,6 +62,7 @@ namespace Dolphin.BLL.Repository
             {
                 throw new ArgumentNullException(nameof(entity));
             }
+            entity.ModifiedOn = DateTime.UtcNow;
             entity.IsDeleted = true;
             _context.SaveChanges();
         }
@@ -93,6 +94,7 @@ namespace Dolphin.BLL.Repository
                 throw new ArgumentNullException(nameof(entity));
             }
             entity.ModifiedOn = DateTime.UtcNow;
+
             _db.Update(entity);
             _context.SaveChanges();
         }

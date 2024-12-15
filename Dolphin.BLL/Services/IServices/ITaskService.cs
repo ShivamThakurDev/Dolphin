@@ -12,10 +12,10 @@ namespace Dolphin.BLL.Services.IServices
     public interface ITaskService
     {
         Task<IEnumerable<TaskResponseDto>> GetAllTasks();
-        TaskResponseDto GetById(Guid id);
+        TaskResponseDto GetById(string id);
         void Add(TaskRequestDto taskDto);
         void Update(string id,TaskRequestDto taskDto);
-        void Delete(Guid id);
+        void Delete(string id);
 
     }
 }

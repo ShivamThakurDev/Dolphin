@@ -14,7 +14,7 @@ namespace Dolphin.DAL.Model
         [Key]
         public Guid Id { get; set; }
         [Column(Order = 10)]
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         [Column(Order = 11)]
         public DateTime ModifiedOn { get; set; }
         [Column(Order =12)]
