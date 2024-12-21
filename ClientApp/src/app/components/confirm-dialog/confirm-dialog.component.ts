@@ -7,7 +7,7 @@ import { TaskService } from '../../services/task.service';
   styleUrl: './confirm-dialog.component.css'
 })
 export class ConfirmDialogComponent {
-  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>, private taskService: TaskService ,@Inject(MAT_DIALOG_DATA) public id: taskId) {}
+  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>, private taskService: TaskService ,@Inject(MAT_DIALOG_DATA) public id: string) {}
 
   onConfirm(): void {
     this.taskService.deleteTask(this.id).subscribe((res:any)=>{

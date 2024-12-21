@@ -94,6 +94,7 @@ deleteTask(taskId: string): void {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Modal closed:', result);
+      this.loadTaskList();
     });
 }
 
