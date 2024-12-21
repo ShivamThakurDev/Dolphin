@@ -60,11 +60,19 @@ export class AddEditTaskComponent {
     });
   }
   onSubmit():void {
+
     if (this.taskForm.valid) {
+    if(this.taskForm.value.id ==''){
     this.taskService.addTask(this.taskForm.value).subscribe((res:any)=>{
        console.log(res);
        this.dialogRef.close(this.taskForm.value);
     });
+  }else{
+    this.taskService.editTask(this.taskForm.value.id,this.taskForm.value).subscribe((res:any)=>{
+      console.log(res);
+      this.dialogRef.close(this.taskForm.value);
+   });
+  }
   }
   }
 

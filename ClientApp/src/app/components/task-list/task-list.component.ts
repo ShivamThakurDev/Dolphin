@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-task-list',
@@ -30,6 +31,10 @@ export class TaskListComponent{
 
 ngOnInit() {
 
+  this.loadTaskList();
+}
+
+loadTaskList(){
   this.taskService.getTaskList().subscribe({
     next: (res: any) => {
        
@@ -65,6 +70,7 @@ addTask(): void {
     width:'800px'
   });
   dialogRef.afterClosed().subscribe(result => {
+    this.loadTaskList()
   });
 }
 
@@ -75,15 +81,20 @@ editTask(task: task): void {
     data: task
   });
   dialogRef.afterClosed().subscribe(result => {
-     
+     this.loadTaskList();
   });
 }
 
-deleteTask(id: string): void {
-   debugger
-  this.taskService.deleteTask(id).subscribe((res:any)=>{
-    console.log(res);
-  })
+deleteTask(taskId: string): void {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: taskId // Optional data to pass
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Modal closed:', result);
+    });
 }
 
 }

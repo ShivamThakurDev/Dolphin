@@ -63,6 +63,6 @@
     </mat-dialog-content>
     <mat-dialog-actions>
     <button mat-button mat-raised-dialog-close  (click)="ClosePopup()">Close</button>
-    <button type="submit" mat-raised-button color="primary" [disabled]="taskForm.invalid">Submit</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="taskForm.invalid" (click)="onSubmit()">Submit</button>
     </mat-dialog-actions>
 </div>

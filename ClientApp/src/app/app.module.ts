@@ -9,12 +9,15 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEditTaskComponent } from './components/add-edit-task/add-edit-task.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListComponent,
-    AddEditTaskComponent
+    AddEditTaskComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

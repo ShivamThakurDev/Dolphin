@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Dolphin.BLL.Services
 {
-    public class TaskService: ITaskService
+    public class TaskService : ITaskService
     {
         private readonly IRepository<Tasks> _taskRepo;
         private readonly IMapper _mapper;
-        public TaskService(IRepository<Tasks> taskRepo,IMapper mapper)
+        public TaskService(IRepository<Tasks> taskRepo, IMapper mapper)
         {
             _taskRepo = taskRepo;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace Dolphin.BLL.Services
 
         public void Delete(string id)
         {
-            try 
+            try
             {
                 if (Guid.TryParse(id, out var taskId))
                 {
@@ -45,7 +45,7 @@ namespace Dolphin.BLL.Services
                     throw new Exception("Invalid Guid Id");
                 }
             }
-            
+
             catch (Exception ex)
             {
                 throw new Exception("Message expection details", ex);
@@ -54,14 +54,14 @@ namespace Dolphin.BLL.Services
 
         public async Task<IEnumerable<TaskResponseDto>> GetAllTasks()
         {
-            return  _mapper.Map<IEnumerable<TaskResponseDto>>(_taskRepo.GetAll().Where(x=>!x.IsDeleted));
+            return _mapper.Map<IEnumerable<TaskResponseDto>>(_taskRepo.GetAll().Where(x => !x.IsDeleted));
         }
 
         public TaskResponseDto GetById(string id)
         {
             try
             {
-                if(Guid.TryParse(id,out  var taskId))
+                if (Guid.TryParse(id, out var taskId))
                 {
                     return _mapper.Map<TaskResponseDto>(_taskRepo.GetById(taskId));
                 }
@@ -70,19 +70,29 @@ namespace Dolphin.BLL.Services
             catch (Exception ex)
             {
 
-                throw new Exception("Message expection details",ex);
+                throw new Exception("Message expection details", ex);
             }
-            
+
         }
 
         public void Update(string id, TaskRequestDto taskDto)
         {
-            //var taskDetail = _taskRepo.GetById(task.Id);
-            //if(taskDetail != null)
-            //{
-                var task = _mapper.Map<Tasks>(taskDto);
-                _taskRepo.Update(task);
-            //}
+            if (Guid.TryParse(id, out var guidId))
+            {
+                var taskDetail = _taskRepo.GetById(guidId);
+                if (taskDetail != null)
+                {
+                    taskDetail.Name = taskDto.Name;
+                    taskDetail.Description = taskDto.Description;
+                    taskDetail.Status = taskDto.Status;
+                    taskDetail.Priority = taskDto.Priority;
+                    taskDetail.Progress = taskDto.Progress;
+                    taskDetail.StoryPoint = taskDto.StoryPoint;
+                    taskDetail.StartDate = taskDto.StartDate;
+                    taskDetail.EndDate = taskDto.EndDate;
+                    _taskRepo.Update(taskDetail);
+                }
+            }
         }
     }
 }
