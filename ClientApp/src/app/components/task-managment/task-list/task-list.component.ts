@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TaskService } from '../../services/task.service';
+import { TaskService } from '../../../services/task.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { task } from '../../models/task';
+import { task } from '../../../models/task';
 import { first } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-task-list',

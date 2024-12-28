@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TaskService } from '../../services/task.service';
+import { TaskService } from '../../../services/task.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { task } from '../../models/task';
+import { task } from '../../../models/task';
 
 @Component({
   selector: 'app-add-edit-task',

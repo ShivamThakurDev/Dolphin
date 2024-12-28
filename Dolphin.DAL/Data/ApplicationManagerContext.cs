@@ -17,7 +17,13 @@ namespace Dolphin.DAL.Data
         }
         public DbSet<Tasks> Tasks { get; set; }
 
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Tasks>().ToTable("Tasks");
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
 

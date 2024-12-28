@@ -16,7 +16,7 @@ namespace Dolphin.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             var user = new IdentityUser { UserName = model.Username, Email = model.Email };
@@ -27,7 +27,7 @@ namespace Dolphin.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpPost("assign-role")]
+        [HttpPost("AssignRole")]
         public async Task<IActionResult> AssignRole(string userId, string roleName)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -39,7 +39,7 @@ namespace Dolphin.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetUsers()
         {
             var users = _userManager.Users.ToList();

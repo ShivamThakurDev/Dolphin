@@ -15,7 +15,7 @@ namespace Dolphin.Controllers
             _roleManager = roleManager;
         }
 
-        [HttpPost]
+        [HttpPost("AddRole")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             if (string.IsNullOrEmpty(roleName)) return BadRequest("Role name cannot be empty.");
@@ -26,7 +26,7 @@ namespace Dolphin.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpGet]
+        [HttpGet("GetRoles")]
         public IActionResult GetRoles()
         {
             var roles = _roleManager.Roles.ToList();

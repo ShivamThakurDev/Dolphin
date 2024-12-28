@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TaskListComponent } from './components/task-list/task-list.component';
-import { AddEditTaskComponent } from './components/add-edit-task/add-edit-task.component';
+import { TaskListComponent } from './components/task-managment/task-list/task-list.component';
+import { AddEditTaskComponent } from './components/task-managment/add-edit-task/add-edit-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'task-list', pathMatch: 'full' }, // Default route
