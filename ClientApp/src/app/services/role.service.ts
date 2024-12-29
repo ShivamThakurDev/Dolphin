@@ -16,4 +16,7 @@ export class RoleService {
   addRole(params:any){
     return this.crudService.post(ApiEndpoint.addRole,params)
   }
+  deleteRole(id:string){
+    return this.crudService.delete(ApiEndpoint.addRole);
+  }
 }

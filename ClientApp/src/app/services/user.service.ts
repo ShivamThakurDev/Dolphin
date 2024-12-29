@@ -21,4 +21,11 @@ export class UserService {
   registerUser(params:any){
     return this.crudService.post(ApiEndpoint.registerUser,params);
   }
+  getUserById(params:any){
+    return this.crudService.post(ApiEndpoint.registerUser,params);
+  }
+
+  updateUser(id:string,params:any){
+    return this.crudService.post(ApiEndpoint.registerUser,params);
+  }
 }

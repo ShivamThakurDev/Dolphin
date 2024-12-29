@@ -1,24 +1,23 @@
 <mat-card>
-    <mat-card-title>{{ isEdit ? 'Edit User' : 'Add User' }}</mat-card-title>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role">
-          <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
-    </form>
-  </mat-card>
-  
+  <mat-card-title>{{ isEdit ? 'Edit User' : 'Add User' }}</mat-card-title>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
+  </form>
+</mat-card>

@@ -2,18 +2,26 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RoleService } from "../../../services/role.service";
 import { UserService } from "../../../services/user.service";
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserManagementComponent implements OnInit {
+export class UserListComponent implements OnInit {
   users: any[] = [];
   roles: any[] = [];
   userForm: FormGroup;
+  displayedColumns: string[] = ['name', 'email', 'actions'];
 
-  constructor(private fb: FormBuilder, private userService: UserService, private roleService: RoleService) {
+  constructor(
+    private fb: FormBuilder, 
+    private userService: UserService, 
+    private roleService: RoleService
+  ) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -27,23 +35,43 @@ export class UserManagementComponent implements OnInit {
     this.loadRoles();
   }
 
-  loadUsers() {
-    this.userService.getUsers().subscribe((data:any) => (this.users = data));
+  loadUsers(): void {
+    this.userService.getUsers().subscribe({
+      next: (data: any) => (this.users = data),
+      error: (err) => console.error('Error fetching users', err)
+    });
   }
 
-  loadRoles() {
-    this.roleService.getRoles().subscribe((data:any) => (this.roles = data));
+  loadRoles(): void {
+    this.roleService.getRoles().subscribe({
+      next: (data: any) => (this.roles = data),
+      error: (err) => console.error('Error fetching roles', err)
+    });
   }
 
-  addUser() {
+  addUser(): void {
     if (this.userForm.valid) {
       const { role, ...user } = this.userForm.value;
-      this.userService.registerUser(user).subscribe(newUser => {
-        this.userService.assignRole({newUser.id, role}).subscribe(() => {
-          this.loadUsers();
-          this.userForm.reset();
-        });
+      this.userService.registerUser(user).subscribe({
+        next: (newUser: any) => {
+          this.userService.assignRole({ userId: newUser.id, role }).subscribe({
+            next: () => {
+              this.loadUsers();
+              this.userForm.reset();
+            },
+            error: (err) => console.error('Error assigning role', err)
+          });
+        },
+        error: (err) => console.error('Error registering user', err)
       });
     }
+  }
+
+  editUser(userId: string): void {
+    console.log('Edit user logic goes here for user ID:', userId);
+  }
+
+  deleteUser(userId: string): void {
+   console.log("Delete user logic goes here for user ID:",userId);
   }
 }

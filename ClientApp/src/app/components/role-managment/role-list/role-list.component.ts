@@ -7,7 +7,7 @@ import { RoleService } from "../../../services/role.service";
   templateUrl: './role-list.component.html',
   styleUrls: ['./role-list.component.css']
 })
-export class RoleManagementComponent implements OnInit {
+export class RoleListComponent implements OnInit {
   roles: any[] = [];
   roleForm: FormGroup;
 
@@ -34,4 +34,10 @@ export class RoleManagementComponent implements OnInit {
       });
     }
   }
+  deleteRole(roleId: string): void {
+    this.roleService.deleteRole(roleId).subscribe(() => {
+      this.loadRoles(); // Refresh roles after deletion
+    });
+  }
+  
 }

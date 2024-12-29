@@ -10,11 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEditTaskComponent } from './components/task-managment/add-edit-task/add-edit-task.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { UserListComponent } from './components/user-managment/user-list/user-list.component';
 import { AddEditUserComponent } from './components/user-managment/add-edit-user/add-edit-user.component';
 import { AddEditRoleComponent } from './components/role-managment/add-edit-role/add-edit-role.component';
+import { UserListComponent } from './components/user-managment/user-list/user-list.component';
 import { RoleListComponent } from './components/role-managment/role-list/role-list.component';
-
 
 @NgModule({
   declarations: [
