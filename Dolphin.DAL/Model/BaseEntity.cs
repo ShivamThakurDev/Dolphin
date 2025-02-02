@@ -13,15 +13,15 @@ namespace Dolphin.DAL.Model
         [Column(Order =0)]
         [Key]
         public Guid Id { get; set; }
-        [Column(Order = 10)]
+        [Column(Order = 15)]
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-        [Column(Order = 11)]
-        public DateTime ModifiedOn { get; set; }
-        [Column(Order =12)]
+        [Column(Order = 16)]
+        public DateTime ModifiedOn { get; set; } = DateTime.UtcNow;
+        [Column(Order =17)]
         public Guid ModifiedBy { get; set; }
-        [Column(Order = 13)]
+        [Column(Order = 18)]
         public Boolean IsActive { get; set; } = true;
-        [Column(Order = 14)]
+        [Column(Order = 19)]
         public Boolean IsDeleted { get; set; } = false;
     }
 }
