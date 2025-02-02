@@ -2,10 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RoleService } from "../../../services/role.service";
 import { UserService } from "../../../services/user.service";
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -43,7 +40,7 @@ export class UserListComponent implements OnInit {
   }
 
   loadRoles(): void {
-    this.roleService.getRoles().subscribe({
+    this.roleService.getRoleList().subscribe({
       next: (data: any) => (this.roles = data),
       error: (err) => console.error('Error fetching roles', err)
     });

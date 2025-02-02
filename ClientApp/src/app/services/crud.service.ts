@@ -11,22 +11,22 @@ export class CrudService {
   constructor(public http:HttpClient) { }
 
   get(url:string, reqOpts?: any){
-    return this.http.get(this.getUrl(url),reqOpts);
+    return this.http.get(this.getBaseUrl(url),reqOpts);
   }
 
   post(url:string, body: any, reqOpts?: any){
-    return this.http.post(this.getUrl(url),body,reqOpts).pipe(catchError(this.handleError))
+    return this.http.post(this.getBaseUrl(url),body,reqOpts).pipe(catchError(this.handleError))
   }
 
   put(url:string, body:any, reqOpts?:any){
-    return this.http.put(this.getUrl(url),body,reqOpts);
+    return this.http.put(this.getBaseUrl(url),body,reqOpts);
   }
 
   delete(url:string, reqOpts?: any){
-    return this.http.delete(this.getUrl(url),reqOpts);
+    return this.http.delete(this.getBaseUrl(url),reqOpts);
   }
 
-  private getUrl(url:string):string{
+  private getBaseUrl(url:string):string{
     return `${environment.baseUrl}${url}`;
   }
   

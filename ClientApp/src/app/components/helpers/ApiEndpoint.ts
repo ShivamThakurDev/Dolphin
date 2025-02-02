@@ -7,10 +7,12 @@ export class ApiEndpoint  {
  public static readonly editTask = `${environment.baseUrl}Task/Edit`;
  public static readonly deleteTask = `${environment.baseUrl}Task/Delete`;
 
- public static readonly getAllUsers = `${environment.baseUrl}Users/GetAll`; 
- public static readonly assignRole = `${environment.baseUrl}Users/AssignRole`;
- public static readonly registerUser = `${environment.baseUrl}Users/Register`;
+ public static readonly getAllUsers = `${environment.baseUrl}User/GetAll`; 
+ public static readonly assignRole = `${environment.baseUrl}User/AssignRole`;
+ public static readonly registerUser = `${environment.baseUrl}User/Register`;
 
- public static readonly getRoles = `${environment.baseUrl}Roles/GetRoles`; 
- public static readonly addRole = `${environment.baseUrl}Roles/AddRole`;
+ public static readonly getAllRoles = `${environment.baseUrl}Role/GetAll`; 
+ public static readonly addRole = `${environment.baseUrl}Role/Add`;
+ public static readonly editRole = `${environment.baseUrl}Role/Edit`;
+ public static readonly deleteRole = `${environment.baseUrl}Role/Delete`;
 }

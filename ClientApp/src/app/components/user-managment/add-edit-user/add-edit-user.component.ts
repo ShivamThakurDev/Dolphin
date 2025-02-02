@@ -47,7 +47,7 @@ export class AddEditUserComponent implements OnInit {
 
   // Fetch roles from the server
   loadRoles(): void {
-    this.roleService.getRoles().subscribe(
+    this.roleService.getRoleList().subscribe(
       (roles:any) => {
         this.roles = roles;
       },

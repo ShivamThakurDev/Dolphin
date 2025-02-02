@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dolphin.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
 
-        public UsersController(UserManager<IdentityUser> userManager)
+        public UserController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }

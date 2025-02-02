@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from './crud.service';
 import { ApiEndpoint } from '../components/helpers/ApiEndpoint';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  constructor(private crudService:CrudService) { }
+  constructor(private http: HttpClient) {}
 
-  getRoles(){
-    return this.crudService.get(ApiEndpoint.getRoles);
+  getRoleList(): Observable<any[]> {
+    return this.http.get<any[]>(ApiEndpoint.getAllRoles);
   }
 
-  addRole(params:any){
-    return this.crudService.post(ApiEndpoint.addRole,params)
+  addRole(role:any){
+    return this.http.post<any>(ApiEndpoint.addRole,role);
+  }
+
+  editRole(id:string,role:any){
+    return this.http.put<any>(`${ApiEndpoint.editRole}/${id}`,role);
   }
   deleteRole(id:string){
-    return this.crudService.delete(ApiEndpoint.addRole);
+    return this.http.delete<any>(`${ApiEndpoint.deleteRole}/${id}`)
   }
 }

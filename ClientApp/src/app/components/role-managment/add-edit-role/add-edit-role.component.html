@@ -1,1 +1,21 @@
-<p>add-edit-role works!</p>
+<div>
+  <h3>Add/Edit Role</h3>
+  <mat-dialog-content>
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+      <mat-form-field style="display: none;">
+          <mat-label>Id:</mat-label>
+          <input matInput id="id" formControlName="id">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+          <mat-label>Name:</mat-label>
+          <input matInput id="name" formControlName="name">
+      </mat-form-field>
+     
+  </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-button mat-raised-dialog-close color="primary"  (click)="ClosePopup()">Close</button>
+  <button type="submit" mat-raised-button color="primary" [disabled]="roleForm.invalid" (click)="onSubmit()">Submit</button>
+  </mat-dialog-actions>
+</div>

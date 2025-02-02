@@ -1,5 +1,81 @@
+/* Container for the dialog */
+.dialog-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Heading styles */
+h3 {
+  text-align: center;
+  color: #3f51b5;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Form field styling */
 mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
+  width: 100%;
+}
+
+mat-form-field mat-label {
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+input[matInput], textarea[matInput] {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Hide the ID field */
+mat-form-field#id {
+  display: none;
+}
+
+/* Button container */
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+/* Buttons */
+button[mat-raised-button] {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+button[mat-button] {
+  color: #757575;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .dialog-container {
+    width: 90%;
   }
-  
+
+  mat-dialog-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button[mat-raised-button],
+  button[mat-button] {
+    width: 100%;
+  }
+}
