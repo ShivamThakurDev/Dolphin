@@ -1,4 +1,5 @@
-﻿using Dolphin.DAL.Model;
+﻿using Dolphin.DAL.DTOs;
+using Dolphin.DAL.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,22 +10,88 @@ namespace Dolphin.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public UserController(UserManager<IdentityUser> userManager)
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public UserController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterModel model)
+        [HttpGet("GetUsersByAgencyId/{agencyId}")]
+        public async Task<IActionResult> GetUsersByAgencyId(Guid agencyId)
         {
-            var user = new IdentityUser { UserName = model.Username, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var users =  _userManager.Users.Where(x => x.AgencyId == agencyId).ToList();
+            var userList  = new List<object>();
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+                var roleDetails = new object();
+                if(string.IsNullOrEmpty(role))
+                {
+                    var roleEntity = await _roleManager.FindByNameAsync(role);
+                    if(roleEntity != null)
+                    {
+                        roleDetails = new
+                        {
+                            Id = roleEntity.Id,
+                            Name = roleEntity.Name
+                        };
+                    }
+                }
+                userList.Add(new
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    AgencyId = user.AgencyId,
+                    Role = roleDetails
+                });
+            }
+            return Ok(users);
+        }
 
-            if (result.Succeeded) return Ok(new { Message = "User registered successfully." });
+        [HttpPost]
+        public async Task<ActionResult> PostUserAsync(UserRequestDto userDTO)
+        {
+            if (userDTO != null)
+            {
+                var user = new User
+                {
+                    UserName = userDTO.FirstName + "" + userDTO.LastName,
+                    Email = userDTO.Email,
+                    FirstName = userDTO.FirstName,
+                    LastName = userDTO.LastName,
+                    PhoneNumber = userDTO.PhoneNumber
+                };
+                var result = await _userManager.CreateAsync(user, userDTO.Password);
 
-            return BadRequest(result.Errors);
+                if (!result.Succeeded)
+                {
+                    // Return detailed error messages
+                    return BadRequest(new { Message = "User creation failed", Errors = result.Errors });
+                }
+                // Assign role to user if a valid RoleId is provided
+                if (!string.IsNullOrEmpty(userDTO.RoleId))
+                {
+                    var role = await _roleManager.FindByIdAsync(userDTO.RoleId);
+                    if (role != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        // Return 400 status with specific error message
+                        return BadRequest(new { Message = "Invalid Role", StatusCode = 400 });
+                    }
+                }
+
+                // Return 200 OK status if everything succeeds
+                return Ok(new { Message = "User created successfully", StatusCode = 200 });
+            }
+            return BadRequest(new { Message = "Invalid Object", StatusCode = 400 });
         }
 
         [HttpPost("AssignRole")]

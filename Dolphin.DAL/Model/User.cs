@@ -12,6 +12,8 @@ namespace Dolphin.DAL.Model
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get;set; }
+        public string PhoneNumber { get; set; }
         [ForeignKey("AgencyId")]
         public Guid? AgencyId { get; set; }
         public Agency Agency{ get; set; }

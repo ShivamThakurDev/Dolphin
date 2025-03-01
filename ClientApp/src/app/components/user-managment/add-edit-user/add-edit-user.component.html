@@ -1,5 +1,6 @@
-<mat-card>
-  <mat-card-title>{{ isEdit ? 'Edit User' : 'Add User' }}</mat-card-title>
+<div>
+  <h3>Add/Edit User</h3>
+  <mat-dialog-content>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
@@ -17,7 +18,10 @@
         <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <button mat-raised-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
   </form>
-</mat-card>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  <button mat-button mat-raised-dialog-close color="primary"  (click)="ClosePopup()">Close</button>
+  <button type="submit" mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()">Submit</button>
+  </mat-dialog-actions>
+</div>

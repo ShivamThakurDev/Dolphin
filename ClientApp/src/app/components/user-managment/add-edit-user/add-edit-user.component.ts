@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { RoleService } from '../../../services/role.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -11,17 +13,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./add-edit-user.component.css']
 })
 export class AddEditUserComponent implements OnInit {
+
   userForm: FormGroup;
   roles: any[] = [];
   isEdit: boolean = false; // Determines if we're editing or adding
   userId: string | null = null; // Holds the ID of the user being edited
 
   constructor(
+    private dialogRef: MatDialogRef<AddEditUserComponent>,
     private fb: FormBuilder,
     private userService: UserService,
     private roleService: RoleService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: User // Inject the passed data,
   ) {
     // Initialize the form
     this.userForm = this.fb.group({
@@ -104,5 +109,10 @@ export class AddEditUserComponent implements OnInit {
         }
       );
     }
+  }
+
+  
+  ClosePopup(): void {
+    this.dialogRef.close(); // Close the modal without saving
   }
 }

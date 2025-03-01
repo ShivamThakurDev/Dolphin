@@ -1,7 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RoleService } from "../../../services/role.service";
 import { UserService } from "../../../services/user.service";
+import { MatDialog } from "@angular/material/dialog";
+import { User } from "../../../models/user";
+import { AddEditUserComponent } from "../add-edit-user/add-edit-user.component";
+import { ConfirmDialogComponent } from "../../task-managment/confirm-dialog/confirm-dialog.component";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: 'app-user-list',
@@ -12,12 +18,17 @@ export class UserListComponent implements OnInit {
   users: any[] = [];
   roles: any[] = [];
   userForm: FormGroup;
+  dataSource: any;
   displayedColumns: string[] = ['name', 'email', 'actions'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(
     private fb: FormBuilder, 
     private userService: UserService, 
-    private roleService: RoleService
+    private roleService: RoleService,
+    private dialog: MatDialog
   ) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
@@ -47,28 +58,40 @@ export class UserListComponent implements OnInit {
   }
 
   addUser(): void {
-    if (this.userForm.valid) {
-      const { role, ...user } = this.userForm.value;
-      this.userService.registerUser(user).subscribe({
-        next: (newUser: any) => {
-          this.userService.assignRole({ userId: newUser.id, role }).subscribe({
-            next: () => {
-              this.loadUsers();
-              this.userForm.reset();
-            },
-            error: (err) => console.error('Error assigning role', err)
-          });
-        },
-        error: (err) => console.error('Error registering user', err)
-      });
-    }
+    const dialogRef = this.dialog.open(AddEditUserComponent,{
+      width:'400px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadUsers()
+    });
   }
 
-  editUser(userId: string): void {
-    console.log('Edit user logic goes here for user ID:', userId);
+  applyFilter(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  editUser(user: User): void {
+     
+    const dialogRef = this.dialog.open(AddEditUserComponent,{
+      width:'400px',
+      data: user
+    });
+    dialogRef.afterClosed().subscribe(result => {
+       this.loadRoles();
+    });
+  }
+  
   deleteUser(userId: string): void {
-   console.log("Delete user logic goes here for user ID:",userId);
+  
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: userId // Optional data to pass
+      });
+  
+      dialogRef.afterClosed().subscribe((result: any) => {
+        console.log('Modal closed:', result);
+        this.loadRoles();
+      });
   }
 }

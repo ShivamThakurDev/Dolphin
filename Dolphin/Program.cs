@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using Dolphin.DAL.Model;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,13 +24,14 @@ builder.Services.AddDbContext<ApplicationManagerContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ITaskService,TaskService>();
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;
     options.Password.RequireNonAlphanumeric = false;
 })
 .AddEntityFrameworkStores<ApplicationManagerContext>()
 .AddDefaultTokenProviders();
+
 
 builder.Services.AddAuthentication(options =>
 {

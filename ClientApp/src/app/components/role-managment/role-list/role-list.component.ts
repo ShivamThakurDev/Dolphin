@@ -7,7 +7,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Role } from "../../../models/role";
 import { MatTableDataSource } from "@angular/material/table";
 import { AddEditRoleComponent } from "../add-edit-role/add-edit-role.component";
-import { ConfirmDialogComponent } from "../../helpers/confirm-dialog/confirm-dialog.component";
+import { ConfirmDeleteDialogComponent } from "../confirm-delete-dialog/confirm-delete-dialog.component";
 
 @Component({
   selector: 'app-role-list',
@@ -75,7 +75,7 @@ export class RoleListComponent implements OnInit {
   
   deleteRole(taskId: string): void {
   
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
         width: '400px',
         data: taskId // Optional data to pass
       });
