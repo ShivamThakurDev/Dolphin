@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{data.isEdit? 'Edit':'Add'}} Talk</h2>
+<mat-dialog-content>
+    <form [formGroup]="talkForm">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="text" placeholder="Enter title">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Author</mat-label>
+            <input matInput formControlName="speaker" placeholder="Enter author">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="issueType">
+                <mat-option *ngFor="let issueType of issueTypes" [value]="issueType">{{issueType}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</mat-dialog-actions>

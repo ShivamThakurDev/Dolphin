@@ -1,0 +1,12 @@
+.talk-card {
+    margin-bottom: 8px;
+    cursor: move;
+  
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .mat-card-content {
+    margin-top: 10px;
+  }
