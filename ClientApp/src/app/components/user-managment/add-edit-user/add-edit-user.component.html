@@ -1,27 +1,59 @@
-<div>
-  <h3>Add/Edit User</h3>
+<div class="dialog-wrapper">
+  <div class="dialog-header">
+    <mat-icon class="header-icon">person_outline</mat-icon>
+    <h3 class="font-display">{{ isEdit ? 'Edit User' : 'Register New User' }}</h3>
+  </div>
+
   <mat-dialog-content>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-dialog-form">
+      <div class="form-field-group mb-3">
+        <label class="form-label">Full Name</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>e.g. Alex Morgan</mat-label>
+          <input matInput formControlName="name" placeholder="User full name" />
+          <mat-icon matSuffix>badge</mat-icon>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
+      <div class="form-field-group mb-3">
+        <label class="form-label">Work Email</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>e.g. alex&#64;dolphin.local</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="Corporate email" />
+          <mat-icon matSuffix>mail_outline</mat-icon>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Role</mat-label>
-      <mat-select formControlName="role">
-        <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+      @if (!isEdit) {
+        <div class="form-field-group mb-3">
+          <label class="form-label">Initial Password</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Default: Dolphin&#64;123</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Password" />
+            <mat-icon matSuffix>lock_outline</mat-icon>
+          </mat-form-field>
+        </div>
+      }
+
+      <div class="form-field-group mb-2">
+        <label class="form-label">System Role</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Select assigned role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role.name">
+              {{ role.name }} - {{ role.description || 'Tenant Role' }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>security</mat-icon>
+        </mat-form-field>
+      </div>
+    </form>
   </mat-dialog-content>
-  <mat-dialog-actions>
-  <button mat-button mat-raised-dialog-close color="primary"  (click)="ClosePopup()">Close</button>
-  <button type="submit" mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()">Submit</button>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button (click)="ClosePopup()" class="btn-cancel">Cancel</button>
+    <button type="submit" mat-flat-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()" class="btn-submit">
+      {{ isEdit ? 'Update User' : 'Register User' }}
+    </button>
   </mat-dialog-actions>
 </div>

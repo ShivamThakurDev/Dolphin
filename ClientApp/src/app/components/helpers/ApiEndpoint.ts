@@ -25,11 +25,13 @@ export class ApiEndpoint {
   // Identity / Auth
   public static readonly authLogin = `${environment.baseUrl}auth/login`;
   public static readonly authRefresh = `${environment.baseUrl}auth/refresh`;
-  public static readonly getAllUsers = `${environment.baseUrl}User/GetAll`;
-  public static readonly assignRole = `${environment.baseUrl}User/AssignRole`;
-  public static readonly registerUser = `${environment.baseUrl}User/Register`;
-  public static readonly getAllRoles = `${environment.baseUrl}Role/GetAll`;
-  public static readonly addRole = `${environment.baseUrl}Role/Add`;
-  public static readonly editRole = `${environment.baseUrl}Role/Edit`;
-  public static readonly deleteRole = `${environment.baseUrl}Role/Delete`;
+  public static readonly users = `${environment.baseUrl}users`;
+  public static readonly getAllUsers = `${environment.baseUrl}users`;
+  public static readonly assignRole = `${environment.baseUrl}users/assign-role`;
+  public static readonly registerUser = `${environment.baseUrl}users`;
+  public static readonly roles = `${environment.baseUrl}roles`;
+  public static readonly getAllRoles = `${environment.baseUrl}roles`;
+  public static readonly addRole = `${environment.baseUrl}roles`;
+  public static readonly editRole = `${environment.baseUrl}roles`;
+  public static readonly deleteRole = `${environment.baseUrl}roles`;
 }

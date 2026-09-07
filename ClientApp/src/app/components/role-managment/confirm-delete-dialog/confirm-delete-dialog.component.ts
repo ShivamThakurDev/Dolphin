@@ -7,12 +7,26 @@ import { RoleService } from '../../../services/role.service';
   styleUrl: './confirm-delete-dialog.component.css'
 })
 export class ConfirmDeleteDialogComponent {
-  constructor(private dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>, private roleService: RoleService ,@Inject(MAT_DIALOG_DATA) public id: string) {}
+  isDeleting = false;
+
+  constructor(
+    private dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>,
+    private roleService: RoleService,
+    @Inject(MAT_DIALOG_DATA) public id: string
+  ) {}
 
   onConfirm(): void {
-    this.roleService.deleteRole(this.id).subscribe((res:any)=>{
-      console.log(res);
-    })
-    this.dialogRef.close('Confirmed'); // Pass data back to the parent
+    this.isDeleting = true;
+    this.roleService.deleteRole(this.id).subscribe({
+      next: () => {
+        this.isDeleting = false;
+        this.dialogRef.close('Confirmed');
+      },
+      error: (err: any) => {
+        this.isDeleting = false;
+        console.error('Error deleting role:', err);
+        this.dialogRef.close(false);
+      }
+    });
   }
 }

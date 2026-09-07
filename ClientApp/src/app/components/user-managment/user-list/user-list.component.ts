@@ -8,6 +8,7 @@ import { AddEditUserComponent } from "../add-edit-user/add-edit-user.component";
 import { ConfirmDialogComponent } from "../../task-managment/confirm-dialog/confirm-dialog.component";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
   selector: 'app-user-list',
@@ -15,28 +16,18 @@ import { MatSort } from "@angular/material/sort";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users: any[] = [];
+  users: User[] = [];
   roles: any[] = [];
-  userForm: FormGroup;
   dataSource: any;
-  displayedColumns: string[] = ['name', 'email', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'role', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   constructor(
-    private fb: FormBuilder, 
     private userService: UserService, 
     private roleService: RoleService,
     private dialog: MatDialog
-  ) {
-    this.userForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      role: ['', Validators.required]
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -45,53 +36,61 @@ export class UserListComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getUsers().subscribe({
-      next: (data: any) => (this.users = data),
+      next: (data: User[]) => {
+        this.users = data || [];
+        this.dataSource = new MatTableDataSource<User>(this.users);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
       error: (err) => console.error('Error fetching users', err)
     });
   }
 
   loadRoles(): void {
     this.roleService.getRoleList().subscribe({
-      next: (data: any) => (this.roles = data),
+      next: (data: any) => (this.roles = data || []),
       error: (err) => console.error('Error fetching roles', err)
     });
   }
 
   addUser(): void {
-    const dialogRef = this.dialog.open(AddEditUserComponent,{
-      width:'400px'
+    const dialogRef = this.dialog.open(AddEditUserComponent, {
+      width: '460px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.loadUsers()
+      if (result) {
+        this.loadUsers();
+      }
     });
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
   editUser(user: User): void {
-     
-    const dialogRef = this.dialog.open(AddEditUserComponent,{
-      width:'400px',
+    const dialogRef = this.dialog.open(AddEditUserComponent, {
+      width: '460px',
       data: user
     });
     dialogRef.afterClosed().subscribe(result => {
-       this.loadRoles();
+      if (result) {
+        this.loadUsers();
+      }
     });
   }
   
-  deleteUser(userId: string): void {
-  
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
-        data: userId // Optional data to pass
+  deleteUser(user: User): void {
+    if (confirm(`Are you sure you want to delete user "${user.name}"?`)) {
+      this.userService.deleteUser(user.id).subscribe({
+        next: () => {
+          this.loadUsers();
+        },
+        error: (err) => console.error('Error deleting user', err)
       });
-  
-      dialogRef.afterClosed().subscribe((result: any) => {
-        console.log('Modal closed:', result);
-        this.loadRoles();
-      });
+    }
   }
 }

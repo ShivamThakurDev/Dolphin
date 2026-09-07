@@ -1,8 +1,15 @@
-<h2 mat-dialog-title>Delete</h2>
-<mat-dialog-content>
-  <p>Are you sure you want to delete?</p>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close>Close</button>
-  <button mat-raised-button color="warn" (click)="onConfirm()">Confirm</button>
-</mat-dialog-actions>
+<div class="delete-dialog-wrapper">
+  <div class="dialog-header">
+    <mat-icon class="warn-icon">warning_amber</mat-icon>
+    <h3 class="font-display">Confirm Deletion</h3>
+  </div>
+  <mat-dialog-content>
+    <p class="delete-message">Are you sure you want to permanently remove this record? This action cannot be undone.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button mat-dialog-close [disabled]="isDeleting">Cancel</button>
+    <button mat-flat-button color="warn" (click)="onConfirm()" [disabled]="isDeleting">
+      {{ isDeleting ? 'Deleting...' : 'Delete' }}
+    </button>
+  </mat-dialog-actions>
+</div>

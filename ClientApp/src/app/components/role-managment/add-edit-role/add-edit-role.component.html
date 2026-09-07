@@ -1,21 +1,34 @@
-<div>
-  <h3>Add/Edit Role</h3>
+<div class="dialog-wrapper">
+  <div class="dialog-header">
+    <mat-icon class="header-icon">admin_panel_settings</mat-icon>
+    <h3 class="font-display">{{ isEdit ? 'Edit Role' : 'Add New Role' }}</h3>
+  </div>
+
   <mat-dialog-content>
-  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
-      <mat-form-field style="display: none;">
-          <mat-label>Id:</mat-label>
-          <input matInput id="id" formControlName="id">
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-          <mat-label>Name:</mat-label>
-          <input matInput id="name" formControlName="name">
-      </mat-form-field>
-     
-  </form>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="role-dialog-form">
+      <div class="form-field-group mb-3">
+        <label class="form-label">Role Name</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>e.g. Lead Engineer</mat-label>
+          <input matInput id="name" formControlName="name" placeholder="Enter role name">
+          <mat-icon matSuffix>badge</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-group mb-2">
+        <label class="form-label">Description</label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Scope & responsibilities</mat-label>
+          <textarea matInput id="description" formControlName="description" rows="3" placeholder="Define role boundaries and scope"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
   </mat-dialog-content>
-  <mat-dialog-actions>
-  <button mat-button mat-raised-dialog-close color="primary"  (click)="ClosePopup()">Close</button>
-  <button type="submit" mat-raised-button color="primary" [disabled]="roleForm.invalid" (click)="onSubmit()">Submit</button>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button (click)="ClosePopup()" class="btn-cancel">Cancel</button>
+    <button type="submit" mat-flat-button color="primary" [disabled]="roleForm.invalid" (click)="onSubmit()" class="btn-submit">
+      {{ isEdit ? 'Update Role' : 'Create Role' }}
+    </button>
   </mat-dialog-actions>
 </div>
