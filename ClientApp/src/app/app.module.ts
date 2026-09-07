@@ -28,10 +28,20 @@ import { LeaveComponent } from './components/hrms/leave/leave.component';
 
 import { LoginComponent } from './components/auth/login/login.component';
 
+// Liquid Bento Spatial Components
+import { DolphinBridgeAvatarComponent } from './components/shared/dolphin-bridge-avatar/dolphin-bridge-avatar.component';
+import { QuickActionPillComponent } from './components/shared/quick-action-pill/quick-action-pill.component';
+import { TaskDrawerComponent } from './components/task-managment/task-drawer/task-drawer.component';
+import { BentoDashboardComponent } from './components/dashboard/bento-dashboard/bento-dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    BentoDashboardComponent,
+    TaskDrawerComponent,
+    DolphinBridgeAvatarComponent,
+    QuickActionPillComponent,
     TaskListComponent,
     AddEditTaskComponent,
     ConfirmDialogComponent,

@@ -12,9 +12,12 @@ import { EmployeeDirectoryComponent } from './components/hrms/employee-directory
 import { AttendanceComponent } from './components/hrms/attendance/attendance.component';
 import { LeaveComponent } from './components/hrms/leave/leave.component';
 
+import { BentoDashboardComponent } from './components/dashboard/bento-dashboard/bento-dashboard.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'task-list', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: BentoDashboardComponent, canActivate: [AuthGuard] },
   { path: 'task-list', component: TaskListComponent, canActivate: [AuthGuard] },
   { path: 'add-edit-task', component: AddEditTaskComponent, canActivate: [AuthGuard] },
   { path: 'employees', component: EmployeeDirectoryComponent, canActivate: [AuthGuard] },
@@ -24,7 +27,7 @@ const routes: Routes = [
   { path: 'add-edit-user', component: AddEditUserComponent, canActivate: [AuthGuard] },
   { path: 'role-list', component: RoleListComponent, canActivate: [AuthGuard] },
   { path: 'add-edit-role', component: AddEditRoleComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'task-list' }
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({

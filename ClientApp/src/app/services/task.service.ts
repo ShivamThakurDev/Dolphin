@@ -18,6 +18,10 @@ export class TaskService {
     return this.http.get<any[]>(ApiEndpoint.getAllTasks);
   }
 
+  getTasks(): Observable<any[]> {
+    return this.getTaskList();
+  }
+
   addTask(task:any){
     return this.http.post<any>(ApiEndpoint.addTask,task);
   }

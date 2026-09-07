@@ -1,0 +1,63 @@
+.avatar-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.avatar-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+  box-shadow: 0 2px 8px -1px rgba(2, 132, 199, 0.3);
+  letter-spacing: -0.02em;
+}
+
+.presence-dot {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Sizes */
+.size-sm .avatar-circle {
+  width: 28px;
+  height: 28px;
+  font-size: 0.7rem;
+}
+.size-sm .presence-dot {
+  width: 9px;
+  height: 9px;
+  bottom: -1px;
+  right: -1px;
+}
+
+.size-md .avatar-circle {
+  width: 36px;
+  height: 36px;
+  font-size: 0.85rem;
+}
+.size-md .presence-dot {
+  width: 11px;
+  height: 11px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.size-lg .avatar-circle {
+  width: 46px;
+  height: 46px;
+  font-size: 1rem;
+}
+.size-lg .presence-dot {
+  width: 13px;
+  height: 13px;
+  bottom: 1px;
+  right: 1px;
+}

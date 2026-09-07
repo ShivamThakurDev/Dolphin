@@ -1,0 +1,97 @@
+@if (isOpen) {
+  <div class="drawer-backdrop" (click)="close()"></div>
+}
+
+<aside class="sliding-drawer" [class.drawer-open]="isOpen">
+  @if (editableTask) {
+    <div class="drawer-header">
+      <div class="header-left">
+        <span class="task-id-badge">TASK-{{ editableTask.id?.substring(0, 8) || 'NEW' }}</span>
+        <span class="soft-badge" [class.badge-done]="editableTask.status === 'Done' || editableTask.status === 2"
+                                [class.badge-in-progress]="editableTask.status === 'InProgress' || editableTask.status === 1"
+                                [class.badge-todo]="editableTask.status === 'Todo' || editableTask.status === 0">
+          {{ editableTask.status === 2 ? 'Done' : (editableTask.status === 1 ? 'In Progress' : (editableTask.status === 0 ? 'To Do' : (editableTask.status || 'Active'))) }}
+        </span>
+      </div>
+      <button mat-icon-button (click)="close()" class="close-btn" title="Close Drawer">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Generative AI TL;DR Card -->
+    <div class="ai-summary-card" [class.ai-card-conflict]="hasLeaveConflict">
+      <div class="ai-card-header">
+        <mat-icon class="ai-sparkle-icon">auto_awesome</mat-icon>
+        <span class="ai-card-title">Generative Sprint Pulse</span>
+      </div>
+      <p class="ai-summary-text">{{ aiSummary }}</p>
+    </div>
+
+    @if (hasLeaveConflict) {
+      <div class="conflict-alert-box">
+        <mat-icon class="conflict-icon">warning_amber</mat-icon>
+        <div class="conflict-content">
+          <strong>Workforce Conflict Detected</strong>
+          <p>Assignee is scheduled on approved leave during the due date window.</p>
+        </div>
+      </div>
+    }
+
+    <div class="drawer-body">
+      <div class="form-group mb-3">
+        <label class="form-label">Task Title</label>
+        <input type="text" class="form-control glass-input" [(ngModel)]="editableTask.name" placeholder="Task name">
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-label">Description</label>
+        <textarea rows="4" class="form-control glass-input" [(ngModel)]="editableTask.description" placeholder="Task details & acceptance criteria"></textarea>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label">Story Points</label>
+          <div class="input-group">
+            <input type="number" class="form-control glass-input" [(ngModel)]="editableTask.storyPoint" min="1" max="100">
+            <span class="input-group-text glass-input">pts</span>
+          </div>
+        </div>
+        <div class="col-6">
+          <label class="form-label">Progress</label>
+          <div class="input-group">
+            <input type="number" class="form-control glass-input" [(ngModel)]="editableTask.progress" min="0" max="100">
+            <span class="input-group-text glass-input">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-label">Status Progression</label>
+        <div class="status-btn-group">
+          <button type="button" class="status-pill" [class.active]="editableTask.status === 'Todo' || editableTask.status === 0" (click)="editableTask.status = 'Todo'; editableTask.progress = 0">To Do</button>
+          <button type="button" class="status-pill" [class.active]="editableTask.status === 'InProgress' || editableTask.status === 1" (click)="editableTask.status = 'InProgress'; editableTask.progress = 50">In Progress</button>
+          <button type="button" class="status-pill" [class.active]="editableTask.status === 'Done' || editableTask.status === 2" (click)="editableTask.status = 'Done'; editableTask.progress = 100">Done</button>
+        </div>
+      </div>
+
+      <div class="assignee-card mb-4">
+        <div class="assignee-left">
+          <app-dolphin-bridge-avatar [name]="editableTask.assignedEmployeeName || 'Shivam Kumar'" [presence]="hasLeaveConflict ? 'leave' : 'office'" size="md"></app-dolphin-bridge-avatar>
+          <div class="assignee-info">
+            <span class="assignee-name">{{ editableTask.assignedEmployeeName || 'Shivam Kumar' }}</span>
+            <span class="assignee-presence" [class.text-danger]="hasLeaveConflict" [class.text-success]="!hasLeaveConflict">
+              {{ hasLeaveConflict ? '🔴 On Leave (PTO Clash)' : '🟢 Present in Head Office' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <button mat-stroked-button (click)="close()" class="btn-cancel">Cancel</button>
+      <button mat-flat-button color="primary" (click)="save()" [disabled]="isSaving" class="btn-save">
+        {{ isSaving ? 'Saving...' : 'Update Task' }}
+      </button>
+    </div>
+  }
+</aside>
