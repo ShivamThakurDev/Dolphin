@@ -79,17 +79,18 @@
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 /* Animations */
 @keyframes conflictPulse {
   0%, 100% {
     box-shadow: var(--surface-glass-shadow), 0 0 0 0 oklch(0.78 0.16 60 / 45%);
-    border-color: oklch(0.78 0.16 75 / 60%);
+    border-color: oklch(0.78 0.16 60 / 50%);
   }
   50% {
     box-shadow: var(--surface-glass-shadow), 0 0 28px 6px oklch(0.72 0.18 40 / 30%);
-    border-color: oklch(0.78 0.16 75 / 85%);
+    border-color: oklch(0.78 0.16 60 / 80%);
   }
 }
 
@@ -138,6 +139,22 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   letter-spacing: -0.025em;
+}
+
+.font-display {
+  font-family: var(--font-display) !important;
+}
+
+.font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
 }
 
 /* Utilities */
