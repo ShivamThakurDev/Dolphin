@@ -1,0 +1,181 @@
+.profile-page {
+  display: grid;
+  gap: 16px;
+}
+
+.profile-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-brand-500) 13%, transparent), transparent 48%),
+    var(--color-surface);
+}
+
+.profile-identity,
+.profile-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-photo {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #ffd166, #ef9f45);
+  color: #172033;
+  font-size: 1.8rem;
+  font-weight: 840;
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.health-card,
+.meta-card,
+.timeline-card {
+  padding: 18px;
+}
+
+.health-card {
+  grid-column: span 3;
+}
+
+.health-card strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.meta-card {
+  grid-column: span 3;
+}
+
+.manager-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-brand-500), var(--color-accent-cyan));
+  color: white;
+  font-weight: 760;
+}
+
+.manager-row div,
+.meta-list {
+  display: grid;
+  gap: 3px;
+}
+
+.manager-row span,
+.meta-list span {
+  color: var(--color-text-secondary);
+  font-size: .86rem;
+}
+
+.meta-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.documents {
+  grid-column: span 6;
+}
+
+.timeline-card {
+  grid-column: span 4;
+}
+
+.timeline-card ol {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-card li {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+}
+
+.timeline-card li > span {
+  width: 8px;
+  height: 8px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--color-brand-500);
+  box-shadow: 0 0 0 4px var(--color-brand-100);
+}
+
+.timeline-card small {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.assets {
+  grid-column: span 8;
+}
+
+.progress {
+  height: 9px;
+  background: var(--color-surface-subtle);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-cyan));
+}
+
+@media (max-width: 1180px) {
+  .health-card,
+  .meta-card,
+  .documents,
+  .timeline-card,
+  .assets {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 720px) {
+  .profile-hero,
+  .profile-identity,
+  .profile-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-actions,
+  .profile-actions .btn {
+    width: 100%;
+  }
+
+  .profile-actions .btn {
+    justify-content: center;
+  }
+}

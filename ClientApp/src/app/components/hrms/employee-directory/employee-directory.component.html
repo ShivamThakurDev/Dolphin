@@ -1,0 +1,62 @@
+<div class="hrms-container mat-elevation-z4">
+  <div class="header-toolbar">
+    <div class="title-group">
+      <h2>Employee Directory</h2>
+      <p class="subtitle">Multi-tenant workforce directory and profile records</p>
+    </div>
+    <div class="search-box">
+      <mat-form-field appearance="outline" density="compact">
+        <mat-label>Search employee</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Filter by name, code or email">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="employeeCode">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        <span class="badge-code">{{ emp.employeeCode }}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fullName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        <div class="emp-name-cell">
+          <mat-icon class="avatar-icon">account_circle</mat-icon>
+          <strong>{{ emp.fullName }}</strong>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="workEmail">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Work Email</mat-header-cell>
+      <mat-cell *matCellDef="let emp">{{ emp.workEmail }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        <span class="status-badge" [class.active]="emp.status === 1">
+          {{ emp.status === 1 ? 'Active' : 'On Notice' }}
+        </span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        <button mat-icon-button color="primary" title="View details">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

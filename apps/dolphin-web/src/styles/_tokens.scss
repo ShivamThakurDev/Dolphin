@@ -1,0 +1,75 @@
+:root {
+  color-scheme: light;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  --color-brand-50: #f4f1ff;
+  --color-brand-100: #ebe5ff;
+  --color-brand-500: #6547d5;
+  --color-brand-600: #5738c5;
+  --color-brand-700: #472aa7;
+  --color-accent-cyan: #12a8b5;
+  --color-accent-emerald: #17a36b;
+  --color-accent-amber: #c27b13;
+  --color-accent-rose: #d84b6b;
+
+  --color-bg-canvas: #f5f7fb;
+  --color-bg-elevated: #fbfcff;
+  --color-surface: rgba(255, 255, 255, 0.86);
+  --color-surface-solid: #ffffff;
+  --color-surface-subtle: #f8f9fd;
+  --color-border: #e2e7f0;
+  --color-border-strong: #cfd7e6;
+  --color-text-primary: #101828;
+  --color-text-secondary: #40516d;
+  --color-text-muted: #718096;
+  --color-sidebar: #071b2d;
+  --color-sidebar-active: #12324d;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.07);
+  --shadow-md: 0 18px 46px rgba(15, 23, 42, 0.10);
+  --shadow-glow: 0 22px 60px rgba(101, 71, 213, 0.18);
+  --focus-ring: 0 0 0 4px rgba(101, 71, 213, 0.18);
+
+  --motion-fast: 140ms ease;
+  --motion-base: 220ms cubic-bezier(.2, .8, .2, 1);
+  --sidebar-width: 272px;
+  --sidebar-compact-width: 84px;
+  --topbar-height: 72px;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg-canvas: #0e1118;
+  --color-bg-elevated: #111724;
+  --color-surface: rgba(21, 27, 39, 0.86);
+  --color-surface-solid: #151b27;
+  --color-surface-subtle: #101622;
+  --color-border: #263246;
+  --color-border-strong: #35435a;
+  --color-text-primary: #f6f8fc;
+  --color-text-secondary: #c7d0e0;
+  --color-text-muted: #8794a9;
+  --color-sidebar: #080f1a;
+  --color-sidebar-active: #1a2440;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.22);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 18px 46px rgba(0, 0, 0, 0.34);
+}

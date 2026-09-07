@@ -1,0 +1,35 @@
+.surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(18px);
+}
+
+.surface-flat {
+  background: var(--color-surface-solid);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.surface-interactive {
+  transition: transform var(--motion-base), box-shadow var(--motion-base), border-color var(--motion-base), background var(--motion-base);
+}
+
+.surface-interactive:hover {
+  border-color: color-mix(in srgb, var(--color-brand-500) 28%, var(--color-border));
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.56));
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  box-shadow: var(--shadow-glow);
+  backdrop-filter: blur(24px);
+}
+
+[data-theme="dark"] .glass-panel {
+  background: linear-gradient(135deg, rgba(25, 32, 47, 0.86), rgba(18, 24, 36, 0.72));
+  border-color: rgba(255, 255, 255, 0.08);
+}

@@ -1,0 +1,171 @@
+.dashboard-page {
+  display: grid;
+  gap: 18px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 22px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-brand-500) 10%, transparent), transparent 46%),
+    var(--color-surface);
+}
+
+.hero p {
+  margin: 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.hero-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.chart-card {
+  grid-column: span 7;
+  min-height: 360px;
+  padding: 18px;
+}
+
+.chart-card canvas {
+  height: 280px !important;
+}
+
+.bento-workflows {
+  grid-column: span 5;
+}
+
+.attendance-card,
+.insights-card {
+  grid-column: span 3;
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.attendance-card strong {
+  font-size: 2.35rem;
+  line-height: 1;
+}
+
+.attendance-card span {
+  color: var(--color-text-muted);
+  font-size: .95rem;
+}
+
+.attendance-card p,
+.insights-card li {
+  color: var(--color-text-secondary);
+  font-size: .88rem;
+}
+
+.insights-card h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 760;
+}
+
+.insights-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insights-card li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  height: 9px;
+  background: var(--color-surface-subtle);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-cyan));
+}
+
+.bento-ai {
+  grid-column: span 3;
+}
+
+.bento-feed {
+  grid-column: span 6;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 1180px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chart-card,
+  .bento-workflows,
+  .attendance-card,
+  .insights-card,
+  .bento-ai,
+  .bento-feed {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+}

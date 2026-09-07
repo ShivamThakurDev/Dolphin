@@ -11,16 +11,18 @@ import { task } from '../../../models/task';
 })
 export class AddEditTaskComponent {
   statusList = [
-    { label: 'ToDo', value: 0 },
-    { label: 'InProgress', value: 1 },
-    { label: 'Done', value: 2 },
-    {label: 'Closed',value: 3}
+    { label: 'Todo', value: 0 },
+    { label: 'In Progress', value: 1 },
+    { label: 'In Review', value: 2 },
+    { label: 'Done', value: 3 },
+    { label: 'Blocked', value: 4 }
   ];
 
   priorityList = [
     { label: 'Low', value: 0 },
     { label: 'Medium', value: 1 },
-    { label: 'High', value: 2 }
+    { label: 'High', value: 2 },
+    { label: 'Urgent', value: 3 }
   ];
   
 

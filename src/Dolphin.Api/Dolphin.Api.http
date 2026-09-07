@@ -1,0 +1,11 @@
+@host = http://localhost:5154
+
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@dolphin.local",
+  "password": "Admin@12345",
+  "tenantSlug": "demo",
+  "deviceName": "REST Client"
+}
