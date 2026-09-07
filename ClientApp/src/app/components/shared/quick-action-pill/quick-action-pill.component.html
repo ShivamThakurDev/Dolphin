@@ -1,23 +1,17 @@
 @if (!isAuthPage) {
   <div class="pill-wrapper">
-    <div class="spatial-action-pill glass-panel">
-      <button type="button" class="pill-action-btn clock-btn" (click)="quickClockIn()" [disabled]="isProcessing" title="Web Clock-In">
-        <span class="btn-icon">⚡</span> <span>Web Clock-In</span>
+    <div class="spatial-action-pill">
+      <button type="button" class="pill-action-btn clock-btn" (click)="quickClockIn()" [disabled]="isProcessing" title="Clock In">
+        <span class="btn-icon lightning-icon">⚡</span> <span>Clock In</span>
       </button>
-
-      <div class="pill-divider"></div>
 
       <button type="button" class="pill-action-btn task-btn" (click)="openNewTask()" title="Create New Task">
-        <span class="btn-icon">+</span> <span>New Task</span>
+        <span class="btn-icon plus-icon">+</span> <span>New Task</span>
       </button>
-
-      <div class="pill-divider"></div>
 
       <button type="button" class="pill-action-btn search-btn" (click)="openSearch()" title="Quick Search">
-        <span class="btn-icon">🔍</span> <span>Search</span> <kbd class="pill-kbd">⌘K</kbd>
+        <span class="btn-icon cyan-dot">●</span> <span>Search</span> <kbd class="pill-kbd">⌘K</kbd>
       </button>
-
-      <div class="pill-divider"></div>
 
       <button type="button" class="pill-action-btn ai-btn" (click)="askAi()" title="Ask Dolphin AI">
         <span class="btn-icon">✨</span> <span>Ask AI</span>

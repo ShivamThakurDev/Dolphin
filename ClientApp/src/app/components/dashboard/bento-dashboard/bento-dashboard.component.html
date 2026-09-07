@@ -1,203 +1,150 @@
 <div class="bento-container">
-  <!-- Top Greeting & KPI Ribbon -->
-  <header class="bento-header mb-4">
-    <div class="header-titles">
-      <h1 class="welcome-heading">Workforce & Delivery Bento</h1>
-      <p class="welcome-subheading">Real-time fusion of Agile task velocity and team workforce availability</p>
-    </div>
-    <div class="header-actions">
-      <button mat-flat-button color="primary" class="btn-create-task" (click)="openNewTask()">
-        <mat-icon class="me-1">add_circle</mat-icon>
-        <span>New Task</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- KPI Glass Metrics Strip -->
-  <section class="kpi-strip mb-4">
-    <div class="glass-panel kpi-card">
-      <div class="kpi-icon-wrap icon-cyan">
-        <mat-icon>speed</mat-icon>
+  <!-- Top Bento Grid Row (2 Column Asymmetric / 5:7 split) -->
+  <section class="top-bento-row">
+    <!-- Card Left: Team HR Pulse -->
+    <div class="glass-bento-card team-pulse-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span class="header-icon-badge icon-rainbow">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          <h2 class="card-title font-display">Team HR Pulse</h2>
+        </div>
+        <span class="counter-badge">4/5 online</span>
       </div>
-      <div class="kpi-meta">
-        <span class="kpi-label">Sprint Velocity</span>
-        <div class="kpi-value-row">
-          <span class="kpi-number">{{ completedStoryPoints }}/{{ totalStoryPoints }}</span>
-          <span class="kpi-unit">pts</span>
+
+      <!-- Avatar circle row (SK, JD, MR, EB, DL) -->
+      <div class="team-avatars-row">
+        @for (member of teamMembers; track member.initials) {
+          <div class="team-avatar-item">
+            <div class="avatar-bubble" [style.background]="member.color">
+              <span class="avatar-initials">{{ member.initials }}</span>
+              <span class="avatar-presence-dot" [class]="'dot-' + member.presence"></span>
+            </div>
+            <span class="avatar-name">{{ member.name }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Sub-Card: Your session today -->
+      <div class="session-subcard">
+        <span class="subcard-label">Your session today</span>
+        <div class="session-clock">{{ currentTime }}</div>
+        <div class="session-subtext">
+          Clocked in at 09:12 · <span class="tracked-highlight">6h 24m</span> tracked
         </div>
       </div>
     </div>
 
-    <div class="glass-panel kpi-card">
-      <div class="kpi-icon-wrap icon-teal">
-        <mat-icon>how_to_reg</mat-icon>
-      </div>
-      <div class="kpi-meta">
-        <span class="kpi-label">Attendance Rate</span>
-        <div class="kpi-value-row">
-          <span class="kpi-number">94.2%</span>
-          <span class="soft-badge badge-office ms-2">Optimal</span>
+    <!-- Card Right: Sprint Velocity & Health -->
+    <div class="glass-bento-card sprint-velocity-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span class="header-icon-badge icon-blue">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </span>
+          <h2 class="card-title font-display">Sprint Velocity & Health</h2>
         </div>
+        <span class="counter-badge">2 days left</span>
       </div>
-    </div>
 
-    <div class="glass-panel kpi-card">
-      <div class="kpi-icon-wrap icon-indigo">
-        <mat-icon>badge</mat-icon>
-      </div>
-      <div class="kpi-meta">
-        <span class="kpi-label">Team In-Office</span>
-        <div class="kpi-value-row">
-          <span class="kpi-number">8</span>
-          <span class="kpi-sub-text ms-2">&bull; 4 Remote &bull; 1 PTO</span>
+      <!-- Hero Metric: 79% beside 54 points done / 14 points left -->
+      <div class="velocity-hero">
+        <span class="hero-percentage font-display">{{ sprintPercentage }}%</span>
+        <div class="hero-points-stack">
+          <span class="points-done">{{ pointsDone }} points done</span>
+          <span class="points-left">{{ pointsLeft }} points left</span>
         </div>
       </div>
-    </div>
 
-    <div class="glass-panel kpi-card">
-      <div class="kpi-icon-wrap icon-amber">
-        <mat-icon>notification_important</mat-icon>
+      <!-- Dual-tone gradient progress bar (#0284c7 to #38bdf8) -->
+      <div class="velocity-track">
+        <div class="velocity-fill" [style.width.%]="sprintPercentage"></div>
       </div>
-      <div class="kpi-meta">
-        <span class="kpi-label">Schedule Clashes</span>
-        <div class="kpi-value-row">
-          <span class="kpi-number text-warning">1</span>
-          <span class="soft-badge badge-urgent ms-2">Action Req</span>
+
+      <!-- 3 Metric Pill Blocks -->
+      <div class="metrics-pills-row">
+        <div class="metric-pill-block">
+          <span class="metric-pill-label">Velocity</span>
+          <span class="metric-pill-value font-display">{{ velocityPoints }} pts</span>
         </div>
+        <div class="metric-pill-block">
+          <span class="metric-pill-label">Avg last 4</span>
+          <span class="metric-pill-value font-display">{{ avgLast4 }} pts</span>
+        </div>
+        <div class="metric-pill-block">
+          <span class="metric-pill-label">Conflicts</span>
+          <span class="metric-pill-value font-display">{{ conflictsCount }}</span>
+        </div>
+      </div>
+
+      <!-- Bottom Conflict Banner -->
+      <div class="conflict-banner">
+        <span class="conflict-banner-icon">⚠</span>
+        <span class="conflict-banner-text">DLP-43 is due tomorrow while Jane Doe is on approved PTO.</span>
       </div>
     </div>
   </section>
 
-  <!-- Main Bento Modular Grid -->
-  <main class="bento-grid">
-    <!-- Left Column: HR Pulse & Sprint Velocity -->
-    <div class="bento-col-left">
-      <!-- Block 1: Sprint Velocity Circular Meter -->
-      <div class="glass-panel bento-card mb-4">
-        <div class="card-title-row">
-          <div class="title-with-icon">
-            <mat-icon class="text-primary">donut_large</mat-icon>
-            <h2 class="bento-title">Sprint Velocity & Burndown</h2>
-          </div>
-          <span class="soft-badge badge-in-progress">{{ velocityPercentage }}% Complete</span>
-        </div>
-
-        <div class="velocity-visual-wrap">
-          <div class="circular-meter">
-            <svg viewBox="0 0 100 100" class="progress-ring">
-              <circle cx="50" cy="50" r="42" class="ring-bg"></circle>
-              <circle cx="50" cy="50" r="42" class="ring-fill" [style.strokeDashoffset]="264 - (264 * velocityPercentage) / 100"></circle>
-            </svg>
-            <div class="ring-content">
-              <span class="ring-percentage">{{ velocityPercentage }}%</span>
-              <span class="ring-caption">Sprint Goal</span>
-            </div>
-          </div>
-
-          <div class="velocity-details">
-            <div class="metric-row">
-              <span class="metric-label">Delivered Points</span>
-              <strong class="text-success">{{ completedStoryPoints }} pts</strong>
-            </div>
-            <div class="metric-row">
-              <span class="metric-label">In-Flight Points</span>
-              <strong class="text-primary">{{ totalStoryPoints - completedStoryPoints }} pts</strong>
-            </div>
-            <div class="metric-row">
-              <span class="metric-label">Days to Sprint End</span>
-              <strong>3 Days</strong>
-            </div>
-          </div>
-        </div>
+  <!-- Bottom Bento Container: Swim-stream Tasks -->
+  <section class="glass-bento-card swim-tasks-container">
+    <div class="card-header">
+      <div class="header-left">
+        <span class="header-icon-badge icon-cyan">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 12h20M2 6h20M2 18h20"></path>
+          </svg>
+        </span>
+        <h2 class="card-title font-display">Swim-stream Tasks</h2>
       </div>
-
-      <!-- Block 2: Team HR Pulse -->
-      <div class="glass-panel bento-card">
-        <div class="card-title-row">
-          <div class="title-with-icon">
-            <mat-icon class="text-success">groups</mat-icon>
-            <h2 class="bento-title">Team HR Pulse</h2>
-          </div>
-          <div class="presence-legend">
-            <span class="legend-dot dot-office" title="In Office"></span>
-            <span class="legend-dot dot-remote" title="Remote Session"></span>
-            <span class="legend-dot dot-leave" title="On Leave / PTO"></span>
-          </div>
-        </div>
-
-        <div class="team-pulse-list">
-          @for (member of teamPulse; track member.id) {
-            <div class="team-pulse-row">
-              <app-dolphin-bridge-avatar [name]="member.name" [presence]="member.presence" size="md" [clockedInTime]="member.clockedInTime"></app-dolphin-bridge-avatar>
-              <div class="member-meta">
-                <span class="member-name">{{ member.name }}</span>
-                <span class="member-dept">{{ member.department }}</span>
-              </div>
-              <div class="member-time-status">
-                <span class="soft-badge" [class.badge-office]="member.presence === 'office'"
-                                        [class.badge-remote]="member.presence === 'remote'"
-                                        [class.badge-leave]="member.presence === 'leave'">
-                  {{ member.clockedInTime }}
-                </span>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
+      <span class="hint-subtitle">Tap a card to open its drawer</span>
     </div>
 
-    <!-- Right Column: Agile Swim-Streams (Horizontal Task Stream) -->
-    <div class="bento-col-right">
-      <div class="glass-panel bento-card h-100">
-        <div class="card-title-row mb-3">
-          <div class="title-with-icon">
-            <mat-icon class="text-info">view_timeline</mat-icon>
-            <h2 class="bento-title">Agile Swim-Streams</h2>
+    <!-- Task Cards Grid -->
+    <div class="task-cards-grid">
+      @for (task of tasks; track task.code) {
+        <div class="task-stream-card" [class.card-has-conflict]="task.hasConflict" (click)="openTaskDrawer(task)">
+          <div class="task-card-top">
+            <span class="task-code">{{ task.code }}</span>
+            <span class="soft-badge" [ngClass]="'badge-' + task.statusType">
+              {{ task.status }}
+            </span>
           </div>
-          <div class="swim-filters">
-            <span class="filter-caption">{{ tasks.length }} Tasks Tracking</span>
-          </div>
-        </div>
 
-        <div class="swim-stream-container">
-          @for (task of tasks; track task.id) {
-            <div class="swim-card mb-3" [class.conflict-pulse]="task.hasConflict" (click)="openTaskDrawer(task)">
-              <div class="swim-left">
-                @if (task.hasConflict) {
-                  <span class="conflict-badge" title="Assignee on Leave during Task Deadline!">
-                    <mat-icon class="conflict-star">warning</mat-icon>
-                  </span>
-                }
-                <div class="swim-task-info">
-                  <div class="title-row">
-                    <span class="swim-title">{{ task.name || task.title }}</span>
-                    @if (task.hasConflict) {
-                      <span class="soft-badge badge-urgent ms-2">PTO Clash</span>
-                    }
-                  </div>
-                  <span class="swim-desc">{{ task.description || 'Sprint task item for unified ERP delivery' }}</span>
-                </div>
-              </div>
+          <h3 class="task-title">{{ task.title }}</h3>
 
-              <div class="swim-right">
-                <span class="points-pill">{{ task.storyPoint || 5 }} pts</span>
-
-                <span class="soft-badge" [class.badge-done]="task.status === 'Done' || task.status === 2 || task.progress === 100"
-                                        [class.badge-in-progress]="task.status === 'InProgress' || task.status === 1 || (task.progress > 0 && task.progress < 100)"
-                                        [class.badge-todo]="task.status === 'Todo' || task.status === 0 || task.progress === 0">
-                  {{ (task.status === 2 || task.status === 'Done') ? 'Done' : ((task.status === 1 || task.status === 'InProgress') ? 'In Progress' : 'To Do') }}
-                </span>
-
-                <div class="avatar-wrap ms-2">
-                  <app-dolphin-bridge-avatar [name]="task.assignedEmployeeName || 'Shivam Kumar'" [presence]="task.hasConflict ? 'leave' : 'office'" size="sm"></app-dolphin-bridge-avatar>
-                </div>
-              </div>
+          @if (task.conflictText) {
+            <div class="task-conflict-tag">
+              {{ task.conflictText }}
             </div>
           }
+
+          <div class="task-progress-row">
+            <div class="task-assignee-avatar" [style.background]="task.assignee.color">
+              <span>{{ task.assignee.initials }}</span>
+              <span class="assignee-presence-dot" [class]="'dot-' + task.assignee.presence"></span>
+            </div>
+            <div class="task-progress-track">
+              <div class="task-progress-fill" [class.fill-blocked]="task.statusType === 'blocked'" [style.width.%]="task.progress"></div>
+            </div>
+            <span class="task-progress-label">{{ task.progress }}%</span>
+          </div>
+
+          <div class="task-due-date">
+            {{ task.dueDate }}
+          </div>
         </div>
-      </div>
+      }
     </div>
-  </main>
+  </section>
 </div>
 
 <!-- Sliding Context-Aware Inspection Drawer -->
