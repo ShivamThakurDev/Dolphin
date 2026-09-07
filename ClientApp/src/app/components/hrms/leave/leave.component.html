@@ -1,0 +1,69 @@
+<div class="leave-container">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-val">18</span>
+      <span class="stat-lbl">Annual Allowance</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val available">14</span>
+      <span class="stat-lbl">Available Balance</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val used">4</span>
+      <span class="stat-lbl">Days Consumed</span>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="form-card mat-elevation-z4">
+      <h2>Apply for Leave</h2>
+      <p class="subtitle">Submit time-off requests for manager signoff</p>
+
+      <p *ngIf="successMessage" class="success-banner">{{ successMessage }}</p>
+
+      <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Leave Policy</mat-label>
+          <mat-select formControlName="policyType">
+            <mat-option value="Earned Leave">Earned Leave (EL)</mat-option>
+            <mat-option value="Casual Leave">Casual Leave (CL)</mat-option>
+            <mat-option value="Sick Leave">Sick Leave (SL)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="date-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Start Date</mat-label>
+            <input matInput formControlName="fromDate" type="date">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>End Date</mat-label>
+            <input matInput formControlName="toDate" type="date">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Reason for Leave</mat-label>
+          <textarea matInput rows="3" formControlName="reason" placeholder="Briefly describe the reason for your time-off request"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="leaveForm.invalid || isSubmitting">
+          <mat-icon>send</mat-icon> Submit Leave Request
+        </button>
+      </form>
+    </div>
+
+    <div class="history-card mat-elevation-z2">
+      <h3>Recent Leave History</h3>
+      <div *ngFor="let req of recentRequests" class="history-item">
+        <div>
+          <strong>{{ req.type }}</strong> ({{ req.days }} days)
+          <div class="date-range">{{ req.from }} to {{ req.to }}</div>
+          <div class="reason-note">"{{ req.reason }}"</div>
+        </div>
+        <span class="status-pill" [class.approved]="req.status === 'Approved'">{{ req.status }}</span>
+      </div>
+    </div>
+  </div>
+</div>

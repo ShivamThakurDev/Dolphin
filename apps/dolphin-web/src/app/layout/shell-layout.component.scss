@@ -1,0 +1,30 @@
+.shell {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  overflow-x: hidden;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  max-width: calc(100vw - var(--sidebar-width));
+  overflow-x: hidden;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 18px 22px 44px;
+}
+
+@media (max-width: 780px) {
+  .main {
+    max-width: calc(100vw - var(--sidebar-compact-width));
+  }
+
+  .main-content {
+    padding: 14px 12px 36px;
+  }
+}

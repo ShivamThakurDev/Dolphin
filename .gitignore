@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Additional ignored directories
+node_modules/
+dist/
+.angular/
+.vs/
+bin/
+obj/
+*.user
