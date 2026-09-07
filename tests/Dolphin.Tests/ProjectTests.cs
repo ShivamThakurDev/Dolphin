@@ -121,4 +121,56 @@ public sealed class ProjectTests
         var validResult = validator.TestValidate(valid);
         validResult.ShouldNotHaveAnyValidationErrors();
     }
+
+    [Fact]
+    public void TaskDto_should_correctly_expose_leave_collision_properties()
+    {
+        var taskId = Guid.NewGuid();
+        var empId = Guid.NewGuid();
+        var returnDate = new DateOnly(2026, 9, 15);
+
+        var dtoWithConflict = new TaskDto(
+            taskId,
+            "Urgent UI Delivery",
+            "Resolve layout issues",
+            ProjectTaskStatus.InProgress,
+            TaskPriority.High,
+            50m,
+            8,
+            DateTimeOffset.UtcNow,
+            DateTimeOffset.UtcNow.AddDays(3),
+            null,
+            empId,
+            "Shivam Kumar",
+            null,
+            null,
+            IsAssigneeOnLeave: true,
+            LeaveReturnDate: returnDate
+        );
+
+        dtoWithConflict.IsAssigneeOnLeave.Should().BeTrue();
+        dtoWithConflict.LeaveReturnDate.Should().Be(returnDate);
+        dtoWithConflict.HasConflict.Should().BeTrue();
+
+        var dtoWithoutConflict = new TaskDto(
+            taskId,
+            "Standard Task",
+            "No conflict",
+            ProjectTaskStatus.Todo,
+            TaskPriority.Low,
+            0m,
+            3,
+            DateTimeOffset.UtcNow,
+            DateTimeOffset.UtcNow.AddDays(7),
+            null,
+            empId,
+            "Shivam Kumar",
+            null,
+            null
+        );
+
+        dtoWithoutConflict.IsAssigneeOnLeave.Should().BeFalse();
+        dtoWithoutConflict.LeaveReturnDate.Should().BeNull();
+        dtoWithoutConflict.HasConflict.Should().BeFalse();
+    }
 }

@@ -40,8 +40,11 @@ export class TaskDrawerComponent implements OnChanges {
     const assignee = this.editableTask.assignedEmployeeName || 'Assigned Engineer';
     const title = this.editableTask.name || this.editableTask.title || 'Core Feature';
 
-    if (this.editableTask.hasConflict) {
-      this.aiSummary = `⚠️ Schedule Clash: ${assignee} has approved leave during this task sprint. Reallocating story points or extending the due date by 2 business days is recommended.`;
+    if (this.editableTask.hasConflict || this.editableTask.isAssigneeOnLeave) {
+      const returnDateNotice = this.editableTask.leaveReturnDate
+        ? ` (returns on ${this.editableTask.leaveReturnDate})`
+        : '';
+      this.aiSummary = `⚠️ Schedule Clash: ${assignee} has approved leave during this task sprint${returnDateNotice}. Reallocating story points or extending the due date is recommended.`;
     } else if (status === 'Done' || status === 2) {
       this.aiSummary = `✨ AI Analysis: ${title} completed ahead of velocity projection. All subtasks validated with zero active blockers.`;
     } else {
@@ -50,7 +53,7 @@ export class TaskDrawerComponent implements OnChanges {
   }
 
   private checkConflict(): void {
-    this.hasLeaveConflict = !!this.editableTask.hasConflict;
+    this.hasLeaveConflict = !!(this.editableTask.hasConflict || this.editableTask.isAssigneeOnLeave);
   }
 
   save(): void {

@@ -17,7 +17,9 @@ public sealed record TaskDto(
     Guid? AssignedEmployeeId,
     string? AssignedEmployeeName,
     Guid? AgencyId,
-    string? AgencyName
+    string? AgencyName,
+    bool IsAssigneeOnLeave = false,
+    DateOnly? LeaveReturnDate = null
 )
 {
     // Backwards-compatible aliases for legacy frontend
@@ -26,6 +28,7 @@ public sealed record TaskDto(
     public int StoryPoint => StoryPoints;
     public DateTimeOffset? EndDate => DueDate;
     public Guid? ParentId => ParentTaskId;
+    public bool HasConflict => IsAssigneeOnLeave;
 }
 
 public sealed record CreateTaskRequest(

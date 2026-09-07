@@ -50,12 +50,12 @@ export class BentoDashboardComponent implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (res: any) => {
         const list = res?.items || (Array.isArray(res) ? res : []);
-        // Seed default presence and simulate conflict on the 2nd task for demonstration
+        // Bind real Leave-Sprint collision status from backend API
         this.tasks = list.map((t: any, index: number) => ({
           ...t,
           assignedEmployeeName: t.assignedEmployeeName || 'Shivam Kumar',
           storyPoint: t.storyPoint || t.storyPoints || (index === 0 ? 8 : (index === 1 ? 13 : 5)),
-          hasConflict: index === 1 // Task 2 has conflict pulse (Assignee on Leave)
+          hasConflict: (t.isAssigneeOnLeave ?? t.hasConflict) === true
         }));
         this.computeSprintMetrics();
         this.isLoading = false;

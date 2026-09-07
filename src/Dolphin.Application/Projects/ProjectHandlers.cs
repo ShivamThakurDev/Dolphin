@@ -62,7 +62,8 @@ public sealed class ProjectHandlers(
             agencyName = ag?.Name;
         }
 
-        return MapTaskToDto(task, employeeName, agencyName);
+        var (isOnLeave, returnDate) = CheckSingleTaskLeaveCollision(task);
+        return MapTaskToDto(task, employeeName, agencyName, isOnLeave, returnDate);
     }
 
     public async Task<TaskDto> Handle(UpdateTaskCommand command, CancellationToken cancellationToken)
@@ -100,7 +101,8 @@ public sealed class ProjectHandlers(
             agencyName = ag?.Name;
         }
 
-        return MapTaskToDto(task, employeeName, agencyName);
+        var (isOnLeave, returnDate) = CheckSingleTaskLeaveCollision(task);
+        return MapTaskToDto(task, employeeName, agencyName, isOnLeave, returnDate);
     }
 
     public async Task<TaskDto> Handle(UpdateTaskStatusCommand command, CancellationToken cancellationToken)
@@ -131,7 +133,8 @@ public sealed class ProjectHandlers(
             agencyName = ag?.Name;
         }
 
-        return MapTaskToDto(task, employeeName, agencyName);
+        var (isOnLeave, returnDate) = CheckSingleTaskLeaveCollision(task);
+        return MapTaskToDto(task, employeeName, agencyName, isOnLeave, returnDate);
     }
 
     public async Task<bool> Handle(DeleteTaskCommand command, CancellationToken cancellationToken)
@@ -245,12 +248,24 @@ public sealed class ProjectHandlers(
             .ToDictionary(e => e.Id, e => e.FullName);
         var agencyMap = dbContext.Query<Agency>().Where(a => agencyIds.Contains(a.Id))
             .ToDictionary(a => a.Id, a => a.Name);
+        var approvedLeaves = dbContext.Query<LeaveRequest>()
+            .Where(l => employeeIds.Contains(l.EmployeeId) && l.Status == Domain.Enums.LeaveRequestStatus.Approved)
+            .Select(l => new { l.EmployeeId, l.From, l.To })
+            .ToList()
+            .Select(l => (l.EmployeeId, l.From, l.To))
+            .ToList();
 
-        var items = rawTasks.Select(t => MapTaskToDto(
-            t,
-            t.AssignedEmployeeId.HasValue && employeeMap.TryGetValue(t.AssignedEmployeeId.Value, out var empName) ? empName : null,
-            t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null
-        )).ToList();
+        var items = rawTasks.Select(t =>
+        {
+            var (isOnLeave, returnDate) = CheckTaskLeaveCollision(t, approvedLeaves);
+            return MapTaskToDto(
+                t,
+                t.AssignedEmployeeId.HasValue && employeeMap.TryGetValue(t.AssignedEmployeeId.Value, out var empName) ? empName : null,
+                t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null,
+                isOnLeave,
+                returnDate
+            );
+        }).ToList();
 
         return await Task.FromResult(new PagedResult<TaskDto>(items, page, size, total));
     }
@@ -276,11 +291,24 @@ public sealed class ProjectHandlers(
         var agencyMap = dbContext.Query<Agency>().Where(a => agencyIds.Contains(a.Id))
             .ToDictionary(a => a.Id, a => a.Name);
 
-        var items = rawTasks.Select(t => MapTaskToDto(
-            t,
-            t.AssignedEmployeeId.HasValue && employeeMap.TryGetValue(t.AssignedEmployeeId.Value, out var empName) ? empName : null,
-            t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null
-        )).ToList();
+        var approvedLeaves = dbContext.Query<LeaveRequest>()
+            .Where(l => employeeIds.Contains(l.EmployeeId) && l.Status == Domain.Enums.LeaveRequestStatus.Approved)
+            .Select(l => new { l.EmployeeId, l.From, l.To })
+            .ToList()
+            .Select(l => (l.EmployeeId, l.From, l.To))
+            .ToList();
+
+        var items = rawTasks.Select(t =>
+        {
+            var (isOnLeave, returnDate) = CheckTaskLeaveCollision(t, approvedLeaves);
+            return MapTaskToDto(
+                t,
+                t.AssignedEmployeeId.HasValue && employeeMap.TryGetValue(t.AssignedEmployeeId.Value, out var empName) ? empName : null,
+                t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null,
+                isOnLeave,
+                returnDate
+            );
+        }).ToList();
 
         return await Task.FromResult(items);
     }
@@ -304,7 +332,8 @@ public sealed class ProjectHandlers(
             agencyName = ag?.Name;
         }
 
-        return MapTaskToDto(task, employeeName, agencyName);
+        var (isOnLeave, returnDate) = CheckSingleTaskLeaveCollision(task);
+        return MapTaskToDto(task, employeeName, agencyName, isOnLeave, returnDate);
     }
 
     public async Task<IReadOnlyList<TaskDto>> Handle(GetTasksByEmployeeQuery request, CancellationToken cancellationToken)
@@ -321,11 +350,24 @@ public sealed class ProjectHandlers(
         var emp = await employees.GetByIdAsync(request.EmployeeId, cancellationToken);
         var empName = emp?.FullName;
 
-        var items = rawTasks.Select(t => MapTaskToDto(
-            t,
-            empName,
-            t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null
-        )).ToList();
+        var approvedLeaves = dbContext.Query<LeaveRequest>()
+            .Where(l => l.EmployeeId == request.EmployeeId && l.Status == Domain.Enums.LeaveRequestStatus.Approved)
+            .Select(l => new { l.EmployeeId, l.From, l.To })
+            .ToList()
+            .Select(l => (l.EmployeeId, l.From, l.To))
+            .ToList();
+
+        var items = rawTasks.Select(t =>
+        {
+            var (isOnLeave, returnDate) = CheckTaskLeaveCollision(t, approvedLeaves);
+            return MapTaskToDto(
+                t,
+                empName,
+                t.AgencyId.HasValue && agencyMap.TryGetValue(t.AgencyId.Value, out var agName) ? agName : null,
+                isOnLeave,
+                returnDate
+            );
+        }).ToList();
 
         return await Task.FromResult(items);
     }
@@ -403,7 +445,47 @@ public sealed class ProjectHandlers(
         );
     }
 
-    private static TaskDto MapTaskToDto(ProjectTask task, string? employeeName, string? agencyName) =>
+    private (bool IsOnLeave, DateOnly? ReturnDate) CheckSingleTaskLeaveCollision(ProjectTask task)
+    {
+        if (!task.AssignedEmployeeId.HasValue || !task.DueDate.HasValue)
+            return (false, null);
+
+        var due = DateOnly.FromDateTime(task.DueDate.Value.UtcDateTime);
+        var leave = dbContext.Query<LeaveRequest>()
+            .Where(l => l.EmployeeId == task.AssignedEmployeeId.Value &&
+                        l.Status == Domain.Enums.LeaveRequestStatus.Approved &&
+                        l.From <= due && l.To >= due)
+            .OrderByDescending(l => l.To)
+            .Select(l => l.To)
+            .FirstOrDefault();
+
+        return leave != default
+            ? (true, leave.AddDays(1))
+            : (false, null);
+    }
+
+    private static (bool IsOnLeave, DateOnly? ReturnDate) CheckTaskLeaveCollision(
+        ProjectTask task,
+        IReadOnlyList<(Guid EmployeeId, DateOnly From, DateOnly To)> approvedLeaves)
+    {
+        if (!task.AssignedEmployeeId.HasValue || !task.DueDate.HasValue)
+            return (false, null);
+
+        var due = DateOnly.FromDateTime(task.DueDate.Value.UtcDateTime);
+        var match = approvedLeaves.FirstOrDefault(l =>
+            l.EmployeeId == task.AssignedEmployeeId.Value && due >= l.From && due <= l.To);
+
+        return match != default
+            ? (true, match.To.AddDays(1))
+            : (false, null);
+    }
+
+    private static TaskDto MapTaskToDto(
+        ProjectTask task,
+        string? employeeName,
+        string? agencyName,
+        bool isAssigneeOnLeave = false,
+        DateOnly? leaveReturnDate = null) =>
         new(
             task.Id,
             task.Title,
@@ -418,6 +500,8 @@ public sealed class ProjectHandlers(
             task.AssignedEmployeeId,
             employeeName,
             task.AgencyId,
-            agencyName
+            agencyName,
+            isAssigneeOnLeave,
+            leaveReturnDate
         );
 }

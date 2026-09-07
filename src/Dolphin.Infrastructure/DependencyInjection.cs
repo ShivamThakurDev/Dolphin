@@ -56,6 +56,31 @@ public static class DependencyInjection
                 db.Roles.AddRange(rAdmin, rHr, rEmp, rPm);
                 await db.SaveChangesAsync();
             }
+
+            if (!await db.LeaveRequests.IgnoreQueryFilters().AnyAsync())
+            {
+                var existingTenant = await db.Tenants.IgnoreQueryFilters().FirstAsync();
+                var emp = await db.Employees.IgnoreQueryFilters().FirstOrDefaultAsync();
+                var pol = await db.LeavePolicies.IgnoreQueryFilters().FirstOrDefaultAsync();
+                if (emp != null)
+                {
+                    var today = DateOnly.FromDateTime(DateTime.UtcNow);
+                    var policyId = pol?.Id ?? Guid.NewGuid();
+                    var leave = new LeaveRequest(
+                        existingTenant.Id,
+                        emp.Id,
+                        policyId,
+                        today.AddDays(-1),
+                        today.AddDays(4),
+                        "Medical Leave & Sprint Collision Demo"
+                    )
+                    {
+                        Status = LeaveRequestStatus.Approved
+                    };
+                    db.LeaveRequests.Add(leave);
+                    await db.SaveChangesAsync();
+                }
+            }
             return;
         }
 
@@ -76,7 +101,21 @@ public static class DependencyInjection
             WorkLocationId = location.Id
         };
         db.Employees.Add(employee);
-        db.LeavePolicies.Add(new LeavePolicy(tenant.Id, "Earned Leave", 18));
+        var leavePolicy = new LeavePolicy(tenant.Id, "Earned Leave", 18);
+        db.LeavePolicies.Add(leavePolicy);
+        var demoToday = DateOnly.FromDateTime(DateTime.UtcNow);
+        var demoLeave = new LeaveRequest(
+            tenant.Id,
+            employee.Id,
+            leavePolicy.Id,
+            demoToday.AddDays(-1),
+            demoToday.AddDays(4),
+            "Medical Leave & Sprint Collision Demo"
+        )
+        {
+            Status = LeaveRequestStatus.Approved
+        };
+        db.LeaveRequests.Add(demoLeave);
         db.Assets.Add(new Asset(tenant.Id, "LAP-HP-I7", "HP EliteBook i7", "Computer Hardware"));
         db.Announcements.Add(new Announcement(tenant.Id, employee.Id, "Welcome to Dolphin", "Your HRMS core workspace is ready for onboarding, leave, attendance and assets."));
 
