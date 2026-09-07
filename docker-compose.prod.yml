@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      DATABASE_URL: ${DATABASE_URL:-postgresql://neondb_owner:npg_hpRyoO19JXcu@ep-wandering-brook-az99141r-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require}
+      Cors__AllowedOrigins__0: ${APP_URL:-http://localhost}
+    ports:
+      - "5154:8080"
+    restart: always
+
+  web:
+    build:
+      context: ./apps/dolphin-web
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: always

@@ -12,7 +12,9 @@ export interface ApiResponse<T> {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:5154/api/v1';
+  private readonly baseUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port === '4200'
+    ? 'http://localhost:5154/api/v1'
+    : '/api/v1';
 
   get<T>(path: string): Observable<ApiResponse<T>> {
     return this.http.get<ApiResponse<T>>(`${this.baseUrl}/${path}`);

@@ -16,8 +16,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        var rawConnection = Environment.GetEnvironmentVariable("DATABASE_URL_UNPOOLED")
+            ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+            ?? configuration.GetConnectionString("DefaultConnection");
+
+        var connectionString = NormalizePostgresConnectionString(rawConnection);
+
         services.AddDbContext<DolphinDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(connectionString));
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<DolphinDbContext>());
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -130,5 +136,39 @@ public static class DependencyInjection
         var user = new User(tenant.Id, "admin@dolphin.local", "Dolphin Admin", hasher.Hash("Admin@12345")) { EmployeeId = employee.Id };
         db.Users.Add(user);
         await db.SaveChangesAsync();
+    }
+
+    private static string NormalizePostgresConnectionString(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            return string.Empty;
+        }
+
+        if (raw.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase) ||
+            raw.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
+        {
+            var uri = new Uri(raw);
+            var userInfo = uri.UserInfo.Split(':', 2);
+            var username = Uri.UnescapeDataString(userInfo[0]);
+            var password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : string.Empty;
+            var host = uri.Host;
+            var port = uri.Port > 0 ? uri.Port : 5432;
+            var database = uri.AbsolutePath.TrimStart('/');
+
+            var builder = new Npgsql.NpgsqlConnectionStringBuilder
+            {
+                Host = host,
+                Port = port,
+                Database = string.IsNullOrEmpty(database) ? "neondb" : database,
+                Username = username,
+                Password = password,
+                SslMode = Npgsql.SslMode.Require
+            };
+
+            return builder.ConnectionString;
+        }
+
+        return raw;
     }
 }

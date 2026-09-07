@@ -370,3 +370,7 @@ bin/
 obj/
 *.user
 .env.local
+.neon
+.neon/
+.agents/
+skills-lock.json
