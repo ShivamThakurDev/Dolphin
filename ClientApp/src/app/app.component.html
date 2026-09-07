@@ -1,42 +1,73 @@
-<div class="app-shell">
+<div class="app-shell" [ngClass]="sprintHealth === 'healthy' ? 'mesh-gradient-healthy' : 'mesh-gradient-risk'">
   @if (!isLoginPage) {
-    <header class="app-navbar">
+    <!-- Top Spatial App Bar -->
+    <header class="app-navbar glass-panel">
+      <!-- Left Brand Group -->
       <div class="nav-brand">
-        <mat-icon class="brand-icon">space_dashboard</mat-icon>
-        <span class="brand-title">Dolphin</span>
-        <span class="brand-badge">Unified Suite</span>
+        <div class="brand-logo-wrap">
+          🐬
+        </div>
+        <div class="brand-text-wrap">
+          <div class="brand-title-row">
+            <span class="brand-title">Dolphin</span>
+            <span class="brand-pill-badge">Spatial Bento</span>
+          </div>
+          <p class="brand-subtitle">Project & HRMS Unified Monolith</p>
+        </div>
       </div>
 
-      <nav class="nav-links">
-        <a mat-button routerLink="/dashboard" routerLinkActive="active-link">
-          <mat-icon>dashboard_customize</mat-icon> Dashboard
+      <!-- Center Navigation Pills -->
+      <nav class="nav-pills-bar">
+        <a routerLink="/dashboard" routerLinkActive="active-pill" class="nav-pill">
+          <mat-icon>dashboard</mat-icon> Dashboard
         </a>
-        <a mat-button routerLink="/task-list" routerLinkActive="active-link">
+        <a routerLink="/task-list" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>assignment</mat-icon> Tasks
         </a>
-        <a mat-button routerLink="/employees" routerLinkActive="active-link">
+        <a routerLink="/employees" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>badge</mat-icon> Employees
         </a>
-        <a mat-button routerLink="/attendance" routerLinkActive="active-link">
+        <a routerLink="/attendance" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>alarm</mat-icon> Attendance
         </a>
-        <a mat-button routerLink="/leave" routerLinkActive="active-link">
+        <a routerLink="/leave" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>date_range</mat-icon> Leave
         </a>
-        <a mat-button routerLink="/user-list" routerLinkActive="active-link">
+        <a routerLink="/user-list" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>people</mat-icon> Users
         </a>
-        <a mat-button routerLink="/role-list" routerLinkActive="active-link">
+        <a routerLink="/role-list" routerLinkActive="active-pill" class="nav-pill">
           <mat-icon>security</mat-icon> Roles
         </a>
       </nav>
 
-      <div class="user-profile">
-        <mat-icon>account_circle</mat-icon>
-        <span class="user-name">{{ currentUser?.email || 'admin&#64;dolphin.local' }}</span>
-        <button mat-icon-button class="logout-btn" (click)="logout()" title="Sign Out">
-          <mat-icon>logout</mat-icon>
-        </button>
+      <!-- Right Health Switcher & Bridge Avatar -->
+      <div class="nav-right-cluster">
+        <!-- Sprint Texture Switcher -->
+        <div class="sprint-texture-pill">
+          <span class="texture-label">Sprint:</span>
+          <button type="button" class="texture-toggle-btn" (click)="toggleSprintHealth()" [class.texture-risk]="sprintHealth === 'risk'">
+            {{ sprintHealth === 'healthy' ? '🟢 Healthy' : '🔴 At Risk (PTO Alert)' }}
+          </button>
+        </div>
+
+        <!-- Dolphin Bridge Avatar -->
+        <div class="avatar-bridge-group">
+          <div class="bridge-avatar-circle">
+            {{ userInitials }}
+          </div>
+          <span class="presence-indicator-dot" title="🟢 In Office"></span>
+
+          <!-- User Card Tooltip -->
+          <div class="avatar-hover-card glass-panel">
+            <p class="avatar-user-name">{{ userName }}</p>
+            <p class="avatar-presence-text">🟢 In Office (6h 24m logged)</p>
+            <p class="avatar-role-text">{{ userRole }}</p>
+            <button mat-stroked-button color="warn" class="btn-signout" (click)="logout()">
+              <mat-icon>logout</mat-icon> Sign Out
+            </button>
+          </div>
+        </div>
       </div>
     </header>
   }
@@ -44,4 +75,8 @@
   <main [class.main-content]="!isLoginPage">
     <router-outlet></router-outlet>
   </main>
+
+  @if (!isLoginPage) {
+    <app-quick-action-pill></app-quick-action-pill>
+  }
 </div>

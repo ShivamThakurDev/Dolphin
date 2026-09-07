@@ -13,13 +13,13 @@
   font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0 0 0.25rem;
 }
 
 .welcome-subheading {
   font-size: 0.92rem;
-  color: #64748b;
+  color: #94a3b8;
   margin: 0;
 }
 
@@ -53,23 +53,23 @@
 }
 
 .icon-cyan {
-  background: rgba(6, 182, 212, 0.12);
-  color: #0891b2;
+  background: rgba(6, 182, 212, 0.15);
+  color: #38bdf8;
 }
 
 .icon-teal {
-  background: rgba(20, 184, 166, 0.12);
-  color: #0d9488;
+  background: rgba(20, 184, 166, 0.15);
+  color: #2dd4bf;
 }
 
 .icon-indigo {
-  background: rgba(99, 102, 241, 0.12);
-  color: #4f46e5;
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
 }
 
 .icon-amber {
-  background: rgba(245, 158, 11, 0.12);
-  color: #d97706;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
 }
 
 .kpi-meta {
@@ -82,7 +82,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #64748b;
+  color: #94a3b8;
   margin-bottom: 0.2rem;
 }
 
@@ -100,7 +100,7 @@
 
 .kpi-sub-text {
   font-size: 0.78rem;
-  color: #64748b;
+  color: #94a3b8;
   font-weight: 500;
 }
 
@@ -133,7 +133,7 @@
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -160,13 +160,13 @@
 
 .ring-bg {
   fill: none;
-  stroke: #e2e8f0;
+  stroke: rgba(255, 255, 255, 0.1);
   stroke-width: 9;
 }
 
 .ring-fill {
   fill: none;
-  stroke: #0284c7;
+  stroke: #38bdf8;
   stroke-width: 9;
   stroke-linecap: round;
   stroke-dasharray: 264;
@@ -186,7 +186,7 @@
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #ffffff;
   letter-spacing: -0.03em;
 }
 
@@ -211,11 +211,11 @@
   justify-content: space-between;
   font-size: 0.85rem;
   padding: 0.35rem 0;
-  border-bottom: 1px dashed #e2e8f0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
 .metric-label {
-  color: #64748b;
+  color: #94a3b8;
 }
 
 /* Presence Legend */
@@ -246,15 +246,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 0.85rem;
-  background: rgba(248, 250, 252, 0.7);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 12px;
-  border: 1px solid rgba(226, 232, 240, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.15s ease;
 }
 
 .team-pulse-row:hover {
-  background: #ffffff;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .member-meta {
@@ -267,12 +267,12 @@
 .member-name {
   font-size: 0.88rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .member-dept {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 /* Swim Stream Right Column */
@@ -296,8 +296,9 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #fef3c7;
-  color: #d97706;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 .conflict-star {
@@ -314,13 +315,13 @@
 .swim-title {
   font-weight: 700;
   font-size: 0.95rem;
-  color: #0f172a;
+  color: #ffffff;
   letter-spacing: -0.01em;
 }
 
 .swim-desc {
   font-size: 0.82rem;
-  color: #64748b;
+  color: #94a3b8;
   display: block;
   margin-top: 0.15rem;
 }
@@ -335,10 +336,10 @@
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.25rem 0.55rem;
-  background: #f1f5f9;
-  color: #475569;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 1100px) {

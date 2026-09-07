@@ -60,7 +60,7 @@ export class ShellLayoutComponent implements OnInit {
 
   readonly activeSection = signal('Home');
   readonly sidebarCollapsed = signal(false);
-  readonly darkMode = signal(false);
+  readonly darkMode = signal(true);
   readonly commandOpen = signal(false);
   readonly navItems = PRIMARY_NAV_ITEMS;
   readonly topTabs = TOP_TABS;

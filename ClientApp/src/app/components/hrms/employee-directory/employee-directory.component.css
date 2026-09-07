@@ -1,50 +1,54 @@
 .hrms-container {
   padding: 24px;
-  background: #ffffff;
-  border-radius: 12px;
-  margin: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
 }
 .header-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .title-group h2 {
   margin: 0;
   font-weight: 700;
-  color: #1e293b;
+  font-size: 1.5rem;
+  color: #ffffff;
 }
 .subtitle {
   margin: 4px 0 0;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
 }
 .badge-code {
-  background: #f1f5f9;
+  background: rgba(255, 255, 255, 0.08);
   padding: 4px 8px;
   border-radius: 6px;
   font-family: monospace;
   font-weight: 600;
-  color: #475569;
+  color: #38bdf8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .emp-name-cell {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #ffffff;
 }
 .avatar-icon {
-  color: #6366f1;
+  color: #38bdf8;
 }
 .status-badge {
   padding: 4px 10px;
   border-radius: 16px;
   font-size: 12px;
   font-weight: 600;
-  background: #e2e8f0;
-  color: #475569;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 .status-badge.active {
-  background: #dcfce7;
-  color: #15803d;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }

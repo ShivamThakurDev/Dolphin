@@ -8,18 +8,18 @@
   gap: 10px;
   margin-bottom: 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dialog-header h3 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .header-icon {
-  color: #4f46e5;
+  color: #818cf8;
   font-size: 26px;
   width: 26px;
   height: 26px;
@@ -33,24 +33,30 @@
   display: block;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 6px;
 }
 
 .dialog-actions {
   padding-top: 16px;
   gap: 10px;
-  border-top: 1px solid rgba(226, 232, 240, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-cancel {
   border-radius: 999px;
-  color: #64748b;
+  color: #cbd5e1;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 }
 
 .btn-submit {
   border-radius: 999px;
   font-weight: 600;
   padding: 0 20px;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
 }

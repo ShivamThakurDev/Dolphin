@@ -44,17 +44,27 @@ export class QuickActionPillComponent {
     return 'add_task';
   }
 
-  handleAction(): void {
-    if (this.currentRoute.includes('/attendance')) {
-      this.quickClockIn();
-    } else if (this.currentRoute.includes('/leave')) {
-      this.router.navigate(['/leave']);
-    } else {
+  openNewTask(): void {
+    if (this.newTaskClicked.observed) {
       this.newTaskClicked.emit();
+    } else {
+      this.router.navigate(['/task-list']);
     }
   }
 
-  private quickClockIn(): void {
+  openSearch(): void {
+    this.snackBar.open('🔍 Spatial Quick Search (⌘K) active — Type to search tasks, employees, or policies', 'Dismiss', { duration: 3000 });
+  }
+
+  askAi(): void {
+    this.snackBar.open('✨ Dolphin Spatial AI: Analyzing active sprint velocity and workforce PTO overlap...', 'Close', { duration: 4000 });
+  }
+
+  handleAction(): void {
+    this.openNewTask();
+  }
+
+  quickClockIn(): void {
     this.isProcessing = true;
     const empId = localStorage.getItem('dolphin.employeeId');
     if (!empId) {
