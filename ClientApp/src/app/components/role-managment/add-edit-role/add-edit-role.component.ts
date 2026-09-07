@@ -12,42 +12,55 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AddEditRoleComponent {  
 
   public roleForm: FormGroup;
-  constructor(private dialogRef: MatDialogRef<AddEditRoleComponent>,private roleService: RoleService,private fb:FormBuilder, @Inject(MAT_DIALOG_DATA) public data: Role // Inject the passed data
-) {
-   console.log(data);
-  this.roleForm = this.fb.group({
-    id: [data?.id || ''], // Pre-fill form controls with existing data if available
-    name: [data?.name || '', Validators.required]
-  });
-}
+  isEdit = false;
 
-  ngOnInit(){
+  constructor(
+    private dialogRef: MatDialogRef<AddEditRoleComponent>,
+    private roleService: RoleService,
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: Role
+  ) {
+    this.isEdit = !!data?.id;
+    this.roleForm = this.fb.group({
+      id: [data?.id || ''],
+      name: [data?.name || '', Validators.required],
+      description: [data?.description || '']
+    });
+  }
+
+  ngOnInit(): void {
     if (this.data) {
       this.patchFormValues(this.data);
     }
   }
+
   patchFormValues(role: Role): void {
     this.roleForm.patchValue({
       id: role.id,
-      name: role.name
+      name: role.name,
+      description: role.description || ''
     });
   }
-  onSubmit():void {
 
-    if (this.roleForm.valid) {
-    if(this.roleForm.value.id ==''){
-    this.roleService.addRole(this.roleForm.value).subscribe((res:any)=>{
-       console.log(res);
-       this.dialogRef.close(this.roleForm.value);
-    });
-  }
-  else{
-    this.roleService.editRole(this.roleForm.value.id,this.roleForm.value).subscribe((res:any)=>{
-      console.log(res);
-      this.dialogRef.close(this.roleForm.value);
-   });
-  }
-  }
+  onSubmit(): void {
+    if (this.roleForm.invalid) return;
+
+    const val = this.roleForm.value;
+    if (!val.id) {
+      this.roleService.addRole(val).subscribe({
+        next: (res: any) => {
+          this.dialogRef.close(res || val);
+        },
+        error: (err: any) => console.error('Failed to add role', err)
+      });
+    } else {
+      this.roleService.editRole(val.id, val).subscribe({
+        next: (res: any) => {
+          this.dialogRef.close(res || val);
+        },
+        error: (err: any) => console.error('Failed to edit role', err)
+      });
+    }
   }
 
   ClosePopup(): void {

@@ -275,3 +275,18 @@ html, body {
   max-width: 1440px;
   margin: 0 auto;
 }
+
+/* Liquid Bento Material Dialog Surface */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.5) !important;
+  padding: 16px !important;
+}
+
+.mat-mdc-dialog-content {
+  max-height: 75vh !important;
+}

@@ -16,69 +16,54 @@ export class AddEditUserComponent implements OnInit {
 
   userForm: FormGroup;
   roles: any[] = [];
-  isEdit: boolean = false; // Determines if we're editing or adding
-  userId: string | null = null; // Holds the ID of the user being edited
+  isEdit = false;
+  userId: string | null = null;
 
   constructor(
     private dialogRef: MatDialogRef<AddEditUserComponent>,
     private fb: FormBuilder,
     private userService: UserService,
     private roleService: RoleService,
-    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: User // Inject the passed data,
+    @Inject(MAT_DIALOG_DATA) public data: User
   ) {
-    // Initialize the form
+    this.isEdit = !!data?.id;
+    this.userId = data?.id || null;
+
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      role: ['', Validators.required]
+      name: [data?.name || '', Validators.required],
+      email: [data?.email || '', [Validators.required, Validators.email]],
+      password: [this.isEdit ? '' : 'Dolphin@123', this.isEdit ? [] : [Validators.required]],
+      role: [data?.role || '', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    // Load roles for the dropdown
     this.loadRoles();
 
-    // Check if editing an existing user
-    this.route.params.subscribe((params) => {
-      this.userId = params['id']; // Assuming route is like /users/edit/:id
-      if (this.userId) {
-        this.isEdit = true;
-        this.loadUserData(this.userId);
+    if (this.data && this.data.id) {
+      this.userForm.patchValue({
+        name: this.data.name,
+        email: this.data.email,
+        role: this.data.role
+      });
+    }
+  }
+
+  loadRoles(): void {
+    this.roleService.getRoleList().subscribe({
+      next: (roles: any[]) => {
+        this.roles = roles || [];
+        if (!this.userForm.value.role && this.roles.length > 0) {
+          this.userForm.patchValue({ role: this.roles[0].name });
+        }
+      },
+      error: () => {
+        this.snackBar.open('Failed to load roles', 'Close', { duration: 3000 });
       }
     });
   }
 
-  // Fetch roles from the server
-  loadRoles(): void {
-    this.roleService.getRoleList().subscribe(
-      (roles:any) => {
-        this.roles = roles;
-      },
-      (error) => {
-        this.snackBar.open('Failed to load roles', 'Close', { duration: 3000 });
-      }
-    );
-  }
-
-  // Fetch user data if editing
-  loadUserData(userId: string): void {
-    this.userService.getUserById(userId).subscribe(
-      (user:any) => {
-        this.userForm.patchValue({
-          name: user.name,
-          email: user.email,
-          role: user.role.id // Assuming role object contains an 'id' field
-        });
-      },
-      (error:any) => {
-        this.snackBar.open('Failed to load user data', 'Close', { duration: 3000 });
-      }
-    );
-  }
-
-  // Handle form submission
   onSubmit(): void {
     if (this.userForm.invalid) {
       this.snackBar.open('Please fill out the form correctly', 'Close', { duration: 3000 });
@@ -88,31 +73,29 @@ export class AddEditUserComponent implements OnInit {
     const formData = this.userForm.value;
 
     if (this.isEdit && this.userId) {
-      // Update user
-      this.userService.updateUser(this.userId, formData).subscribe(
-        () => {
+      this.userService.updateUser(this.userId, formData).subscribe({
+        next: (res: any) => {
           this.snackBar.open('User updated successfully', 'Close', { duration: 3000 });
+          this.dialogRef.close(res || true);
         },
-        (error:any) => {
+        error: (error: any) => {
           this.snackBar.open('Failed to update user', 'Close', { duration: 3000 });
         }
-      );
+      });
     } else {
-      // Add new user
-      this.userService.registerUser(formData).subscribe(
-        () => {
+      this.userService.registerUser(formData).subscribe({
+        next: (res: any) => {
           this.snackBar.open('User added successfully', 'Close', { duration: 3000 });
-          this.userForm.reset(); // Clear the form after adding
+          this.dialogRef.close(res || true);
         },
-        (error) => {
+        error: () => {
           this.snackBar.open('Failed to add user', 'Close', { duration: 3000 });
         }
-      );
+      });
     }
   }
 
-  
   ClosePopup(): void {
-    this.dialogRef.close(); // Close the modal without saving
+    this.dialogRef.close();
   }
 }

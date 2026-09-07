@@ -1,41 +1,59 @@
-<div class="mat-elevation-z8">
-  <div class="list-header">
-    <mat-form-field appearance="outline">
-      <mat-label>Filter</mat-label>
-      <input matInput (input)="applyFilter($event)" placeholder="Search Role">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addRole()">Add</button>
+<div class="roles-container glass-panel">
+  <div class="header-toolbar">
+    <div class="title-group">
+      <h2 class="font-display">Role Management</h2>
+      <p class="subtitle">Access control, system policies, and tenant permission tiers</p>
+    </div>
+    <div class="action-group">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Role</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Filter by name or description">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button mat-flat-button color="primary" class="btn-add" (click)="addRole()">
+        <mat-icon>add</mat-icon>
+        <span>Add Role</span>
+      </button>
+    </div>
   </div>
-  <mat-table [dataSource]="dataSource" matSort>
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-      <mat-cell *matCellDef="let role">{{role.id}}</mat-cell>
-    </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let role">{{role.name}}</mat-cell>
-    </ng-container>
+  <div class="table-responsive">
+    <mat-table [dataSource]="dataSource" matSort>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</mat-header-cell>
+        <mat-cell *matCellDef="let role">
+          <div class="role-name-cell">
+            <span class="role-pill">{{ role.name }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
 
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-          <mat-cell *matCellDef="let task">
-            <button mat-icon-button color="primary" (click)="editRole(task)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteRole(task.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+        <mat-cell *matCellDef="let role">
+          <span class="role-desc">{{ role.description || 'Standard tenant authority and scope' }}</span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Header and Row Definitions -->
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions-header">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let role" class="actions-cell">
+          <button mat-icon-button color="primary" (click)="editRole(role)" title="Edit Role">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteRole(role.id)" title="Delete Role">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-  </mat-table>
-  <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
 </div>

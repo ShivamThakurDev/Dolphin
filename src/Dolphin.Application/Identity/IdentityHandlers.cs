@@ -37,11 +37,31 @@ public sealed class IdentityHandlers(
 {
     public Task<IReadOnlyList<UserItemDto>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
     {
-        var list = dbContext.Query<User>()
+        var rawUsers = dbContext.Query<User>()
             .Where(u => !u.IsDeleted)
             .OrderBy(u => u.DisplayName)
-            .Select(u => new UserItemDto(u.Id, u.DisplayName, u.Email, "Admin"))
             .ToList();
+
+        var userIds = rawUsers.Select(u => u.Id).ToList();
+        var userRoles = dbContext.Query<UserRole>()
+            .Where(ur => userIds.Contains(ur.UserId))
+            .ToList();
+
+        var roleIds = userRoles.Select(ur => ur.RoleId).Distinct().ToList();
+        var roleMap = dbContext.Query<Role>()
+            .Where(r => roleIds.Contains(r.Id))
+            .ToDictionary(r => r.Id, r => r.Name);
+
+        var userRoleMap = userRoles
+            .GroupBy(ur => ur.UserId)
+            .ToDictionary(g => g.Key, g => roleMap.TryGetValue(g.First().RoleId, out var rName) ? rName : "Admin");
+
+        var list = rawUsers.Select(u => new UserItemDto(
+            u.Id,
+            u.DisplayName,
+            u.Email,
+            userRoleMap.TryGetValue(u.Id, out var rName) ? rName : "Admin"
+        )).ToList();
 
         return Task.FromResult<IReadOnlyList<UserItemDto>>(list);
     }
@@ -49,11 +69,21 @@ public sealed class IdentityHandlers(
     public Task<UserItemDto?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         var user = dbContext.Query<User>()
-            .Where(u => u.Id == request.Id && !u.IsDeleted)
-            .Select(u => new UserItemDto(u.Id, u.DisplayName, u.Email, "Admin"))
-            .FirstOrDefault();
+            .FirstOrDefault(u => u.Id == request.Id && !u.IsDeleted);
 
-        return Task.FromResult(user);
+        if (user is null) return Task.FromResult<UserItemDto?>(null);
+
+        var userRole = dbContext.Query<UserRole>()
+            .FirstOrDefault(ur => ur.UserId == user.Id);
+
+        string roleName = "Admin";
+        if (userRole != null)
+        {
+            var r = dbContext.Query<Role>().FirstOrDefault(ro => ro.Id == userRole.RoleId);
+            if (r != null) roleName = r.Name;
+        }
+
+        return Task.FromResult<UserItemDto?>(new UserItemDto(user.Id, user.DisplayName, user.Email, roleName));
     }
 
     public async Task<UserItemDto> Handle(CreateUserCommand command, CancellationToken cancellationToken)
@@ -61,9 +91,22 @@ public sealed class IdentityHandlers(
         var r = command.Request;
         var hash = passwordHasher.Hash(string.IsNullOrWhiteSpace(r.Password) ? "Dolphin@123" : r.Password);
         var user = new User(tenantContext.TenantId, r.Email, r.Name ?? r.Email, hash);
+
+        var assignedRoleName = "Admin";
+        if (!string.IsNullOrWhiteSpace(r.Role))
+        {
+            var roleEntity = dbContext.Query<Role>()
+                .FirstOrDefault(ro => ro.Name.ToLower() == r.Role.ToLower() || ro.Id.ToString() == r.Role);
+            if (roleEntity != null)
+            {
+                user.AddRole(roleEntity.Id);
+                assignedRoleName = roleEntity.Name;
+            }
+        }
+
         await users.AddAsync(user, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
-        return new UserItemDto(user.Id, user.DisplayName, user.Email, r.Role ?? "Admin");
+        return new UserItemDto(user.Id, user.DisplayName, user.Email, assignedRoleName);
     }
 
     public async Task<UserItemDto> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
@@ -75,9 +118,27 @@ public sealed class IdentityHandlers(
         {
             user.DisplayName = command.Request.Name;
         }
+
+        var assignedRoleName = command.Request.Role ?? "Admin";
+        if (!string.IsNullOrWhiteSpace(command.Request.Role))
+        {
+            var roleEntity = dbContext.Query<Role>()
+                .FirstOrDefault(ro => ro.Name.ToLower() == command.Request.Role.ToLower() || ro.Id.ToString() == command.Request.Role);
+            if (roleEntity != null)
+            {
+                var existingUserRoles = dbContext.Query<UserRole>().Where(ur => ur.UserId == user.Id).ToList();
+                foreach (var ur in existingUserRoles)
+                {
+                    ur.IsDeleted = true;
+                }
+                user.AddRole(roleEntity.Id);
+                assignedRoleName = roleEntity.Name;
+            }
+        }
+
         users.Update(user);
         await dbContext.SaveChangesAsync(cancellationToken);
-        return new UserItemDto(user.Id, user.DisplayName, user.Email, command.Request.Role ?? "Admin");
+        return new UserItemDto(user.Id, user.DisplayName, user.Email, assignedRoleName);
     }
 
     public async Task<bool> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
