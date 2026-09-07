@@ -12,9 +12,10 @@ import { CommandSearchComponent } from './command-search.component';
     <header class="topbar-wrap">
       <div class="topbar">
         <div class="crumbs" aria-label="Breadcrumb">
-          <span>Dolphin Demo Pvt Ltd</span>
+          <span>🐬 Dolphin ERP</span>
           <app-icon name="chevron-right" [size]="14"></app-icon>
           <strong>{{ activeSection }}</strong>
+          <span class="status-indicator-pill">🟢 Healthy</span>
         </div>
 
         <app-command-search (open)="commandOpen.emit()"></app-command-search>
@@ -28,7 +29,10 @@ import { CommandSearchComponent } from './command-search.component';
             <span></span>
           </button>
           <button class="profile-chip" type="button" aria-label="Open profile menu">
-            <span>S</span>
+            <div class="avatar-wrap">
+              <span>SK</span>
+              <span class="presence-dot" title="🟢 In Office"></span>
+            </div>
             <div>
               <strong>Shivam</strong>
               <small>HR Admin</small>

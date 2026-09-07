@@ -31,7 +31,12 @@
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
         <mat-cell *matCellDef="let task">
-          <strong class="task-title-text">{{task.name}}</strong>
+          <div class="task-title-cell">
+            <strong class="task-title-text">{{task.name}}</strong>
+            <span *ngIf="task.hasConflict || task.isAssigneeOnLeave" class="soft-badge badge-conflict ms-2" title="Assignee on PTO during delivery window">
+              ⚠️ PTO Conflict
+            </span>
+          </div>
         </mat-cell>
       </ng-container>
 
@@ -85,6 +90,21 @@
         </mat-cell>
       </ng-container>
 
+      <!-- Assignee Column -->
+      <ng-container matColumnDef="assignee">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Assignee</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <div class="assignee-cell-wrap">
+            <app-dolphin-bridge-avatar
+              [name]="task.assignedEmployeeName || 'Dev Lead'"
+              [presence]="(task.hasConflict || task.isAssigneeOnLeave) ? 'leave' : 'office'"
+              size="sm">
+            </app-dolphin-bridge-avatar>
+            <span class="assignee-name-text">{{ task.assignedEmployeeName || 'Dev Lead' }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+
       <!-- Start_Date Column -->
       <ng-container matColumnDef="start date">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
@@ -118,7 +138,7 @@
 
       <!-- Header and Row Definitions -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [class.conflict-pulse]="row.hasConflict || row.isAssigneeOnLeave" class="spatial-table-row"></mat-row>
     </mat-table>
   </div>
   <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>

@@ -171,6 +171,48 @@ body {
   border: 1px solid rgba(168, 85, 247, 0.25);
 }
 
+.badge-done {
+  background: var(--badge-done-bg);
+  color: var(--badge-done-text);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.badge-conflict, .badge-warn {
+  background: var(--badge-conflict-bg);
+  color: var(--badge-conflict-text);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-urgent {
+  background: var(--badge-urgent-bg);
+  color: var(--badge-urgent-text);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.badge-blocked {
+  background: var(--badge-blocked-bg);
+  color: var(--badge-blocked-text);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-office {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--presence-office);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-remote {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--presence-remote);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.badge-leave {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--presence-leave);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
 /* Typography Classes */
 .font-display {
   font-family: var(--font-display);
