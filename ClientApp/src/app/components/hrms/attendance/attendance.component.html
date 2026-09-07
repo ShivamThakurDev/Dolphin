@@ -1,9 +1,9 @@
 <div class="attendance-container">
-  <div class="attendance-card mat-elevation-z4">
+  <div class="attendance-card glass-panel">
     <div class="card-header">
       <mat-icon class="clock-icon">alarm</mat-icon>
       <div>
-        <h2>Attendance & Work Hours</h2>
+        <h2 class="font-display">Attendance & Work Hours</h2>
         <p class="subtitle">{{ today | date: 'fullDate' }}</p>
       </div>
     </div>
@@ -19,18 +19,18 @@
     </div>
 
     <div class="actions-section">
-      <button *ngIf="!clockedIn" mat-raised-button color="primary" class="action-btn"
+      <button *ngIf="!clockedIn" mat-flat-button class="action-btn clockin-btn"
         [disabled]="isProcessing" (click)="handleClockIn()">
         <mat-icon>login</mat-icon> Web Clock-In
       </button>
-      <button *ngIf="clockedIn" mat-raised-button color="warn" class="action-btn"
+      <button *ngIf="clockedIn" mat-flat-button color="warn" class="action-btn clockout-btn"
         (click)="handleClockOut()">
         <mat-icon>logout</mat-icon> Web Clock-Out
       </button>
     </div>
   </div>
 
-  <div class="policy-card mat-elevation-z2">
+  <div class="policy-card glass-panel">
     <h3>Workplace Attendance Guidelines</h3>
     <ul>
       <li>Standard shift starts between 09:00 AM and 09:30 AM.</li>

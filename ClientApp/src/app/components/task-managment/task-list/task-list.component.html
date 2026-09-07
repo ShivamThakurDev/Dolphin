@@ -1,92 +1,145 @@
-<div class="mat-elevation-z8">
-  <div class="list-header">
-    <mat-form-field appearance="outline">
-      <mat-label>Filter</mat-label>
-      <input matInput (input)="applyFilter($event)" placeholder="Search tasks">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addTask()">Add</button>
+<div class="tasks-container glass-panel">
+  <div class="header-toolbar">
+    <div class="title-group">
+      <h2 class="font-display">Delivery & Tasks</h2>
+      <p class="subtitle">Agile sprint backlog, assignments, and velocity tracking</p>
+    </div>
+    <div class="action-group">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Filter tasks</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Search task name, priority...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button mat-flat-button class="btn-add" (click)="addTask()">
+        <mat-icon>add_task</mat-icon>
+        <span>Add Task</span>
+      </button>
+    </div>
   </div>
-  <mat-table [dataSource]="dataSource" matSort>
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
-    </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.name}}</mat-cell>
-    </ng-container>
+  <div class="table-responsive">
+    <mat-table [dataSource]="dataSource" matSort>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="task-code">#{{task.id?.substring(0, 6) || task.id}}</span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.description}}</mat-cell>
-    </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <div class="task-title-cell">
+            <strong class="task-title-text">{{task.name}}</strong>
+            <span *ngIf="task.hasConflict || task.isAssigneeOnLeave" class="soft-badge badge-conflict ms-2" title="Assignee on PTO during delivery window">
+              ⚠️ PTO Conflict
+            </span>
+          </div>
+        </mat-cell>
+      </ng-container>
 
-   
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="task-desc-text">{{task.description}}</span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.status}}</mat-cell>
-    </ng-container>
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="soft-badge"
+                [class.badge-done]="task.status === 'Done' || task.status === 2"
+                [class.badge-progress]="task.status === 'InProgress' || task.status === 1"
+                [class.badge-todo]="task.status === 'Todo' || task.status === 0">
+            {{ task.status === 2 ? 'Done' : (task.status === 1 ? 'In Progress' : (task.status === 0 ? 'To Do' : (task.status || 'Active'))) }}
+          </span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Priority Column -->
-    <ng-container matColumnDef="priority">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Priority</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.priority}}</mat-cell>
-    </ng-container>
+      <!-- Priority Column -->
+      <ng-container matColumnDef="priority">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Priority</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="soft-badge"
+                [class.badge-urgent]="task.priority === 'High' || task.priority === 'Urgent'"
+                [class.badge-progress]="task.priority === 'Medium'"
+                [class.badge-todo]="task.priority === 'Low' || !task.priority">
+            {{task.priority || 'Normal'}}
+          </span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Progress</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.progress}}</mat-cell>
-    </ng-container>
+      <!-- Progress Column -->
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Progress</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="progress-pct">{{task.progress || 0}}%</span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Story_Point Column -->
-    <ng-container matColumnDef="story point">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Story Point</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.storyPoint}}</mat-cell>
-    </ng-container>
+      <!-- Story_Point Column -->
+      <ng-container matColumnDef="story point">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Pts</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <span class="story-pill">{{task.storyPoint || 0}} pts</span>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Start_Date Column -->
-    <ng-container matColumnDef="start date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.startDate|date: "dd-MM-yyy"}}</mat-cell>
-    </ng-container>
+      <!-- Assignee Column -->
+      <ng-container matColumnDef="assignee">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Assignee</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <div class="assignee-cell-wrap">
+            <app-dolphin-bridge-avatar
+              [name]="task.assignedEmployeeName || 'Dev Lead'"
+              [presence]="(task.hasConflict || task.isAssigneeOnLeave) ? 'leave' : 'office'"
+              size="sm">
+            </app-dolphin-bridge-avatar>
+            <span class="assignee-name-text">{{ task.assignedEmployeeName || 'Dev Lead' }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
 
-    <!-- End_Date Column -->
-    <ng-container matColumnDef="end date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.endDate|date: "dd-MM-yyy"}}</mat-cell>
-    </ng-container>
+      <!-- Start_Date Column -->
+      <ng-container matColumnDef="start date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{task.startDate | date: "dd MMM yyyy"}}</mat-cell>
+      </ng-container>
 
-    <!-- Parent_Id Column -->
-    <ng-container matColumnDef="parent id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Parent Id</mat-header-cell>
-      <mat-cell *matCellDef="let task">{{task.parentId}}</mat-cell>
-    </ng-container>
+      <!-- End_Date Column -->
+      <ng-container matColumnDef="end date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{task.endDate | date: "dd MMM yyyy"}}</mat-cell>
+      </ng-container>
 
-        <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-      <mat-cell *matCellDef="let task">
-        <button mat-icon-button color="primary" (click)="editTask(task)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+      <!-- Parent_Id Column -->
+      <ng-container matColumnDef="parent id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Parent Id</mat-header-cell>
+        <mat-cell *matCellDef="let task">{{task.parentId || '-'}}</mat-cell>
+      </ng-container>
 
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let task">
+          <button mat-icon-button color="primary" (click)="editTask(task)" title="Edit Task">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTask(task.id)" title="Delete Task">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Header and Row Definitions -->
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-  </mat-table>
-  <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+      <!-- Header and Row Definitions -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [class.conflict-pulse]="row.hasConflict || row.isAssigneeOnLeave" class="spatial-table-row"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
 </div>

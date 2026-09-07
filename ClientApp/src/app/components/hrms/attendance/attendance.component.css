@@ -1,12 +1,10 @@
 .attendance-container {
-  max-width: 750px;
-  margin: 30px auto;
+  max-width: 760px;
+  margin: 24px auto;
   padding: 0 16px;
 }
 .attendance-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 32px;
+  padding: 36px;
   text-align: center;
   margin-bottom: 24px;
 }
@@ -18,42 +16,46 @@
   margin-bottom: 24px;
 }
 .clock-icon {
-  font-size: 40px;
-  height: 40px;
-  width: 40px;
-  color: #4f46e5;
+  font-size: 44px;
+  height: 44px;
+  width: 44px;
+  color: #38bdf8;
 }
 .card-header h2 {
   margin: 0;
   font-weight: 700;
-  color: #0f172a;
+  color: #ffffff;
 }
 .subtitle {
   margin: 4px 0 0;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 14px;
 }
 .time-display {
-  font-size: 44px;
+  font-size: 48px;
   font-weight: 800;
-  color: #1e293b;
-  letter-spacing: 1px;
-  margin: 16px 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  letter-spacing: 2px;
+  margin: 20px 0;
+  text-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
 }
 .status-indicator {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 16px;
-  border-radius: 20px;
-  background: #fee2e2;
-  color: #b91c1c;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.3);
   font-weight: 600;
   font-size: 14px;
 }
 .status-indicator.online {
-  background: #dcfce7;
-  color: #15803d;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 .dot {
   width: 10px;
@@ -63,39 +65,65 @@
 }
 .clock-info {
   margin-top: 16px;
-  color: #475569;
+  color: #94a3b8;
+}
+.clock-info strong {
+  color: #ffffff;
 }
 .alert-banner {
   margin-top: 16px;
-  padding: 10px;
-  background: #e0e7ff;
-  color: #3730a3;
-  border-radius: 8px;
+  padding: 12px;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 12px;
   font-weight: 500;
 }
 .actions-section {
   margin-top: 24px;
 }
 .action-btn {
-  padding: 12px 32px;
+  padding: 12px 36px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.clockin-btn {
+  background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+}
+.clockin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(16, 185, 129, 0.5);
+}
+.clockout-btn {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+}
+.clockout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(244, 63, 94, 0.5);
 }
 .policy-card {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 20px;
-  color: #334155;
+  padding: 24px;
+  color: #cbd5e1;
 }
 .policy-card h3 {
   margin-top: 0;
   font-weight: 600;
+  color: #ffffff;
 }
 .policy-card ul {
   padding-left: 20px;
   margin-bottom: 0;
 }
 .policy-card li {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-size: 14px;
+  color: #94a3b8;
 }

@@ -32,7 +32,12 @@
         <mat-icon class="conflict-icon">warning_amber</mat-icon>
         <div class="conflict-content">
           <strong>Workforce Conflict Detected</strong>
-          <p>Assignee is scheduled on approved leave during the due date window.</p>
+          <p>
+            Assignee is on approved leave during this task deadline.
+            @if (editableTask.leaveReturnDate) {
+              <span> Expected return: <strong>{{ editableTask.leaveReturnDate }}</strong>.</span>
+            }
+          </p>
         </div>
       </div>
     }
@@ -80,7 +85,7 @@
           <div class="assignee-info">
             <span class="assignee-name">{{ editableTask.assignedEmployeeName || 'Shivam Kumar' }}</span>
             <span class="assignee-presence" [class.text-danger]="hasLeaveConflict" [class.text-success]="!hasLeaveConflict">
-              {{ hasLeaveConflict ? '🔴 On Leave (PTO Clash)' : '🟢 Present in Head Office' }}
+              {{ hasLeaveConflict ? ('🔴 On Leave' + (editableTask.leaveReturnDate ? ' (Returns ' + editableTask.leaveReturnDate + ')' : ' (PTO Clash)')) : '🟢 Present in Head Office' }}
             </span>
           </div>
         </div>

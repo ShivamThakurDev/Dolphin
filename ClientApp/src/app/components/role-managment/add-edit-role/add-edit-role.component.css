@@ -1,81 +1,62 @@
-/* Container for the dialog */
-.dialog-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
+.dialog-wrapper {
+  padding: 8px 4px;
 }
 
-/* Heading styles */
-h3 {
-  text-align: center;
-  color: #3f51b5;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-/* Form styling */
-form {
+.dialog-header {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Form field styling */
-mat-form-field {
-  width: 100%;
-}
-
-mat-form-field mat-label {
-  color: #757575;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-input[matInput], textarea[matInput] {
-  font-size: 16px;
-  color: #333;
-}
-
-/* Hide the ID field */
-mat-form-field#id {
-  display: none;
-}
-
-/* Button container */
-mat-dialog-actions {
-  display: flex;
-  justify-content: flex-end;
+  align-items: center;
   gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dialog-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.header-icon {
+  color: #818cf8;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.role-dialog-form {
+  padding-top: 4px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 6px;
+}
+
+.dialog-actions {
   padding-top: 16px;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Buttons */
-button[mat-raised-button] {
-  font-weight: 500;
-  text-transform: uppercase;
+.btn-cancel {
+  border-radius: 999px;
+  color: #cbd5e1;
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
-button[mat-button] {
-  color: #757575;
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .dialog-container {
-    width: 90%;
-  }
-
-  mat-dialog-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  button[mat-raised-button],
-  button[mat-button] {
-    width: 100%;
-  }
+.btn-submit {
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 0 20px;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
 }

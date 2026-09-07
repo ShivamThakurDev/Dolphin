@@ -33,3 +33,35 @@
   background: linear-gradient(135deg, rgba(25, 32, 47, 0.86), rgba(18, 24, 36, 0.72));
   border-color: rgba(255, 255, 255, 0.08);
 }
+
+.glass {
+  background: var(--surface-glass-bg);
+  border: 1px solid var(--surface-glass-border);
+  box-shadow: var(--surface-glass-shadow), var(--surface-glass-inner);
+  backdrop-filter: blur(var(--surface-glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--surface-glass-blur)) saturate(140%);
+}
+
+.glass-raised {
+  background: linear-gradient(150deg, oklch(1 0 0 / 9%), oklch(1 0 0 / 3%) 55%, oklch(1 0 0 / 6%));
+  border: 1px solid var(--surface-glass-border);
+  box-shadow: var(--surface-glass-shadow), var(--surface-glass-inner);
+  backdrop-filter: blur(var(--surface-glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--surface-glass-blur)) saturate(150%);
+}
+
+.conflict-pulse {
+  animation: conflictPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes conflictPulse {
+  0%, 100% {
+    box-shadow: var(--surface-glass-shadow), 0 0 0 0 oklch(0.78 0.16 60 / 45%);
+    border-color: oklch(0.78 0.16 60 / 50%);
+  }
+  50% {
+    box-shadow: var(--surface-glass-shadow), 0 0 28px 6px oklch(0.72 0.18 40 / 30%);
+    border-color: oklch(0.78 0.16 60 / 80%);
+  }
+}
+

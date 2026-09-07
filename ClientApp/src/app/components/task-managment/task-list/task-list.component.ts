@@ -19,7 +19,7 @@ export class TaskListComponent{
   taskList: task[] =[];
   dataSource: any;
   //columns to be displayed 
-  displayedColumns: string[] = ['id','name','description','status','priority','progress','story point','start date','end date','actions']
+  displayedColumns: string[] = ['id','name','description','status','priority','progress','story point','assignee','start date','end date','actions']
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

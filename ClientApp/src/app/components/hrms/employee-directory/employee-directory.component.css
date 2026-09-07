@@ -1,50 +1,115 @@
 .hrms-container {
   padding: 24px;
-  background: #ffffff;
-  border-radius: 12px;
-  margin: 20px;
+  margin: 20px auto;
+  max-width: 1240px;
 }
+
 .header-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+}
+
+.header-icon-wrap mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
 .title-group h2 {
   margin: 0;
-  font-weight: 700;
-  color: #1e293b;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
+
 .subtitle {
-  margin: 4px 0 0;
-  color: #64748b;
-  font-size: 14px;
+  margin: 2px 0 0;
+  color: #94a3b8;
+  font-size: 0.85rem;
 }
+
+.search-box {
+  width: 260px;
+}
+
+.search-box ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.table-responsive {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .badge-code {
-  background: #f1f5f9;
+  background: rgba(255, 255, 255, 0.06);
   padding: 4px 8px;
   border-radius: 6px;
   font-family: monospace;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #38bdf8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
+
 .emp-name-cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
-.avatar-icon {
-  color: #6366f1;
-}
-.status-badge {
-  padding: 4px 10px;
-  border-radius: 16px;
-  font-size: 12px;
+
+.emp-name-text {
+  color: #f1f5f9;
+  font-size: 0.88rem;
   font-weight: 600;
-  background: #e2e8f0;
-  color: #475569;
 }
-.status-badge.active {
-  background: #dcfce7;
-  color: #15803d;
+
+.emp-email-text {
+  color: #cbd5e1;
+  font-size: 0.84rem;
+}
+
+.actions-header, .actions-cell {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  color: #94a3b8;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+mat-paginator {
+  background: transparent;
+  margin-top: 12px;
 }

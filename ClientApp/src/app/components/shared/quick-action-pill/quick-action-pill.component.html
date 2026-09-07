@@ -1,10 +1,21 @@
 @if (!isAuthPage) {
   <div class="pill-wrapper">
-    <button class="action-pill" (click)="handleAction()" [disabled]="isProcessing">
-      <span class="pill-glow"></span>
-      <mat-icon class="pill-icon">{{ actionIcon }}</mat-icon>
-      <span class="pill-text">{{ isProcessing ? 'Working...' : actionLabel }}</span>
-      <span class="pill-kbd">&#8984;K</span>
-    </button>
+    <div class="spatial-action-pill">
+      <button type="button" class="pill-action-btn clock-btn" (click)="quickClockIn()" [disabled]="isProcessing" title="Clock In">
+        <span class="btn-icon lightning-icon">⚡</span> <span>Clock In</span>
+      </button>
+
+      <button type="button" class="pill-action-btn task-btn" (click)="openNewTask()" title="Create New Task">
+        <span class="btn-icon plus-icon">+</span> <span>New Task</span>
+      </button>
+
+      <button type="button" class="pill-action-btn search-btn" (click)="openSearch()" title="Quick Search">
+        <span class="btn-icon cyan-dot">●</span> <span>Search</span> <kbd class="pill-kbd">⌘K</kbd>
+      </button>
+
+      <button type="button" class="pill-action-btn ai-btn" (click)="askAi()" title="Ask Dolphin AI">
+        <span class="btn-icon">✨</span> <span>Ask AI</span>
+      </button>
+    </div>
   </div>
 }

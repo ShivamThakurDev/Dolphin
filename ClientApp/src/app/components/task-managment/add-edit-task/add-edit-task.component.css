@@ -1,66 +1,74 @@
-.container-fluid {
-    max-width: 800px; /* Limit the container width for better readability */
-    margin: 20px auto; /* Center the form on the page */
-    padding: 20px;
-    background-color: #ffffff; /* White background for a clean look */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    font-family: 'Roboto', sans-serif; /* Use Material Design recommended font */
+.task-dialog-wrapper {
+  padding: 8px 4px;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
-h3 {
-    text-align: center;
-    color: #3f51b5; /* Primary Material Design color */
-    margin-bottom: 20px;
-    font-weight: 500;
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px; /* Add space between input fields */
+.dialog-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.header-icon {
+  color: #0ea5e9;
+  font-size: 26px;
+  width: 26px;
+  height: 26px;
+}
+
+.task-dialog-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 mat-form-field {
-    width: calc(50% - 16px); /* Half-width fields with spacing */
-    min-width: 200px; /* Minimum width for smaller screens */
+  width: calc(50% - 8px);
+  min-width: 200px;
 }
-
 
 mat-form-field.full-width {
-    width: 100%; /* Full-width fields for long inputs */
+  width: 100%;
 }
-
-mat-form-field mat-label {
-    color: #757575; /* Subtle gray for labels */
-    font-size: 14px;
-    font-weight: 400;
-}
-
-input[matInput], mat-select {
-    font-size: 16px;
-    color: #333333; /* Dark gray for text input */
-}
-
-mat-datepicker-toggle {
-    margin-left: 8px; /* Add spacing to the datepicker icon */
-}
-
-
-
 
 @media (max-width: 768px) {
-    mat-form-field {
-        width: 100%; /* Stack fields on small screens */
-    }
-
-    button[type="submit"] {
-        width: 100%; /* Ensure the button is full-width */
-    }
+  mat-form-field {
+    width: 100%;
+  }
 }
 
-.mat-dialog-container {
-    border-radius: 8px;
-    padding: 16px;
-  }
+.dialog-actions {
+  padding-top: 16px;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-cancel {
+  border-radius: 999px;
+  color: #cbd5e1;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.btn-submit {
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 0 20px;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35);
+}
   

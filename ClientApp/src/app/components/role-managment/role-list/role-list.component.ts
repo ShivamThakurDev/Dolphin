@@ -17,7 +17,7 @@ import { ConfirmDeleteDialogComponent } from "../confirm-delete-dialog/confirm-d
 export class RoleListComponent implements OnInit {
   roles: Role[] = [];
   dataSource: any;
-  displayedColumns: string[]= ['id','name','actions']
+  displayedColumns: string[] = ['name', 'description', 'actions'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -27,64 +27,60 @@ export class RoleListComponent implements OnInit {
     this.loadRoles();
   }
 
-  loadRoles() {
+  loadRoles(): void {
     this.roleService.getRoleList().subscribe({
-      next: (res: any) => {
-         
-        this.roles = res;
+      next: (res: Role[]) => {
+        this.roles = res || [];
         this.dataSource = new MatTableDataSource<Role>(this.roles);
-         
         this.dataSource.paginator = this.paginator;
-         
         this.dataSource.sort = this.sort;
-         
       },
       error: (err: any) => { 
-        console.error('Error occurred:', err);
-      },
-      complete: () => {
-        console.info('Request completed.');
+        console.error('Error loading roles:', err);
       }
     });
   }
   
-  applyFilter(event: Event){
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
+
   addRole(): void {
-     
-    const dialogRef = this.dialog.open(AddEditRoleComponent,{
-      width:'400px'
+    const dialogRef = this.dialog.open(AddEditRoleComponent, {
+      width: '460px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.loadRoles()
+      if (result) {
+        this.loadRoles();
+      }
     });
   }
   
   editRole(role: Role): void {
-     
-    const dialogRef = this.dialog.open(AddEditRoleComponent,{
-      width:'400px',
+    const dialogRef = this.dialog.open(AddEditRoleComponent, {
+      width: '460px',
       data: role
     });
     dialogRef.afterClosed().subscribe(result => {
-       this.loadRoles();
+      if (result) {
+        this.loadRoles();
+      }
     });
   }
   
-  deleteRole(taskId: string): void {
-  
-      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-        width: '400px',
-        data: taskId // Optional data to pass
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Modal closed:', result);
+  deleteRole(roleId: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      width: '420px',
+      data: roleId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'Confirmed' || result === true) {
         this.loadRoles();
-      });
+      }
+    });
   }
-  
-  
 }
