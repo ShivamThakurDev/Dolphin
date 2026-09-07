@@ -46,6 +46,16 @@ public static class DependencyInjection
 
         if (await db.Tenants.IgnoreQueryFilters().AnyAsync())
         {
+            if (!await db.Roles.IgnoreQueryFilters().AnyAsync())
+            {
+                var existingTenant = await db.Tenants.IgnoreQueryFilters().FirstAsync();
+                var rAdmin = new Role(existingTenant.Id, "Admin", "System Administrator with full permissions");
+                var rHr = new Role(existingTenant.Id, "HRAdmin", "Human Resources manager and attendance controller");
+                var rEmp = new Role(existingTenant.Id, "Employee", "Standard employee role for tasks and attendance");
+                var rPm = new Role(existingTenant.Id, "ProjectManager", "Project and sprint management lead");
+                db.Roles.AddRange(rAdmin, rHr, rEmp, rPm);
+                await db.SaveChangesAsync();
+            }
             return;
         }
 

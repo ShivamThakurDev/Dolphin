@@ -26,9 +26,12 @@ import { EmployeeDirectoryComponent } from './components/hrms/employee-directory
 import { AttendanceComponent } from './components/hrms/attendance/attendance.component';
 import { LeaveComponent } from './components/hrms/leave/leave.component';
 
+import { LoginComponent } from './components/auth/login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     TaskListComponent,
     AddEditTaskComponent,
     ConfirmDialogComponent,

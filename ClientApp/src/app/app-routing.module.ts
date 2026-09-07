@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/auth/login/login.component';
+import { AuthGuard } from './services/auth.guard';
 import { TaskListComponent } from './components/task-managment/task-list/task-list.component';
 import { AddEditTaskComponent } from './components/task-managment/add-edit-task/add-edit-task.component';
 import { UserListComponent } from './components/user-managment/user-list/user-list.component';
@@ -11,16 +13,17 @@ import { AttendanceComponent } from './components/hrms/attendance/attendance.com
 import { LeaveComponent } from './components/hrms/leave/leave.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'task-list', pathMatch: 'full' },
-  { path: 'task-list', component: TaskListComponent },
-  { path: 'add-edit-task', component: AddEditTaskComponent },
-  { path: 'employees', component: EmployeeDirectoryComponent },
-  { path: 'attendance', component: AttendanceComponent },
-  { path: 'leave', component: LeaveComponent },
-  { path: 'user-list', component: UserListComponent },
-  { path: 'add-edit-user', component: AddEditUserComponent },
-  { path: 'role-list', component: RoleListComponent },
-  { path: 'add-edit-role', component: AddEditRoleComponent },
+  { path: 'task-list', component: TaskListComponent, canActivate: [AuthGuard] },
+  { path: 'add-edit-task', component: AddEditTaskComponent, canActivate: [AuthGuard] },
+  { path: 'employees', component: EmployeeDirectoryComponent, canActivate: [AuthGuard] },
+  { path: 'attendance', component: AttendanceComponent, canActivate: [AuthGuard] },
+  { path: 'leave', component: LeaveComponent, canActivate: [AuthGuard] },
+  { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },
+  { path: 'add-edit-user', component: AddEditUserComponent, canActivate: [AuthGuard] },
+  { path: 'role-list', component: RoleListComponent, canActivate: [AuthGuard] },
+  { path: 'add-edit-role', component: AddEditRoleComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'task-list' }
 ];
 

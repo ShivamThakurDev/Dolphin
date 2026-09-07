@@ -84,4 +84,4 @@ public sealed record StoredFile(string StorageKey, string FileName, string Conte
 public sealed record LoginRequest(string Email, string Password, string? TenantSlug, string? DeviceName);
 public sealed record RefreshTokenRequest(string RefreshToken, string? DeviceName);
 public sealed record AuthResult(string AccessToken, string RefreshToken, DateTimeOffset ExpiresAt, UserProfileDto User);
-public sealed record UserProfileDto(Guid UserId, Guid TenantId, string Email, string DisplayName, IReadOnlyCollection<string> Roles);
+public sealed record UserProfileDto(Guid UserId, Guid TenantId, string Email, string DisplayName, IReadOnlyCollection<string> Roles, Guid? EmployeeId = null);
