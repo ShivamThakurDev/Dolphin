@@ -1,39 +1,47 @@
 <div class="app-shell">
-  <header class="app-navbar">
-    <div class="nav-brand">
-      <mat-icon class="brand-icon">space_dashboard</mat-icon>
-      <span class="brand-title">Dolphin</span>
-      <span class="brand-badge">Unified Suite</span>
-    </div>
+  @if (!isLoginPage) {
+    <header class="app-navbar">
+      <div class="nav-brand">
+        <mat-icon class="brand-icon">space_dashboard</mat-icon>
+        <span class="brand-title">Dolphin</span>
+        <span class="brand-badge">Unified Suite</span>
+      </div>
 
-    <nav class="nav-links">
-      <a mat-button routerLink="/task-list" routerLinkActive="active-link">
-        <mat-icon>assignment</mat-icon> Tasks
-      </a>
-      <a mat-button routerLink="/employees" routerLinkActive="active-link">
-        <mat-icon>badge</mat-icon> Employees
-      </a>
-      <a mat-button routerLink="/attendance" routerLinkActive="active-link">
-        <mat-icon>alarm</mat-icon> Attendance
-      </a>
-      <a mat-button routerLink="/leave" routerLinkActive="active-link">
-        <mat-icon>date_range</mat-icon> Leave
-      </a>
-      <a mat-button routerLink="/user-list" routerLinkActive="active-link">
-        <mat-icon>people</mat-icon> Users
-      </a>
-      <a mat-button routerLink="/role-list" routerLinkActive="active-link">
-        <mat-icon>security</mat-icon> Roles
-      </a>
-    </nav>
+      <nav class="nav-links">
+        <a mat-button routerLink="/dashboard" routerLinkActive="active-link">
+          <mat-icon>dashboard_customize</mat-icon> Dashboard
+        </a>
+        <a mat-button routerLink="/task-list" routerLinkActive="active-link">
+          <mat-icon>assignment</mat-icon> Tasks
+        </a>
+        <a mat-button routerLink="/employees" routerLinkActive="active-link">
+          <mat-icon>badge</mat-icon> Employees
+        </a>
+        <a mat-button routerLink="/attendance" routerLinkActive="active-link">
+          <mat-icon>alarm</mat-icon> Attendance
+        </a>
+        <a mat-button routerLink="/leave" routerLinkActive="active-link">
+          <mat-icon>date_range</mat-icon> Leave
+        </a>
+        <a mat-button routerLink="/user-list" routerLinkActive="active-link">
+          <mat-icon>people</mat-icon> Users
+        </a>
+        <a mat-button routerLink="/role-list" routerLinkActive="active-link">
+          <mat-icon>security</mat-icon> Roles
+        </a>
+      </nav>
 
-    <div class="user-profile">
-      <mat-icon>account_circle</mat-icon>
-      <span class="user-name">demo&#64;dolphin.local</span>
-    </div>
-  </header>
+      <div class="user-profile">
+        <mat-icon>account_circle</mat-icon>
+        <span class="user-name">{{ currentUser?.email || 'admin&#64;dolphin.local' }}</span>
+        <button mat-icon-button class="logout-btn" (click)="logout()" title="Sign Out">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </header>
+  }
 
-  <main class="main-content">
+  <main [class.main-content]="!isLoginPage">
     <router-outlet></router-outlet>
   </main>
 </div>

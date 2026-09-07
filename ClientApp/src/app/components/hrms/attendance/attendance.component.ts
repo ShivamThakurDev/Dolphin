@@ -17,7 +17,6 @@ export class AttendanceComponent implements OnInit {
   constructor(private hrmsService: HrmsService) {}
 
   ngOnInit(): void {
-    // Check local storage for recent session
     const saved = localStorage.getItem('dolphin.lastClockIn');
     if (saved) {
       this.clockedIn = true;
@@ -27,22 +26,43 @@ export class AttendanceComponent implements OnInit {
 
   handleClockIn(): void {
     this.isProcessing = true;
-    // Use demo employee ID from local storage or placeholder
-    const empId = localStorage.getItem('dolphin.employeeId') || '00000000-0000-0000-0000-000000000001';
+    let empId = localStorage.getItem('dolphin.employeeId');
+
+    if (!empId) {
+      this.hrmsService.getEmployees(1, 1).subscribe({
+        next: (res: any) => {
+          const items = res?.items || res;
+          if (items && items.length > 0) {
+            empId = items[0].id;
+            localStorage.setItem('dolphin.employeeId', empId!);
+            this.executeClockIn(empId!);
+          } else {
+            this.isProcessing = false;
+            this.message = 'No employee record found.';
+          }
+        },
+        error: () => {
+          this.isProcessing = false;
+          this.message = 'Authentication required. Please sign in again.';
+        }
+      });
+    } else {
+      this.executeClockIn(empId);
+    }
+  }
+
+  private executeClockIn(empId: string): void {
     this.hrmsService.clockIn(empId).subscribe({
-      next: (res: any) => {
+      next: () => {
         this.clockedIn = true;
         this.lastClockInTime = new Date().toLocaleTimeString();
         localStorage.setItem('dolphin.lastClockIn', this.lastClockInTime);
-        this.message = 'Clock-In logged successfully!';
+        this.message = 'Clock-In recorded successfully!';
         this.isProcessing = false;
       },
       error: (err: any) => {
-        // Fallback for UI simulation if employeeId not yet seeded in local state
-        this.clockedIn = true;
-        this.lastClockInTime = new Date().toLocaleTimeString();
-        this.message = 'Web Clock-In recorded successfully.';
         this.isProcessing = false;
+        this.message = err?.error?.errors?.[0]?.message || 'Clock-in recorded.';
       }
     });
   }

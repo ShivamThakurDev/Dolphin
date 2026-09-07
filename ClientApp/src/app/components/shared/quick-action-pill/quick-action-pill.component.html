@@ -1,0 +1,10 @@
+@if (!isAuthPage) {
+  <div class="pill-wrapper">
+    <button class="action-pill" (click)="handleAction()" [disabled]="isProcessing">
+      <span class="pill-glow"></span>
+      <mat-icon class="pill-icon">{{ actionIcon }}</mat-icon>
+      <span class="pill-text">{{ isProcessing ? 'Working...' : actionLabel }}</span>
+      <span class="pill-kbd">&#8984;K</span>
+    </button>
+  </div>
+}

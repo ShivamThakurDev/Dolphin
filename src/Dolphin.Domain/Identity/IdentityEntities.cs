@@ -49,8 +49,12 @@ public sealed class User : TenantEntity, IAggregateRoot
     public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
 
     public void AddRole(Guid roleId) => _roles.Add(new UserRole(TenantId, Id, roleId));
-    public void AddRefreshToken(string tokenHash, DateTimeOffset expiresAt, string? deviceName, string? ipAddress) =>
-        _refreshTokens.Add(new RefreshToken(TenantId, Id, tokenHash, expiresAt, deviceName, ipAddress));
+    public RefreshToken AddRefreshToken(string tokenHash, DateTimeOffset expiresAt, string? deviceName, string? ipAddress)
+    {
+        var token = new RefreshToken(TenantId, Id, tokenHash, expiresAt, deviceName, ipAddress);
+        _refreshTokens.Add(token);
+        return token;
+    }
 }
 
 public sealed class Role : TenantEntity

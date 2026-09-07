@@ -71,11 +71,12 @@ public sealed class JwtTokenService(DolphinDbContext dbContext, IPasswordHasher 
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
         var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-        user.AddRefreshToken(HashToken(refreshToken), DateTimeOffset.UtcNow.AddDays(GetInt("Jwt:RefreshTokenDays", 14)), deviceName, null);
+        var tokenEntity = user.AddRefreshToken(HashToken(refreshToken), DateTimeOffset.UtcNow.AddDays(GetInt("Jwt:RefreshTokenDays", 14)), deviceName, null);
+        await dbContext.RefreshTokens.AddAsync(tokenEntity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new AuthResult(new JwtSecurityTokenHandler().WriteToken(token), refreshToken, expires,
-            new UserProfileDto(user.Id, user.TenantId, user.Email, user.DisplayName, roles));
+            new UserProfileDto(user.Id, user.TenantId, user.Email, user.DisplayName, roles, user.EmployeeId));
     }
 
     private int GetInt(string key, int fallback) => int.TryParse(configuration[key], out var value) ? value : fallback;

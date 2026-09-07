@@ -1,0 +1,6 @@
+<div class="avatar-container size-{{ size }}" [title]="name + ' • ' + statusLabel + (clockedInTime ? ' (' + clockedInTime + ')' : '')">
+  <div class="avatar-circle">
+    <span class="avatar-text">{{ initials }}</span>
+  </div>
+  <span class="presence-dot presence-{{ presence }}" [style.background-color]="statusColor"></span>
+</div>

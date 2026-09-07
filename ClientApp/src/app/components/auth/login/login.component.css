@@ -1,0 +1,165 @@
+.login-wrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+              #f8fafc;
+  overflow: hidden;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.glow-orb-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.35) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+}
+
+.glow-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+  bottom: -120px;
+  right: -120px;
+}
+
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07),
+              0 0 0 1px rgba(226, 232, 240, 0.6);
+  border-radius: 20px;
+  padding: 2.5rem;
+  z-index: 10;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(14, 165, 233, 0.1);
+  border-radius: 999px;
+  color: #0284c7;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.brand-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.brand-title {
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.welcome-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.03em;
+}
+
+.welcome-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.action-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-submit {
+  height: 46px;
+  font-weight: 600;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem 0;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+  padding: 0 0.75rem;
+}
+
+.btn-demo {
+  height: 46px;
+  border-radius: 12px;
+  font-weight: 600;
+  border-color: #cbd5e1;
+  color: #1e293b;
+  background: rgba(248, 250, 252, 0.8);
+}
+
+.btn-demo:hover {
+  background: #f1f5f9;
+}
+
+.demo-hints {
+  margin-top: 1.75rem;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.hint-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.hint-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+}
